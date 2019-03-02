@@ -22,14 +22,14 @@
 	    <name>Sushil Gupta</name>
 	    <email>sushil106768@gmail.com</email>
 	    <organization>Individual</organization>
-	    <organizationUrl>http://www.github.com/sushil106768</organizationUrl>
+	    <organizationUrl>https://www.github.com/sukgu</organizationUrl>
 	  </developer>
    </developers>
    
    <scm>
-	  <connection>scm:git:git://github.com/sushil106768/com.shadow.automation.git</connection>
-	  <developerConnection>scm:git:git@github.com:sushil106768/com.shadow.automation.git</developerConnection>
-	  <url>https://github.com/sushil106768/com.shadow.automation</url>
+	  <connection>scm:git:git://github.com/sukgu/shadow-automation-selenium.git</connection>
+	  <developerConnection>scm:git:git@github.com:sukgu/shadow-automation-selenium.git</developerConnection>
+	  <url>https://github.com/sukgu/shadow-automation-selenium</url>
 	</scm>
    
   <properties>
