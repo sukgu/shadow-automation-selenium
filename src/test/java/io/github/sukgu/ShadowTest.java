@@ -1,4 +1,4 @@
-package com.shadow.automation;
+package io.github.sukgu;
 
 import java.util.List;
 
