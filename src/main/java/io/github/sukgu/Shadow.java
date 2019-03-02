@@ -1,4 +1,4 @@
-package com.shadow.automation;
+package io.github.sukgu;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -7,8 +7,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.List;
-
-import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
@@ -128,7 +126,7 @@ public class Shadow {
             WebDriverWait wait = new WebDriverWait(driver, 30);
             wait.until(expectation);
         } catch (Throwable error) {
-            Assertions.fail("Timeout waiting for Page Load Request to complete.");
+            //Assertions.fail("Timeout waiting for Page Load Request to complete.");
         }
     }
 	

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archetype-catalog  xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-catalog/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-catalog/1.0.0 http://maven.apache.org/xsd/archetype-catalog-1.0.0.xsd">
+  <archetypes>
+    <archetype>
+		<groupId>io.github.sukgu</groupId>
+		<artifactId>automation</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<repository>https://github.com/sukgu/com.shadow.automation</repository>
+		<description>This project automates shadow-dom elements using java selenium</description>
+    </archetype>
+
+  </archetypes>
+</archetype-catalog>

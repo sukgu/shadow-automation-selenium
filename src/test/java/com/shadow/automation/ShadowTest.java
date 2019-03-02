@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import io.github.sukgu.Shadow;
+
 public class ShadowTest {
 	
 	private final static ChromeDriver driver = new ChromeDriver();

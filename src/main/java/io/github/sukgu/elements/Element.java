@@ -1,4 +1,4 @@
-package com.shadow.automation.elements;
+package io.github.sukgu.elements;
 
 import java.util.List;
 import org.openqa.selenium.By;
