@@ -4,7 +4,7 @@ sudo: false
 
 install: true
 script: 
-    - mvn clean install
+    - mvn clean validate compile test
     - bash <(curl -s https://codecov.io/bash)
 
 cache:
