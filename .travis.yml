@@ -3,10 +3,11 @@ jdk: oraclejdk8
 sudo: false
 
 install: true
-script: 
-    - mvn clean validate compile test
-    - bash <(curl -s https://codecov.io/bash)
+script: "mvn clean validate compile test cobertura:cobertura"
 
 cache:
   directories:
   - $HOME/.m2
+  
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
