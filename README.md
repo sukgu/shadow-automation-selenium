@@ -2,14 +2,18 @@
 
 [![Build Status](https://travis-ci.org/sukgu/shadow-automation-selenium.svg?branch=master)](https://travis-ci.org/sukgu/shadow-automation-selenium "Travis CI")
 [![codecov](https://codecov.io/gh/sukgu/shadow-automation-selenium/branch/master/graph/badge.svg)](https://codecov.io/gh/sukgu/shadow-automation-selenium)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/cz.jirutka.rsql/rsql-parser/badge.svg)](https://oss.sonatype.org/#nexus-search;quick~io.github.sukgu)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.sukgu/automation.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.sukgu%22%20AND%20a:%22automation%22)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Shadow DOM:
 Shadow DOM is a web standard that offers component style and markup encapsulation. It is a critically important piece of the Web Components story as it ensures that a component will work in any environment even if other CSS or JavaScript is at play on the page.
 
+## Custom HTML Tags:
+Custom HTML tags can't be directly identified with selenium tools. Using this plugin you can handle any custom HTML tags.
+
 ## Problem Statement:
-You have already developed your web-based automation framework in java selenium. Your frontend application uses Polymer that uses shadow dom. Selenium doesn't provide any way to deal with shadow-dom elements. 
+- You have already developed your web-based automation framework in java selenium. Your frontend application uses Polymer that uses shadow dom. Selenium doesn't provide any way to deal with shadow-dom elements.
+- Your application page contains custom HTML tags that can't be identified directly using selenium.
 
 ## Solution:
 You can use this plugin by adding jar file or by including maven dependency in your java selenium project.
@@ -17,13 +21,14 @@ You can use this plugin by adding jar file or by including maven dependency in y
 ## How it works:
 
 ## Methods:
-  WebElement findElement(String cssSelector) : use this method if want single element from DOM
+  `WebElement findElement(String cssSelector)` : use this method if want single element from DOM
 
-  List<WebElement> findElements(String cssSelector) : use this if you want to find all elements from DOM
+  `List<WebElement> findElements(String cssSelector)` : use this if you want to find all elements from DOM
   
 ###### How to use this plugin:
-  You will have to add maven dependency in your pom file.
+  You will have to dependency in your project.
   
+  **Maven**
   ```
   <dependency>
 	<groupId>io.github.sukgu</groupId>
@@ -31,6 +36,12 @@ You can use this plugin by adding jar file or by including maven dependency in y
 	<version>0.0.1</version>
   <dependency>
   ```
+  
+  **Gradle**
+  ```
+  implementation 'io.github.sukgu:automation:0.0.1'
+  ```
+  
   
   You might need to add staging repository in your pom https://oss.sonatype.org/content/groups/staging/
   Or you can download the jar file from repository https://oss.sonatype.org/content/groups/staging//io/github/sukgu/automation/0.0.1/
