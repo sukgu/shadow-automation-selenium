@@ -17,4 +17,7 @@
       </properties>
     </profile>
   </profiles>
+  <activeProfiles>
+    <activeProfile>release</activeProfile>
+  </activeProfiles>
 </settings>

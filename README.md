@@ -28,17 +28,19 @@ You can use this plugin by adding jar file or by including maven dependency in y
   <dependency>
 	<groupId>io.github.sukgu</groupId>
 	<artifactId>automation</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
   <dependency>
   ```
-  Or you can download the jar file from repository https://oss.sonatype.org/content/repositories/snapshots/io/github/sukgu/automation/0.0.1-SNAPSHOT/
+  
+  You might need to add staging repository in your pom https://oss.sonatype.org/content/groups/staging/
+  Or you can download the jar file from repository https://oss.sonatype.org/content/groups/staging//io/github/sukgu/automation/0.0.1/
   
 ## Selector:
   ###### Examples: 
   for html tag ``` <paper-tab title="Settings"> ```
   You can use this code in your framework to grab the paper-tab element Object.
   ```java
-    import io.github.sukgu;
+    import io.github.sukgu.*;
 	
 	Shadow shadow = new Shadow(driver);
 	WebElement element = shadow.findElement("paper-tab[title='Settings']");
@@ -48,7 +50,7 @@ You can use this plugin by adding jar file or by including maven dependency in y
   for html tag that resides under a shadow-root dom element ``` <input title="The name of the employee"> ```
   You can use this code in your framework to grab the paper-tab element Object.
   ```java
-    import io.github.sukgu;
+    import io.github.sukgu.*;
 	
 	Shadow shadow = new Shadow(driver);
 	WebElement element = shadow.findElement("input[title='The name of the employee']");
@@ -62,7 +64,7 @@ You can use this plugin by adding jar file or by including maven dependency in y
   ```
   You can use this code in your framework to grab the textarea element Object.
   ```java
-    import io.github.sukgu;
+    import io.github.sukgu.*;
 	
 	Shadow shadow = new Shadow(driver);
 	WebElement element = shadow.findElement("properties-page#settingsPage>textarea#textarea");
