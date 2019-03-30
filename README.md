@@ -43,8 +43,7 @@ You can use this plugin by adding jar file or by including maven dependency in y
   ```
   
   
-  You might need to add staging repository in your pom https://oss.sonatype.org/content/groups/staging/
-  Or you can download the jar file from repository https://oss.sonatype.org/content/groups/staging//io/github/sukgu/automation/0.0.1/
+ You can download the jar file from repository http://central.maven.org/maven2/io/github/sukgu/automation/0.0.1/automation-0.0.1.jar
   
 ## Selector:
   ###### Examples: 
