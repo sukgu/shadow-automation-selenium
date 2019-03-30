@@ -1,9 +1,17 @@
-var querySelectorAllDeep = function querySelectorAllDeep(selector, root = document) {
-    return _querySelectorDeep(selector, true, root);
+var querySelectorAllDeep = function querySelectorAllDeep(selector, root) {
+	if(root==undefined) {
+		return _querySelectorDeep(selector, true, document);
+	} else {
+		return _querySelectorDeep(selector, true, root);
+	}
 };
 
-var querySelectorDeep = function querySelectorDeep(selector, root = document) {
-    return _querySelectorDeep(selector, false, root);
+var querySelectorDeep = function querySelectorDeep(selector, root) {
+	if(root==undefined) {
+		return _querySelectorDeep(selector, false, document);
+	} else {
+		return _querySelectorDeep(selector, false, root);
+	}
 };
 
 var getObject = function getObject(selector, root = document) {
@@ -14,6 +22,8 @@ var getObject = function getObject(selector, root = document) {
 		return querySelectorDeep(multiLevelSelectors[1], querySelectorDeep(multiLevelSelectors[0]).root);
 	} else if (multiLevelSelectors.length == 3) {
 		return querySelectorDeep(multiLevelSelectors[2], querySelectorDeep(multiLevelSelectors[1], querySelectorDeep(multiLevelSelectors[0]).root));
+	} else if (multiLevelSelectors.length == 4) {
+		return querySelectorDeep(multiLevelSelectors[3], querySelectorDeep(multiLevelSelectors[2], querySelectorDeep(multiLevelSelectors[1], querySelectorDeep(multiLevelSelectors[0]).root)));
 	}
 	
 };
@@ -26,7 +36,9 @@ var getAllObject = function getAllObject(selector, root = document) {
         return querySelectorAllDeep(multiLevelSelectors[1], querySelectorDeep(multiLevelSelectors[0]).root);
     } else if (multiLevelSelectors.length == 3) {
         return querySelectorAllDeep(multiLevelSelectors[2], querySelectorDeep(multiLevelSelectors[1], querySelectorDeep(multiLevelSelectors[0]).root));
-    }
+    } else if (multiLevelSelectors.length == 4) {
+		return querySelectorAllDeep(multiLevelSelectors[3], querySelectorDeep(multiLevelSelectors[2], querySelectorDeep(multiLevelSelectors[1], querySelectorDeep(multiLevelSelectors[0]).root)));
+	}
     
 };
 

@@ -1,10 +1,9 @@
 package io.github.sukgu;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.util.List;
 import org.openqa.selenium.JavascriptExecutor;
@@ -70,14 +69,13 @@ public class Shadow {
 	}
 	
 	private StringBuilder convertJStoText() {
-		File jsFile = new File("resource/querySelector.js");
+		InputStream in = getClass().getResourceAsStream("/querySelector.js"); 
 		BufferedReader reader = null;
+		//File jsFile = new File("querySelector.js");
+		//BufferedReader reader = null;
 		StringBuilder text = new StringBuilder();
-		try {
-			reader = new BufferedReader(new FileReader(jsFile));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} 
+		//reader = new BufferedReader(new FileReader(jsFile));
+		reader = new BufferedReader(new InputStreamReader(in)); 
 		if(reader!=null) {
 			try {
 				while(reader.ready()) {

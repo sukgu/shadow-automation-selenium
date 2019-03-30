@@ -4,7 +4,7 @@
 
   <groupId>io.github.sukgu</groupId>
   <artifactId>automation</artifactId>
-  <version>0.0.1</version>
+  <version>0.0.3</version>
 
   <name>automation</name>
   <description>This project automates shadow-dom elements using java selenium</description>
@@ -178,6 +178,18 @@
 		</plugin>
 	  
 	  </plugins>
+	  
+	  <resources>
+        <resource>
+            <directory>${basedir}/resources</directory>
+            <includes>
+                <include>querySelector.js</include>
+            </includes>
+        </resource>
+      </resources>
+	  
+	  
+	  
   </build>
   
   

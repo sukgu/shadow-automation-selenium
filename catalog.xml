@@ -5,7 +5,7 @@
     <archetype>
 		<groupId>io.github.sukgu</groupId>
 		<artifactId>automation</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.3</version>
 		<repository>https://github.com/sukgu/com.shadow.automation</repository>
 		<description>This project automates shadow-dom elements using java selenium</description>
     </archetype>
