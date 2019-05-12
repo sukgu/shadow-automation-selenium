@@ -25,6 +25,34 @@ You can use this plugin by adding jar file or by including maven dependency in y
 
   `List<WebElement> findElements(String cssSelector)` : use this if you want to find all elements from DOM
   
+  `WebElement findElements(WebElement parent, String cssSelector)` : use this if you want to find a single elements from parent object DOM
+  
+  `List<WebElement> findElements(WebElement parent, String cssSelector)` : use this if you want to find all elements from parent object DOM
+  
+  `WebElement getShadowElement(WebElement parent,String selector)` : use this if you want to find a single element from parent DOM
+  
+  `List<WebElement> getAllShadowElement(WebElement parent,String selector)` : use this if you want to find all elements from parent DOM
+  
+  `boolean isVisible(WebElement element)` : use this if you want to find visibility of element
+  
+  `boolean isChecked(WebElement element)` : use this if you want to check if checkbox is selected 
+  
+  `boolean isDisabled(WebElement element)` : use this if you want to check if element is disabled
+  
+  `String getAttribute(WebElement element,String attribute)` : use this if you want to get attribute like aria-selected and other custom attributes of elements.
+  
+  `void selectCheckbox(String label)` : use this to select checkbox element using label.
+  
+  `void selectCheckbox(WebElement parentElement, String label)` : use this to select checkbox element using label.
+  
+  `void selectRadio(String label)` : use this to select radio element using label.
+  
+  `void selectRadio(WebElement parentElement, String label)` : use this to select radio element from parent DOM using label.
+  
+  `void selectDropdown(String label)` : use this to select dropdown list item using label (use this if only one dropdown is present or loaded on UI).
+  
+  `void selectDropdown(WebElement parentElement, String label)` : use this to select dropdown list item from parent DOM using label.
+  
 ###### How to use this plugin:
   You will have to dependency in your project.
   
@@ -33,17 +61,17 @@ You can use this plugin by adding jar file or by including maven dependency in y
   <dependency>
 	<groupId>io.github.sukgu</groupId>
 	<artifactId>automation</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.4</version>
   <dependency>
   ```
   
   **Gradle**
   ```
-  implementation 'io.github.sukgu:automation:0.0.1'
+  implementation 'io.github.sukgu:automation:0.0.4'
   ```
   
   
- You can download the jar file from repository http://central.maven.org/maven2/io/github/sukgu/automation/0.0.1/automation-0.0.1.jar
+ You can download the jar file from repository http://central.maven.org/maven2/io/github/sukgu/automation/0.0.4/automation-0.0.4.jar
   
 ## Selector:
   ###### Examples: 
