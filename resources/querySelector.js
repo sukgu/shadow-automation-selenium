@@ -1,3 +1,85 @@
+var getShadowElement = function getShadowElement(object,selector) {
+	return object.shadowRoot.querySelector(selector);
+};
+
+var getAllShadowElement = function getAllShadowElement(object,selector) {
+	return object.shadowRoot.querySelectorAll(selector);
+};
+
+var getAttribute = function getAttribute(object,attribute) {
+	return object.getAttribute(attribute);
+};
+
+var isVisible = function isVisible(object) {
+	var visible = object.widthOffset();
+	if(visible>0) {
+		return true;
+	} else {
+		return false;
+	}
+};
+
+var isChecked = function isChecked(object) {
+	return object.checked;
+};
+
+var isDisabled = function isDisabled(object) {
+	return object.disabled;
+};
+
+var findCheckboxWithLabel = function findCheckboxWithLabel(label, root=document) {
+	if(root.nodeName=="PAPER-CHECKBOX") {
+		if(root.childNodes[0].data.trimStart().trimEnd()==label) {
+			return root;
+		}
+	} else {
+		let all_checkbox = getAllObject("paper-checkbox", root);
+		for (let checkbox of all_checkbox) {
+			if(checkbox.childNodes[0].data.trimStart().trimEnd()==label) {
+				return checkbox;
+			}
+		}
+	}
+};
+
+var findRadioWithLabel = function findRadioWithLabel(label, root=document) {
+	if(root.nodeName=="PAPER-RADIO-BUTTON") {
+		if(root.childNodes[0].data.trimStart().trimEnd()==label) {
+			return root;
+		}
+	} else {
+		let all_radio = getAllObject("paper-radio-button", root);
+		for (let radio of all_radio) {
+			if(radio.childNodes[0].data.trimStart().trimEnd()==label) {
+				return radio;
+			}
+		}
+	}
+};
+
+var selectCheckbox = function selectCheckbox(label, root=document) {
+	let checkbox = findCheckboxWithLabel(label, root);
+	if(!checkbox.checked) {
+		checbox.click();
+	}
+};
+
+var selectRadio = function selectRadio(label, root=document) {
+	let radio = findCheckboxWithLabel(label, root);
+	if(!radio.checked) {
+		radio.click();
+	}
+};
+
+var selectDropdown = function selectDropdown(label, root=document) {
+	if(root.nodeName=="PAPER-LISTBOX") {
+		root.select(label);
+	} else {
+		let listbox = getAllObject("paper-listbox", root);
+		listbox.select(label);
+	}
+};
+
 var querySelectorAllDeep = function querySelectorAllDeep(selector, root) {
 	if(root==undefined) {
 		return _querySelectorDeep(selector, true, document);
@@ -140,7 +222,11 @@ function collectAllElementsDeep(selector = null, root) {
             }
         }
     };
-
+	
+	if(root.shadowRoot != null) {
+		findAllElements(root.shadowRoot.querySelectorAll('*'));
+	}
+	
     findAllElements(root.querySelectorAll('*'));
 
     return selector ? allElements.filter(el => el.matches(selector)) : allElements;

@@ -62,10 +62,32 @@ public class Shadow {
 		}
 	}
 	
+	private Object injectShadowExecuter(String javascript, WebElement element) {
+		if(chromeDriver!=null) {
+			JavascriptExecutor js = (JavascriptExecutor)chromeDriver;
+			waitForPageLoaded();
+			return js.executeScript(javascript, element);
+		} else if (firfoxDriver!=null) {
+			waitForPageLoaded();
+			return firfoxDriver.executeScript(javascript, element);
+		} else if (ieDriver!=null) {
+			waitForPageLoaded();
+			return ieDriver.executeScript(javascript, element);
+		} else {
+			return null;
+		}
+	}
+	
 	private Object executerGetObject(String script) {
 		String javascript = convertJStoText().toString();
 		javascript += script;
 		return injectShadowExecuter(javascript);
+	}
+	
+	private Object executerGetObject(String script, WebElement element) {
+		String javascript = convertJStoText().toString();
+		javascript += script;
+		return injectShadowExecuter(javascript, element);
 	}
 	
 	private StringBuilder convertJStoText() {
@@ -135,6 +157,13 @@ public class Shadow {
 		return element;
 	}
 	
+	public WebElement findElement(WebElement parent, String cssSelector) {
+		WebElement element = null;
+		element = (WebElement) executerGetObject("return getObject(\""+cssSelector+"\", arguments[0]);", parent);
+		fixLocator(driver, cssSelector, element);
+		return element;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<WebElement> findElements(String cssSelector) {
 		List<WebElement> element = null;
@@ -147,5 +176,79 @@ public class Shadow {
 		}
 		return element;
 	}
-
+	
+	@SuppressWarnings("unchecked")
+	public List<WebElement> findElements(WebElement parent, String cssSelector) {
+		List<WebElement> element = null;
+		Object object = executerGetObject("return getAllObject(\""+cssSelector+"\", arguments[0]);", parent);
+		if(object!=null && object instanceof List<?>) {
+			element = (List<WebElement>) object;
+		}
+		for (WebElement webElement : element) {
+			fixLocator(driver, cssSelector, webElement);
+		}
+		return element;
+	}
+	
+	public WebElement getShadowElement(WebElement parent,String selector) {
+		WebElement element = null;
+		element = (WebElement) executerGetObject("return getShadowElement(arguments[0],\""+selector+"\");", parent);
+		fixLocator(driver, selector, element);
+		return element;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<WebElement> getAllShadowElement(WebElement parent,String selector) {
+		List<WebElement> elements = null;
+		Object object = executerGetObject("return getAllShadowElement(arguments[0],\""+selector+"\");", parent);
+		if(object!=null && object instanceof List<?>) {
+			elements = (List<WebElement>) object;
+		}
+		for (WebElement element : elements) {
+			fixLocator(driver, selector, element);
+		}
+		return elements;
+	}
+	
+	public boolean isVisible(WebElement element) {
+		return (Boolean) executerGetObject("return isVisible(arguments[0]);", element);
+	}
+	
+	public boolean isChecked(WebElement element) {
+		return (Boolean) executerGetObject("return isChecked(arguments[0]);", element);
+	}
+	
+	public boolean isDisabled(WebElement element) {
+		return (Boolean) executerGetObject("return isDisabled(arguments[0]);", element);
+	}
+	
+	public String getAttribute(WebElement element,String attribute) {
+		return (String) executerGetObject("return getAttribute(arguments[0],\""+attribute+"\");", element);
+	}
+	
+	public void selectCheckbox(WebElement parentElement,String label) {
+		executerGetObject("return selectCheckbox(\""+label+"\",arguments[0]);", parentElement);
+	}
+	
+	public void selectCheckbox(String label) {
+		executerGetObject("return selectCheckbox(\""+label+"\");");
+	}
+	
+	public void selectRadio(WebElement parentElement,String label) {
+		executerGetObject("return selectRadio(\""+label+"\",arguments[0]);", parentElement);
+	}
+	
+	public void selectRadio(String label) {
+		executerGetObject("return selectRadio(\""+label+"\");");
+	}
+	
+	public void selectDropdown(WebElement parentElement,String label) {
+		executerGetObject("return selectDropdown(\""+label+"\",arguments[0]);", parentElement);
+	}
+	
+	public void selectDropdown(String label) {
+		executerGetObject("return selectDropdown(\""+label+"\");");
+	}
+	
+	
 }
