@@ -11,11 +11,27 @@ var getAttribute = function getAttribute(object,attribute) {
 };
 
 var isVisible = function isVisible(object) {
-	var visible = object.widthOffset();
+	var visible = object.offsetWidth;
 	if(visible>0) {
 		return true;
 	} else {
 		return false;
+	}
+};
+
+var getParentElement = function getParentElement(object) {
+	if(object.parentNode.nodeName=="#document-fragment") {
+		return object.children;
+	} else {
+		return object.childElements();
+	}
+};
+
+var getChildElements = function getChildElements(object) {
+	if(object.nodeName=="#document-fragment") {
+		return object.parentNode.host;
+	} else {
+		return object.parentElement;
 	}
 };
 

@@ -209,6 +209,20 @@ public class Shadow {
 		}
 		return elements;
 	}
+
+	public WebElement getParentElement(WebElement element) {
+		return (WebElement) executerGetObject("return getParentElement(arguments[0]);", element);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<WebElement> getChildElements(WebElement parent) {
+		List<WebElement> elements = null;
+		Object object = executerGetObject("return getChildElements(arguments[0]);", parent);
+		if(object!=null && object instanceof List<?>) {
+			elements = (List<WebElement>) object;
+		}
+		return elements;
+	}
 	
 	public boolean isVisible(WebElement element) {
 		return (Boolean) executerGetObject("return isVisible(arguments[0]);", element);

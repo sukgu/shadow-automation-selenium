@@ -33,6 +33,10 @@ You can use this plugin by adding jar file or by including maven dependency in y
   
   `List<WebElement> getAllShadowElement(WebElement parent,String selector)` : use this if you want to find all elements from parent DOM
   
+  `WebElement getParentElement(WebElement element)` : use this to get the parent element if web element.
+  
+  `List<WebElement> getChildElements(WebElement parent)` : use this to get all the child elements of parent element.
+  
   `boolean isVisible(WebElement element)` : use this if you want to find visibility of element
   
   `boolean isChecked(WebElement element)` : use this if you want to check if checkbox is selected 
@@ -61,17 +65,17 @@ You can use this plugin by adding jar file or by including maven dependency in y
   <dependency>
 	<groupId>io.github.sukgu</groupId>
 	<artifactId>automation</artifactId>
-	<version>0.0.4</version>
+	<version>0.0.5</version>
   <dependency>
   ```
   
   **Gradle**
   ```
-  implementation 'io.github.sukgu:automation:0.0.4'
+  implementation 'io.github.sukgu:automation:0.0.5'
   ```
   
   
- You can download the jar file from repository http://central.maven.org/maven2/io/github/sukgu/automation/0.0.4/automation-0.0.4.jar
+ You can download the jar file from repository http://central.maven.org/maven2/io/github/sukgu/automation/0.0.5/automation-0.0.5.jar
   
 ## Selector:
   ###### Examples: 
