@@ -15,6 +15,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.CommandExecutor;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.remote.SessionId;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -30,6 +31,7 @@ public class Shadow {
 	ChromeDriver chromeDriver;
 	FirefoxDriver firfoxDriver;
 	InternetExplorerDriver ieDriver;
+	RemoteWebDriver remoteWebDriver;
 	
 	public Shadow(WebDriver driver) {
 		
@@ -42,7 +44,10 @@ public class Shadow {
 		} else if (driver instanceof InternetExplorerDriver) {
 			sessionId  = ((InternetExplorerDriver)driver).getSessionId();
 			ieDriver = (InternetExplorerDriver)driver;
-		}
+		} else if (driver instanceof RemoteWebDriver) {
+			sessionId  = ((RemoteWebDriver)driver).getSessionId();
+			remoteWebDriver = (RemoteWebDriver)driver;
+		} 
 		this.driver = driver;
 	}
 	
@@ -57,6 +62,10 @@ public class Shadow {
 		} else if (ieDriver!=null) {
 			waitForPageLoaded();
 			return ieDriver.executeScript(javascript);
+		} else if (remoteWebDriver!=null) {
+			JavascriptExecutor js = (JavascriptExecutor)remoteWebDriver;
+			waitForPageLoaded();
+			return js.executeScript(javascript);
 		} else {
 			return null;
 		}
@@ -73,6 +82,10 @@ public class Shadow {
 		} else if (ieDriver!=null) {
 			waitForPageLoaded();
 			return ieDriver.executeScript(javascript, element);
+		} else if (remoteWebDriver!=null) {
+			JavascriptExecutor js = (JavascriptExecutor)remoteWebDriver;
+			waitForPageLoaded();
+			return js.executeScript(javascript, element);
 		} else {
 			return null;
 		}
