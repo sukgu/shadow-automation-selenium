@@ -21,17 +21,19 @@ var isVisible = function isVisible(object) {
 
 var getParentElement = function getParentElement(object) {
 	if(object.parentNode.nodeName=="#document-fragment") {
-		return object.children;
+		return object.parentNode.host;
+	} else if(object.nodeName=="#document-fragment") {
+		return object.host;
 	} else {
-		return object.childElements();
+		return object.parentElement;
 	}
 };
 
 var getChildElements = function getChildElements(object) {
 	if(object.nodeName=="#document-fragment") {
-		return object.parentNode.host;
+		return object.children;
 	} else {
-		return object.parentElement;
+		return object.childElements();
 	}
 };
 
