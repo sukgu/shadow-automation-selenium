@@ -33,7 +33,7 @@ var getChildElements = function getChildElements(object) {
 	if(object.nodeName=="#document-fragment") {
 		return object.children;
 	} else {
-		return object.childElements();
+		return object.childNodes;
 	}
 };
 
