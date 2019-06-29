@@ -237,6 +237,28 @@ public class Shadow {
 		return elements;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<WebElement> getSiblingElements(WebElement element) {
+		List<WebElement> elements = null;
+		Object object = executerGetObject("return getSiblingElements(arguments[0]);", element);
+		if(object!=null && object instanceof List<?>) {
+			elements = (List<WebElement>) object;
+		}
+		return elements;
+	}
+	
+	public WebElement getSiblingElement(WebElement element, String selector) {
+		return (WebElement)  executerGetObject("return getSiblingElement(arguments[0],\""+selector+"\");", element);
+	}
+	
+	public WebElement getNextSiblingElement(WebElement element) {
+		return (WebElement)  executerGetObject("return getNextSiblingElement(arguments[0]);", element);
+	}
+	
+	public WebElement getPreviousSiblingElement(WebElement element) {
+		return (WebElement)  executerGetObject("return getPreviousSiblingElement(arguments[0]);", element);
+	}
+	
 	public boolean isVisible(WebElement element) {
 		return (Boolean) executerGetObject("return isVisible(arguments[0]);", element);
 	}

@@ -37,6 +37,38 @@ var getChildElements = function getChildElements(object) {
 	}
 };
 
+var getSiblingElements = function getSiblingElements(object) {
+	if(object.nodeName=="#document-fragment") {
+		return object.host.children;
+	} else {
+		return object.siblings();
+	}
+};
+
+var getSiblingElement = function getSiblingElement(object, selector) {
+	if(object.nodeName=="#document-fragment") {
+		return object.host.querySelector(selector);
+	} else {
+		return object.parentElement.querySelector(selector);
+	}
+};
+
+var getNextSiblingElement = function getNextSiblingElement(object) {
+	if(object.nodeName=="#document-fragment") {
+		return object.host.firstElementChild.nextElementSibling;
+	} else {
+		return object.nextElementSibling;
+	}
+};
+
+var getPreviousSiblingElement = function getPreviousSiblingElement(object) {
+	if(object.nodeName=="#document-fragment") {
+		return null;
+	} else {
+		return object.previousElementSibling;
+	}
+};
+
 var isChecked = function isChecked(object) {
 	return object.checked;
 };
@@ -124,8 +156,9 @@ var getObject = function getObject(selector, root = document) {
 		return querySelectorDeep(multiLevelSelectors[2], querySelectorDeep(multiLevelSelectors[1], querySelectorDeep(multiLevelSelectors[0]).root));
 	} else if (multiLevelSelectors.length == 4) {
 		return querySelectorDeep(multiLevelSelectors[3], querySelectorDeep(multiLevelSelectors[2], querySelectorDeep(multiLevelSelectors[1], querySelectorDeep(multiLevelSelectors[0]).root)));
+	} else if (multiLevelSelectors.length == 5) {
+		return querySelectorDeep(multiLevelSelectors[4], querySelectorDeep(multiLevelSelectors[3], querySelectorDeep(multiLevelSelectors[2], querySelectorDeep(multiLevelSelectors[1], querySelectorDeep(multiLevelSelectors[0]).root))));
 	}
-	
 };
 
 var getAllObject = function getAllObject(selector, root = document) {
@@ -138,6 +171,8 @@ var getAllObject = function getAllObject(selector, root = document) {
         return querySelectorAllDeep(multiLevelSelectors[2], querySelectorDeep(multiLevelSelectors[1], querySelectorDeep(multiLevelSelectors[0]).root));
     } else if (multiLevelSelectors.length == 4) {
 		return querySelectorAllDeep(multiLevelSelectors[3], querySelectorDeep(multiLevelSelectors[2], querySelectorDeep(multiLevelSelectors[1], querySelectorDeep(multiLevelSelectors[0]).root)));
+	} else if (multiLevelSelectors.length == 5) {
+		return querySelectorAllDeep(multiLevelSelectors[4], querySelectorDeep(multiLevelSelectors[3], querySelectorDeep(multiLevelSelectors[2], querySelectorDeep(multiLevelSelectors[1], querySelectorDeep(multiLevelSelectors[0]).root))));
 	}
     
 };
