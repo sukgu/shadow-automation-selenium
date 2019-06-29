@@ -37,6 +37,14 @@ You can use this plugin by adding jar file or by including maven dependency in y
   
   `List<WebElement> getChildElements(WebElement parent)` : use this to get all the child elements of parent element.
   
+  `List<WebElement> getSiblingElements(WebElement element)` : use this to get all adjacent (sibling) elements.
+  
+  `WebElement getSiblingElement(WebElement element, String selector)` : use this to get adjacent(sibling) element using css selector.
+  
+  `WebElement getNextSiblingElement(WebElement element)` : use this to get next adjacent(sibling) element.
+  
+  `WebElement getPreviousSiblingElement(WebElement element)` : use this to get previous adjacent(sibling) element..
+  
   `boolean isVisible(WebElement element)` : use this if you want to find visibility of element
   
   `boolean isChecked(WebElement element)` : use this if you want to check if checkbox is selected 
@@ -65,17 +73,17 @@ You can use this plugin by adding jar file or by including maven dependency in y
   <dependency>
 	<groupId>io.github.sukgu</groupId>
 	<artifactId>automation</artifactId>
-	<version>0.0.8</version>
+	<version>0.0.9</version>
   <dependency>
   ```
   
   **Gradle**
   ```
-  implementation 'io.github.sukgu:automation:0.0.8'
+  implementation 'io.github.sukgu:automation:0.0.9'
   ```
   
   
- You can download the jar file from repository http://central.maven.org/maven2/io/github/sukgu/automation/0.0.8/automation-0.0.8.jar
+ You can download the jar file from repository http://central.maven.org/maven2/io/github/sukgu/automation/0.0.9/automation-0.0.9.jar
   
 ## Selector:
   ###### Examples: 
@@ -113,5 +121,7 @@ You can use this plugin by adding jar file or by including maven dependency in y
     String text = element.getText();
   ```
   
-  ###### Note: > is used to combine multi level dom structure. So you can combine 4 levels of dom. If you want some more level modify the script and ready to rock.
+  ###### Note: > is used to combine multi level dom structure. So you can combine 5 levels of dom. If you want some more level modify the script and ready to rock.
+  
+  **Documentation** [Link](https://github.com/sukgu/shadow-automation-selenium/wiki)
   
