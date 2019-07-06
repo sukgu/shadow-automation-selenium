@@ -299,5 +299,9 @@ public class Shadow {
 		executerGetObject("return selectDropdown(\""+label+"\");");
 	}
 	
+	public void scrollTo(WebElement element) {
+		executerGetObject("return scrollTo(arguments[0]);", element);
+	}
+	
 	
 }

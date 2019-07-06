@@ -19,6 +19,10 @@ var isVisible = function isVisible(object) {
 	}
 };
 
+var scrollTo = function scrollTo(object) {
+	object.scrollIntoView({block: "center", inline: "nearest"});
+};
+
 var getParentElement = function getParentElement(object) {
 	if(object.parentNode.nodeName=="#document-fragment") {
 		return object.parentNode.host;

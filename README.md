@@ -65,6 +65,8 @@ You can use this plugin by adding jar file or by including maven dependency in y
   
   `void selectDropdown(WebElement parentElement, String label)` : use this to select dropdown list item from parent DOM using label.
   
+  `void scrollTo(WebElement element)` : use this to scroll to web element.
+  
 ###### How to use this plugin:
   You will have to dependency in your project.
   
@@ -73,17 +75,17 @@ You can use this plugin by adding jar file or by including maven dependency in y
   <dependency>
 	<groupId>io.github.sukgu</groupId>
 	<artifactId>automation</artifactId>
-	<version>0.0.9</version>
+	<version>0.0.10</version>
   <dependency>
   ```
   
   **Gradle**
   ```
-  implementation 'io.github.sukgu:automation:0.0.9'
+  implementation 'io.github.sukgu:automation:0.0.10'
   ```
   
   
- You can download the jar file from repository http://central.maven.org/maven2/io/github/sukgu/automation/0.0.9/automation-0.0.9.jar
+ You can download the jar file from repository http://central.maven.org/maven2/io/github/sukgu/automation/0.0.10/automation-0.0.10.jar
   
 ## Selector:
   ###### Examples: 
