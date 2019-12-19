@@ -25,9 +25,13 @@ You can use this plugin by adding jar file or by including maven dependency in y
 
   `List<WebElement> findElements(String cssSelector)` : use this if you want to find all elements from DOM
   
-  `WebElement findElements(WebElement parent, String cssSelector)` : use this if you want to find a single elements from parent object DOM
+  `WebElement findElement(WebElement parent, String cssSelector)` : use this if you want to find a single elements from parent object DOM
   
   `List<WebElement> findElements(WebElement parent, String cssSelector)` : use this if you want to find all elements from parent object DOM
+  
+   `void setImplicitWait(int seconds)` : use this method for implicit wait, will only work with **findElement(String cssSelector)** and **findElement(WebElement parent, String cssSelector)** method
+    
+   `void setExplicitWait(int seconds, int pollingTime) throws Exception` : use this method for explicit wait, will only work with **findElement(String cssSelector)** and **findElement(WebElement parent, String cssSelector)** method
   
   `WebElement getShadowElement(WebElement parent,String selector)` : use this if you want to find a single element from parent DOM
   
@@ -122,6 +126,15 @@ You can use this plugin by adding jar file or by including maven dependency in y
 	WebElement element = shadow.findElement("properties-page#settingsPage>textarea#textarea");
     String text = element.getText();
   ```
+  
+  ## Wait: Implicit and Explicit
+If you want to use wait to synchronize your scripts then you should use the implicit or explicit wait feature.
+
+* For Implicit wait, you can use **shadow.setImplicitWait(int seconds)** method.
+* For Explicit wait, you can use **shadow.setExplicitWait(int seconds, int pollingTime)** method.
+
+* In Implicit wait, the driver will wait for at least n seconds as set in **shadow.setImplicitWait(n)**.
+* In Explicit wait, the driver will wait for at max n seconds as set in **shadow.setImplicitWait(n,m)**. In between driver will check for presence of WebElement every m seconds.
   
   ###### Note: > is used to combine multi level dom structure. So you can combine 5 levels of dom. If you want some more level modify the script and ready to rock.
   
