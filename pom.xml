@@ -70,6 +70,8 @@
 	    <groupId>org.seleniumhq.selenium</groupId>
 	    <artifactId>selenium-api</artifactId>
 	    <version>3.14.0</version>
+	    <scope>compile</scope>
+	    <optional>true</optional>
 	</dependency>
 	
 	<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-server -->
@@ -77,6 +79,8 @@
 	    <groupId>org.seleniumhq.selenium</groupId>
 	    <artifactId>selenium-server</artifactId>
 	    <version>3.14.0</version>
+	    <scope>compile</scope>
+	    <optional>true</optional>
 	</dependency>
 	
 	<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
@@ -84,6 +88,8 @@
 	    <groupId>org.seleniumhq.selenium</groupId>
 	    <artifactId>selenium-java</artifactId>
 	    <version>3.14.0</version>
+	    <scope>compile</scope>
+	    <optional>true</optional>
 	</dependency>
     
   </dependencies>
