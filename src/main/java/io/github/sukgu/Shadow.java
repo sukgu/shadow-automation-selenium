@@ -6,6 +6,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.util.List;
+
+import org.openqa.selenium.ElementNotVisibleException;
+import org.openqa.selenium.JavascriptException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
@@ -32,6 +35,9 @@ public class Shadow {
 	FirefoxDriver firfoxDriver;
 	InternetExplorerDriver ieDriver;
 	RemoteWebDriver remoteWebDriver;
+	private int implicitWait = 0;
+	private int explicitWait = 0;
+	private int pollingTime = 0;
 	
 	public Shadow(WebDriver driver) {
 		
@@ -163,17 +169,108 @@ public class Shadow {
         }
     }
 	
+	// wait methods on shadow objects
+	public void setImplicitWait(int seconds) {
+        this.implicitWait = seconds;
+    }
+	
+	public void setExplicitWait(int seconds, int pollingTime) throws Exception {
+		if(pollingTime > seconds) {
+			throw new Exception("pollingTime can't be greater than wait time");
+		}
+        this.explicitWait = seconds;
+        this.pollingTime = pollingTime;
+    }
+	
+	private boolean isPresent(WebElement element) {
+		boolean present = false;
+		try {
+			present =  (Boolean) executerGetObject("return isVisible(arguments[0]);", element);
+		} catch(JavascriptException ex) {
+			
+		}
+		return present;
+	}
+	
 	public WebElement findElement(String cssSelector) {
 		WebElement element = null;
-		element = (WebElement) executerGetObject("return getObject(\""+cssSelector+"\");");
-		fixLocator(driver, cssSelector, element);
+		boolean visible = false;
+		
+		if(implicitWait>0) {
+			try {
+				Thread.sleep(implicitWait*1000);
+			} catch (InterruptedException e) {
+				
+			}
+			element = (WebElement) executerGetObject("return getObject(\""+cssSelector+"\");");
+			fixLocator(driver, cssSelector, element);
+			visible = isPresent(element);
+		}
+		
+		if(explicitWait>0) {
+			element = (WebElement) executerGetObject("return getObject(\""+cssSelector+"\");");
+			fixLocator(driver, cssSelector, element);
+			visible = isPresent(element);
+			
+			for(int i=0;i<explicitWait && !visible;) {
+				try {
+					Thread.sleep(pollingTime*1000);
+					element = (WebElement) executerGetObject("return getObject(\""+cssSelector+"\");");
+					fixLocator(driver, cssSelector, element);
+					visible = isPresent(element);
+					i=i+pollingTime;
+				} catch (InterruptedException e) {
+					
+				}
+			}
+		}
+		
+		if(!isPresent(element)) {
+			throw new ElementNotVisibleException("Element with CSS "+cssSelector+" is not present on screen");
+		}
+		
 		return element;
+
 	}
 	
 	public WebElement findElement(WebElement parent, String cssSelector) {
 		WebElement element = null;
-		element = (WebElement) executerGetObject("return getObject(\""+cssSelector+"\", arguments[0]);", parent);
-		fixLocator(driver, cssSelector, element);
+		boolean visible = false;
+		
+		if(implicitWait>0) {
+			try {
+				Thread.sleep(implicitWait*1000);
+			} catch (InterruptedException e) {
+				
+			}
+			element = (WebElement) executerGetObject("return getObject(\""+cssSelector+"\", arguments[0]);", parent);
+			fixLocator(driver, cssSelector, element);
+			visible = isPresent(element);
+		}
+		
+		if(explicitWait>0) {
+			element = (WebElement) executerGetObject("return getObject(\""+cssSelector+"\", arguments[0]);", parent);
+			fixLocator(driver, cssSelector, element);
+			visible = isPresent(element);
+			
+			for(int i=0;i<explicitWait && !visible;) {
+				try {
+					Thread.sleep(pollingTime*1000);
+					element = (WebElement) executerGetObject("return getObject(\""+cssSelector+"\", arguments[0]);", parent);
+					fixLocator(driver, cssSelector, element);
+					visible = isPresent(element);
+					i=i+pollingTime;
+				} catch (InterruptedException e) {
+					
+				}
+			}
+			
+		}
+		
+		if(!isPresent(element)) {
+			throw new ElementNotVisibleException("Element with CSS "+cssSelector+" is not present on screen");
+		}
+		
 		return element;
 	}
 	
