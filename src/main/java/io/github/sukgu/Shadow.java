@@ -225,6 +225,11 @@ public class Shadow {
 			}
 		}
 		
+		if(explicitWait == 0 && implicitWait == 0) {
+			element = (WebElement) executerGetObject("return getObject(\""+cssSelector+"\");");
+			fixLocator(driver, cssSelector, element);
+		}
+		
 		if(!isPresent(element)) {
 			throw new ElementNotVisibleException("Element with CSS "+cssSelector+" is not present on screen");
 		}
@@ -267,6 +272,11 @@ public class Shadow {
 			
 		}
 		
+		if(explicitWait == 0 && implicitWait == 0) {
+			element = (WebElement) executerGetObject("return getObject(\""+cssSelector+"\", arguments[0]);", parent);
+			fixLocator(driver, cssSelector, element);
+		}
+		
 		if(!isPresent(element)) {
 			throw new ElementNotVisibleException("Element with CSS "+cssSelector+" is not present on screen");
 		}
@@ -276,6 +286,13 @@ public class Shadow {
 	
 	@SuppressWarnings("unchecked")
 	public List<WebElement> findElements(String cssSelector) {
+		if(implicitWait>0) {
+			try {
+				Thread.sleep(implicitWait*1000);
+			} catch (InterruptedException e) {
+				
+			}
+		}
 		List<WebElement> element = null;
 		Object object = executerGetObject("return getAllObject(\""+cssSelector+"\");");
 		if(object!=null && object instanceof List<?>) {
@@ -289,6 +306,13 @@ public class Shadow {
 	
 	@SuppressWarnings("unchecked")
 	public List<WebElement> findElements(WebElement parent, String cssSelector) {
+		if(implicitWait>0) {
+			try {
+				Thread.sleep(implicitWait*1000);
+			} catch (InterruptedException e) {
+				
+			}
+		}
 		List<WebElement> element = null;
 		Object object = executerGetObject("return getAllObject(\""+cssSelector+"\", arguments[0]);", parent);
 		if(object!=null && object instanceof List<?>) {
@@ -301,6 +325,13 @@ public class Shadow {
 	}
 	
 	public WebElement getShadowElement(WebElement parent,String selector) {
+		if(implicitWait>0) {
+			try {
+				Thread.sleep(implicitWait*1000);
+			} catch (InterruptedException e) {
+				
+			}
+		}
 		WebElement element = null;
 		element = (WebElement) executerGetObject("return getShadowElement(arguments[0],\""+selector+"\");", parent);
 		fixLocator(driver, selector, element);
@@ -309,6 +340,13 @@ public class Shadow {
 	
 	@SuppressWarnings("unchecked")
 	public List<WebElement> getAllShadowElement(WebElement parent,String selector) {
+		if(implicitWait>0) {
+			try {
+				Thread.sleep(implicitWait*1000);
+			} catch (InterruptedException e) {
+				
+			}
+		}
 		List<WebElement> elements = null;
 		Object object = executerGetObject("return getAllShadowElement(arguments[0],\""+selector+"\");", parent);
 		if(object!=null && object instanceof List<?>) {
@@ -321,11 +359,25 @@ public class Shadow {
 	}
 
 	public WebElement getParentElement(WebElement element) {
+		if(implicitWait>0) {
+			try {
+				Thread.sleep(implicitWait*1000);
+			} catch (InterruptedException e) {
+				
+			}
+		}
 		return (WebElement) executerGetObject("return getParentElement(arguments[0]);", element);
 	}
 	
 	@SuppressWarnings("unchecked")
 	public List<WebElement> getChildElements(WebElement parent) {
+		if(implicitWait>0) {
+			try {
+				Thread.sleep(implicitWait*1000);
+			} catch (InterruptedException e) {
+				
+			}
+		}
 		List<WebElement> elements = null;
 		Object object = executerGetObject("return getChildElements(arguments[0]);", parent);
 		if(object!=null && object instanceof List<?>) {
@@ -336,6 +388,13 @@ public class Shadow {
 	
 	@SuppressWarnings("unchecked")
 	public List<WebElement> getSiblingElements(WebElement element) {
+		if(implicitWait>0) {
+			try {
+				Thread.sleep(implicitWait*1000);
+			} catch (InterruptedException e) {
+				
+			}
+		}
 		List<WebElement> elements = null;
 		Object object = executerGetObject("return getSiblingElements(arguments[0]);", element);
 		if(object!=null && object instanceof List<?>) {
@@ -345,6 +404,13 @@ public class Shadow {
 	}
 	
 	public WebElement getSiblingElement(WebElement element, String selector) {
+		if(implicitWait>0) {
+			try {
+				Thread.sleep(implicitWait*1000);
+			} catch (InterruptedException e) {
+				
+			}
+		}
 		return (WebElement)  executerGetObject("return getSiblingElement(arguments[0],\""+selector+"\");", element);
 	}
 	

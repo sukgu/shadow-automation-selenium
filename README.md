@@ -29,9 +29,9 @@ You can use this plugin by adding jar file or by including maven dependency in y
   
   `List<WebElement> findElements(WebElement parent, String cssSelector)` : use this if you want to find all elements from parent object DOM
   
-   `void setImplicitWait(int seconds)` : use this method for implicit wait, will only work with **findElement(String cssSelector)** and **findElement(WebElement parent, String cssSelector)** method
+   `void setImplicitWait(int seconds)` : use this method for implicit wait
     
-   `void setExplicitWait(int seconds, int pollingTime) throws Exception` : use this method for explicit wait, will only work with **findElement(String cssSelector)** and **findElement(WebElement parent, String cssSelector)** method
+   `void setExplicitWait(int seconds, int pollingTime) throws Exception` : use this method for explicit wait
   
   `WebElement getShadowElement(WebElement parent,String selector)` : use this if you want to find a single element from parent DOM
   
@@ -79,17 +79,17 @@ You can use this plugin by adding jar file or by including maven dependency in y
   <dependency>
 	<groupId>io.github.sukgu</groupId>
 	<artifactId>automation</artifactId>
-	<version>0.0.10</version>
+	<version>0.0.12</version>
   <dependency>
   ```
   
   **Gradle**
   ```
-  implementation 'io.github.sukgu:automation:0.0.10'
+  implementation 'io.github.sukgu:automation:0.0.12'
   ```
   
   
- You can download the jar file from repository http://central.maven.org/maven2/io/github/sukgu/automation/0.0.10/automation-0.0.10.jar
+ You can download the jar file from repository http://central.maven.org/maven2/io/github/sukgu/automation/0.0.12/automation-0.0.12.jar
   
 ## Selector:
   ###### Examples: 
