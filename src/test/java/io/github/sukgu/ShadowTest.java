@@ -9,10 +9,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 
 import java.io.IOException;
@@ -183,6 +183,19 @@ public class ShadowTest {
 		assertThat(elements, notNullValue());
 		assertThat(elements.size(), greaterThan(0));
 
+	}
+
+	@Test
+	public void testAPICalls5() {
+		WebElement element = shadow.findElement(urlLocator);
+		List<WebElement> elements = shadow.findElements(element, "#wrapperLink");
+		assertThat(elements, notNullValue());
+		assertThat(elements.size(), greaterThan(0));
+		err.println(
+				String.format("Located %d #wrapperLink elements:", elements.size()));
+		elements.stream()
+				.map(o -> String.format("outerHTML: %s", o.getAttribute("outerHTML")))
+				.forEach(err::println);
 	}
 
 	@After
