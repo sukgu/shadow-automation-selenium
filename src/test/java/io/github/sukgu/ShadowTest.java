@@ -30,6 +30,7 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import org.openqa.selenium.WebElement;
@@ -44,12 +45,15 @@ public class ShadowTest {
 	private final static String baseUrl = "https://www.virustotal.com";
 	// private static final String urlLocator = "a[data-route='url']";
 	private static final String urlLocator = "*[data-route='url']";
-	private boolean debug = Boolean.parseBoolean(getPropertyEnv("DEBUG", "false"));;
+	private boolean debug = Boolean
+			.parseBoolean(getPropertyEnv("DEBUG", "false"));;
 	protected static String osName = getOSName();
 	private static final Map<String, String> browserDrivers = new HashMap<>();
 	static {
-		browserDrivers.put("chrome", osName.equals("windows") ? "chromedriver.exe" : "chromedriver");
-		browserDrivers.put("firefox", osName.equals("windows") ? "geckodriver.exe" : "driver");
+		browserDrivers.put("chrome",
+				osName.equals("windows") ? "chromedriver.exe" : "chromedriver");
+		browserDrivers.put("firefox",
+				osName.equals("windows") ? "geckodriver.exe" : "driver");
 		browserDrivers.put("edge", "MicrosoftWebDriver.exe");
 	}
 
@@ -57,7 +61,8 @@ public class ShadowTest {
 	private static Shadow shadow = null;
 	private static String browser = getPropertyEnv("webdriver.driver", "chrome");
 	// use -P profile to override
-	private static final boolean headless = Boolean.parseBoolean(getPropertyEnv("HEADLESS", "false"));
+	private static final boolean headless = Boolean
+			.parseBoolean(getPropertyEnv("HEADLESS", "false"));
 
 	public static String getBrowser() {
 		return browser;
@@ -73,8 +78,12 @@ public class ShadowTest {
 		if (browser.equals("chrome")) {
 		} // TODO: finish for other browser
 
-		System.setProperty("webdriver.chrome.driver", Paths.get(System.getProperty("user.home")).resolve("Downloads")
-				.resolve(osName.equals("windows") ? "chromedriver.exe" : "chromedriver").toAbsolutePath().toString());
+		System
+				.setProperty("webdriver.chrome.driver",
+						Paths.get(System.getProperty("user.home"))
+								.resolve("Downloads").resolve(osName.equals("windows")
+										? "chromedriver.exe" : "chromedriver")
+								.toAbsolutePath().toString());
 
 		// https://peter.sh/experiments/chromium-command-line-switches/
 		ChromeOptions options = new ChromeOptions();
@@ -118,31 +127,61 @@ public class ShadowTest {
 		elements.stream().map(o -> o.getTagName()).forEach(err::println);
 		// default toString() is not be particularly useful
 		elements.stream().forEach(err::println);
-		elements.stream().map(o -> String.format("innerHTML: %s", o.getAttribute("innerHTML"))).forEach(err::println);
-		elements.stream().map(o -> String.format("outerHTML: %s", o.getAttribute("outerHTML"))).forEach(err::println);
+		elements.stream()
+				.map(o -> String.format("innerHTML: %s", o.getAttribute("innerHTML")))
+				.forEach(err::println);
+		elements.stream()
+				.map(o -> String.format("outerHTML: %s", o.getAttribute("outerHTML")))
+				.forEach(err::println);
 	}
 
 	@Test
-	public void testGetAPICalls() {
+	public void testAPICalls1() {
+		WebElement element = shadow.findElements(urlLocator).stream()
+				.filter(o -> o.getTagName().matches("div")).collect(Collectors.toList())
+				.get(0);
+
+		WebElement element1 = shadow.getNextSiblingElement(element);
+		assertThat(element1, notNullValue());
+		// TODO: examine the collection of elements returned earlier
+	}
+
+	@Test
+	public void testAPICalls2() {
 		List<WebElement> elements = shadow.findElements(urlLocator);
 		assertThat(elements, notNullValue());
 		assertThat(elements.size(), greaterThan(0));
 		err.println(String.format("Located %d elements:", elements.size()));
-		WebElement element = elements.stream().filter(o -> o.getTagName().matches("div")).collect(Collectors.toList())
+		WebElement element = elements.stream()
+				.filter(o -> o.getTagName().matches("div")).collect(Collectors.toList())
 				.get(0);
-		// elements = shadow.getSiblingElements(element);
-		// javascript error: object.siblings is not a function
-
-		// elements = shadow.getChildElements(element);
-		// javascript error: Illegal invocation
-
 		elements = shadow.findElements(element, "img");
-
 		assertThat(elements, notNullValue());
 		assertThat(elements.size(), greaterThan(0));
+	}
 
-		WebElement element1 = shadow.getNextSiblingElement(element);
-		assertThat(element1, notNullValue());
+	@Ignore
+	// TODO:
+	@Test
+	public void testAPICalls3() {
+		WebElement element = shadow.findElement(urlLocator);
+		List<WebElement> elements = shadow.getSiblingElements(element);
+		// javascript error: object.siblings is not a function
+		// https://www.w3schools.com/jquery/traversing_siblings.asp
+		assertThat(elements, notNullValue());
+		assertThat(elements.size(), greaterThan(0));
+	}
+
+	@Ignore
+	// TODO:
+	@Test
+	public void testAPICalls4() {
+		WebElement element = shadow.findElement(urlLocator);
+		List<WebElement> elements = shadow.getChildElements(element);
+		// javascript error: Illegal invocation
+		// https://stackoverflow.com/questions/10743596/why-are-certain-function-calls-termed-illegal-invocations-in-javascript
+		assertThat(elements, notNullValue());
+		assertThat(elements.size(), greaterThan(0));
 
 	}
 
