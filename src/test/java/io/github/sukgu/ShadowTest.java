@@ -33,12 +33,19 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import org.openqa.selenium.ElementNotVisibleException;
+import org.openqa.selenium.JavascriptException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import io.github.sukgu.Shadow;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class ShadowTest {
 
@@ -47,23 +54,17 @@ public class ShadowTest {
 	private static final String urlLocator = "*[data-route='url']";
 	private boolean debug = Boolean
 			.parseBoolean(getPropertyEnv("DEBUG", "false"));;
-	protected static String osName = getOSName();
-	private static final Map<String, String> browserDrivers = new HashMap<>();
-	static {
-		browserDrivers.put("chrome",
-				osName.equals("windows") ? "chromedriver.exe" : "chromedriver");
-		browserDrivers.put("firefox",
-				osName.equals("windows") ? "geckodriver.exe" : "driver");
-		browserDrivers.put("edge", "MicrosoftWebDriver.exe");
-	}
+	private static Map<String, String> env = System.getenv();
+	private static boolean isCIBuild = checkEnvironment();
 
-	private static ChromeDriver driver = null;
+	private static WebDriver driver = null;
 	private static Shadow shadow = null;
-	private static String browser = getPropertyEnv("webdriver.driver", "chrome");
+	private static String browser = getPropertyEnv("PROFILE", getPropertyEnv("webdriver.driver", "chrome"));
 	// use -P profile to override
 	private static final boolean headless = Boolean
 			.parseBoolean(getPropertyEnv("HEADLESS", "false"));
 
+	protected static String osName = getOSName();
 	public static String getBrowser() {
 		return browser;
 	}
@@ -76,25 +77,13 @@ public class ShadowTest {
 	public static void injectShadowJS() {
 		err.println("Launching " + browser);
 		if (browser.equals("chrome")) {
-		} // TODO: finish for other browser
-
-		System
-				.setProperty("webdriver.chrome.driver",
-						Paths.get(System.getProperty("user.home"))
-								.resolve("Downloads").resolve(osName.equals("windows")
-										? "chromedriver.exe" : "chromedriver")
-								.toAbsolutePath().toString());
-
-		// https://peter.sh/experiments/chromium-command-line-switches/
-		ChromeOptions options = new ChromeOptions();
-		// options for headless
-		if (headless) {
-			for (String arg : (new String[] { "headless", "window-size=1200x800" })) {
-				options.addArguments(arg);
-			}
+			WebDriverManager.chromedriver().setup();
+			driver = new ChromeDriver();
 		}
-
-		driver = new ChromeDriver(options);
+		if (browser.equals("firefox")) {
+			WebDriverManager.firefoxdriver().setup();
+			driver = new FirefoxDriver();
+		} // TODO: finish for other browsers
 		driver.navigate().to(baseUrl);
 		shadow = new Shadow(driver);
 	}
@@ -222,13 +211,21 @@ public class ShadowTest {
 	// https://github.com/TsvetomirSlavov/wdci/blob/master/code/src/main/java/com/seleniumsimplified/webdriver/manager/EnvironmentPropertyReader.java
 	public static String getPropertyEnv(String name, String defaultValue) {
 		String value = System.getProperty(name);
-		if (value == null) {
+		if (value == null || value.length() == 0) {
 			value = System.getenv(name);
-			if (value == null) {
+			if (value == null || value.length() == 0) {
 				value = defaultValue;
 			}
 		}
 		return value;
+	}
+
+	public static boolean checkEnvironment() {
+		boolean result = false;
+		if (env.containsKey("TRAVIS") && env.get("TRAVIS").equals("true")) {
+			result = true;
+		}
+		return result;
 	}
 
 }
