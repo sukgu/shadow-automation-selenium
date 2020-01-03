@@ -239,11 +239,20 @@
 		    <goals>deploy</goals>
 		  </configuration>
 		</plugin>
-		<plugin>
-		  <groupId>org.apache.maven.plugins</groupId>
-		  <artifactId>maven-surefire-plugin</artifactId>
-		  <version>${maven-surefire-plugin.version}</version>
-		</plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${maven-surefire-plugin.version}</version>
+        <executions>
+          <execution>
+            <configuration>
+              <systemPropertyVariables>
+                <webdriver.driver>${browser.name}</webdriver.driver>
+              </systemPropertyVariables>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
 	  </plugins>
 	  <resources>
         <resource>
@@ -257,6 +266,27 @@
 	  
 	  
   </build>
-  
-  
+  <profiles>
+    <profile>
+      <id>chrome</id>
+      <properties>
+        <browser.name>chrome</browser.name>
+      </properties>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+    </profile>
+    <profile>
+      <id>edge</id>
+      <properties>
+        <browser.name>edge</browser.name>
+      </properties>
+    </profile>
+    <profile>
+      <id>firefox</id>
+      <properties>
+        <browser.name>firefox</browser.name>
+      </properties>
+    </profile>
+  </profiles>
 </project>

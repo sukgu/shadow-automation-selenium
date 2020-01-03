@@ -33,9 +33,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import org.openqa.selenium.ElementNotVisibleException;
+import org.openqa.selenium.JavascriptException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import io.github.sukgu.Shadow;
@@ -46,13 +52,17 @@ public class ShadowTest {
 	private final static String baseUrl = "https://www.virustotal.com";
 	// private static final String urlLocator = "a[data-route='url']";
 	private static final String urlLocator = "*[data-route='url']";
-	private boolean debug = Boolean
+	private static final boolean debug = Boolean
 			.parseBoolean(getPropertyEnv("DEBUG", "false"));;
+	private static Map<String, String> env = System.getenv();
+	private static boolean isCIBuild = checkEnvironment();
 
-	private static ChromeDriver driver = null;
+	private static WebDriver driver = null;
 	private static Shadow shadow = null;
-	private static String browser = getPropertyEnv("webdriver.driver", "chrome");
-	// use -P profile to override
+	private static String browser = getPropertyEnv("BROWSER",
+			getPropertyEnv("webdriver.driver", "chrome"));
+	// export BROWSER=firefox or
+	// use -Pfirefox to override
 	private static final boolean headless = Boolean
 			.parseBoolean(getPropertyEnv("HEADLESS", "false"));
 
@@ -62,9 +72,12 @@ public class ShadowTest {
 		if (browser.equals("chrome")) {
 			WebDriverManager.chromedriver().setup();
 			driver = new ChromeDriver();
-			driver.navigate().to(baseUrl);
-		} // TODO: finish for other browser
-
+		}
+		if (browser.equals("firefox")) {
+			WebDriverManager.firefoxdriver().setup();
+			driver = new FirefoxDriver();
+		} // TODO: finish for other browsers
+		driver.navigate().to(baseUrl);
 		shadow = new Shadow(driver);
 	}
 
@@ -163,15 +176,32 @@ public class ShadowTest {
 		driver.close();
 	}
 
-        public static String getPropertyEnv(String name, String defaultValue) {
-                String value = System.getProperty(name);
-                if (value == null || value.length() == 0) {
-                        value = System.getenv(name);
-                        if (value == null || value.length() == 0) {
-                                value = defaultValue;
-                        }
-                }
-                return value;
-        }
+	public static String getPropertyEnv(String name, String defaultValue) {
+		String value = System.getProperty(name);
+		if (debug) {
+			err.println("system property " + name + " = " + value);
+		}
+		if (value == null || value.length() == 0) {
+			value = System.getenv(name);
+			if (debug) {
+				err.println("system env " + name + " = " + value);
+			}
+			if (value == null || value.length() == 0) {
+				value = defaultValue;
+				if (debug) {
+					err.println("default value  = " + value);
+				}
+			}
+		}
+		return value;
+	}
+
+	public static boolean checkEnvironment() {
+		boolean result = false;
+		if (env.containsKey("TRAVIS") && env.get("TRAVIS").equals("true")) {
+			result = true;
+		}
+		return result;
+	}
 
 }
