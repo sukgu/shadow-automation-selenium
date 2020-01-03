@@ -1,0 +1,17 @@
+﻿<!DOCTYPE html>
+<html>
+<!-- origin: https://www.html5rocks.com/en/tutorials/webcomponents/shadowdom/ -->
+  <head>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+  <div>
+    <button class="test">Hello Dom!</button>
+    <script>
+      var host = document.querySelector('button');
+      const root = host.createShadowRoot();
+      root.textContent = 'hello from shadow Root';
+     </script>
+   </div>
+  </body>
+</html>
