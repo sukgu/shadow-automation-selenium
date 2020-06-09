@@ -1,35 +1,10 @@
 language: java
-jdk: openjdk8
+jdk: oraclejdk8
 sudo: false
-
 dist: trusty
-services:
-  - xvfb
 
 install: true
-addons:
-  chrome: stable
-  firefox: latest
-  apt:
-    packages:
-      - xvfb
-env:
-  - BROWSER=chrome
-  - BROWSER=firefox
-
-before_script:
-  - 'export DISPLAY=:99.0'
-  # TODO: multiple displays ?
-  - 'export TRAVIS=true'
-  - 'export DEBUG=true'
-  - 'sh -e /etc/init.d/xvfb start'
-  - sleep 3
-
-# TODO:  run 'clean' 
-script: "mvn -P${BROWSER} validate compile test cobertura:cobertura"
-
-after_script:
-  - "sh -e /etc/init.d/xvfb stop"
+script: "mvn clean validate compile test cobertura:cobertura"
 
 cache:
   directories:
