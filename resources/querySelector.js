@@ -155,13 +155,53 @@ var getObject = function getObject(selector, root = document) {
 	if (multiLevelSelectors.length == 1) {
 		return querySelectorDeep(multiLevelSelectors[0], root);
 	} else if (multiLevelSelectors.length == 2) {
-		return querySelectorDeep(multiLevelSelectors[1], querySelectorDeep(multiLevelSelectors[0]).root);
+	    parent = querySelectorDeep(multiLevelSelectors[0]);
+        if (parent === undefined) {
+            parent = querySelectorDeep(multiLevelSelectors[0]).shadowRoot
+        }
+		return querySelectorDeep(multiLevelSelectors[1], parent);
 	} else if (multiLevelSelectors.length == 3) {
-		return querySelectorDeep(multiLevelSelectors[2], querySelectorDeep(multiLevelSelectors[1], querySelectorDeep(multiLevelSelectors[0]).root));
+	    parent_1 = querySelectorDeep(multiLevelSelectors[0]);
+        if (parent_1 === undefined) {
+            parent_1 = querySelectorDeep(multiLevelSelectors[0]).shadowRoot
+        }
+        parent_2 = querySelectorDeep(multiLevelSelectors[1], parent_1);
+        if (parent_2 === undefined) {
+            parent_2 = querySelectorDeep(multiLevelSelectors[1], parent_1).shadowRoot
+        }
+		return querySelectorDeep(multiLevelSelectors[2], parent_2);
 	} else if (multiLevelSelectors.length == 4) {
-		return querySelectorDeep(multiLevelSelectors[3], querySelectorDeep(multiLevelSelectors[2], querySelectorDeep(multiLevelSelectors[1], querySelectorDeep(multiLevelSelectors[0]).root)));
+	    parent_1 = querySelectorDeep(multiLevelSelectors[0]);
+        if (parent_1 === undefined) {
+            parent_1 = querySelectorDeep(multiLevelSelectors[0]).shadowRoot
+        }
+        parent_2 = querySelectorDeep(multiLevelSelectors[1], parent_1);
+        if (parent_2 === undefined) {
+            parent_2 = querySelectorDeep(multiLevelSelectors[1], parent_1).shadowRoot
+        }
+        parent_3 = querySelectorDeep(multiLevelSelectors[2], parent_2);
+        if (parent_3 === undefined) {
+            parent_3 = querySelectorDeep(multiLevelSelectors[2], parent_2).shadowRoot
+        }
+		return querySelectorDeep(multiLevelSelectors[3], parent_3);
 	} else if (multiLevelSelectors.length == 5) {
-		return querySelectorDeep(multiLevelSelectors[4], querySelectorDeep(multiLevelSelectors[3], querySelectorDeep(multiLevelSelectors[2], querySelectorDeep(multiLevelSelectors[1], querySelectorDeep(multiLevelSelectors[0]).root))));
+	    parent_1 = querySelectorDeep(multiLevelSelectors[0]);
+        if (parent_1 === undefined) {
+            parent_1 = querySelectorDeep(multiLevelSelectors[0]).shadowRoot
+        }
+        parent_2 = querySelectorDeep(multiLevelSelectors[1], parent_1);
+        if (parent_2 === undefined) {
+            parent_2 = querySelectorDeep(multiLevelSelectors[1], parent_1).shadowRoot
+        }
+        parent_3 = querySelectorDeep(multiLevelSelectors[2], parent_2);
+        if (parent_3 === undefined) {
+            parent_3 = querySelectorDeep(multiLevelSelectors[2], parent_2).shadowRoot
+        }
+        parent_4 = querySelectorDeep(multiLevelSelectors[3], parent_3);
+        if (parent_4 === undefined) {
+            parent_4 = querySelectorDeep(multiLevelSelectors[3], parent_3).shadowRoot
+        }
+		return querySelectorDeep(multiLevelSelectors[4], parent_4);
 	}
 };
 
@@ -170,15 +210,55 @@ var getAllObject = function getAllObject(selector, root = document) {
     if (multiLevelSelectors.length == 1) {
         return querySelectorAllDeep(multiLevelSelectors[0], root);
     } else if (multiLevelSelectors.length == 2) {
-        return querySelectorAllDeep(multiLevelSelectors[1], querySelectorDeep(multiLevelSelectors[0]).root);
+        parent = querySelectorDeep(multiLevelSelectors[0]);
+        if (parent === undefined) {
+            parent = querySelectorDeep(multiLevelSelectors[0]).shadowRoot
+        }
+        return querySelectorAllDeep(multiLevelSelectors[1], parent);
     } else if (multiLevelSelectors.length == 3) {
-        return querySelectorAllDeep(multiLevelSelectors[2], querySelectorDeep(multiLevelSelectors[1], querySelectorDeep(multiLevelSelectors[0]).root));
+        parent_1 = querySelectorDeep(multiLevelSelectors[0]);
+        if (parent_1 === undefined) {
+            parent_1 = querySelectorDeep(multiLevelSelectors[0]).shadowRoot
+        }
+        parent_2 = querySelectorDeep(multiLevelSelectors[1], parent_1);
+        if (parent_2 === undefined) {
+            parent_2 = querySelectorDeep(multiLevelSelectors[1], parent_1).shadowRoot
+        }
+        return querySelectorAllDeep(multiLevelSelectors[2], parent_2);
     } else if (multiLevelSelectors.length == 4) {
-		return querySelectorAllDeep(multiLevelSelectors[3], querySelectorDeep(multiLevelSelectors[2], querySelectorDeep(multiLevelSelectors[1], querySelectorDeep(multiLevelSelectors[0]).root)));
+        parent_1 = querySelectorDeep(multiLevelSelectors[0]);
+        if (parent_1 === undefined) {
+            parent_1 = querySelectorDeep(multiLevelSelectors[0]).shadowRoot
+        }
+        parent_2 = querySelectorDeep(multiLevelSelectors[1], parent_1);
+        if (parent_2 === undefined) {
+            parent_2 = querySelectorDeep(multiLevelSelectors[1], parent_1).shadowRoot
+        }
+        parent_3 = querySelectorDeep(multiLevelSelectors[2], parent_2);
+        if (parent_3 === undefined) {
+            parent_3 = querySelectorDeep(multiLevelSelectors[2], parent_2).shadowRoot
+        }
+		return querySelectorAllDeep(multiLevelSelectors[3], parent_3);
 	} else if (multiLevelSelectors.length == 5) {
-		return querySelectorAllDeep(multiLevelSelectors[4], querySelectorDeep(multiLevelSelectors[3], querySelectorDeep(multiLevelSelectors[2], querySelectorDeep(multiLevelSelectors[1], querySelectorDeep(multiLevelSelectors[0]).root))));
+	    parent_1 = querySelectorDeep(multiLevelSelectors[0]);
+        if (parent_1 === undefined) {
+            parent_1 = querySelectorDeep(multiLevelSelectors[0]).shadowRoot
+        }
+        parent_2 = querySelectorDeep(multiLevelSelectors[1], parent_1);
+        if (parent_2 === undefined) {
+            parent_2 = querySelectorDeep(multiLevelSelectors[1], parent_1).shadowRoot
+        }
+        parent_3 = querySelectorDeep(multiLevelSelectors[2], parent_2);
+        if (parent_3 === undefined) {
+            parent_3 = querySelectorDeep(multiLevelSelectors[2], parent_2).shadowRoot
+        }
+        parent_4 = querySelectorDeep(multiLevelSelectors[3], parent_3);
+        if (parent_4 === undefined) {
+            parent_4 = querySelectorDeep(multiLevelSelectors[3], parent_3).shadowRoot
+        }
+		return querySelectorAllDeep(multiLevelSelectors[4], parent_4);
 	}
-    
+
 };
 
 function _querySelectorDeep(selector, findMany, root) {
@@ -279,11 +359,11 @@ function collectAllElementsDeep(selector = null, root) {
             }
         }
     };
-	
+
 	if(root.shadowRoot != null) {
 		findAllElements(root.shadowRoot.querySelectorAll('*'));
 	}
-	
+
     findAllElements(root.querySelectorAll('*'));
 
     return selector ? allElements.filter(el => el.matches(selector)) : allElements;
