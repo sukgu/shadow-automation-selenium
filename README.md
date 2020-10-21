@@ -80,7 +80,7 @@ You can use this plugin by adding jar file or by including maven dependency in y
 	<groupId>io.github.sukgu</groupId>
 	<artifactId>automation</artifactId>
 	<version>0.0.12</version>
-  <dependency>
+  </dependency>
   ```
   
   **Gradle**
@@ -139,4 +139,7 @@ If you want to use wait to synchronize your scripts then you should use the impl
   ###### Note: > is used to combine multi level dom structure. So you can combine 5 levels of dom. If you want some more level modify the script and ready to rock.
   
   **Documentation** [Link](https://github.com/sukgu/shadow-automation-selenium/wiki)
+  
+  **Library for Python Selenium** [Link](https://pypi.org/project/pyshadow/)
+  **Git Repo for Python Selenium** [Link](https://github.com/sukgu/pyshadow/)
   
