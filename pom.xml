@@ -4,7 +4,7 @@
 
   <groupId>io.github.sukgu</groupId>
   <artifactId>automation</artifactId>
-  <version>0.0.13</version>
+  <version>0.0.14</version>
 
   <name>automation</name>
   <description>This project automates shadow-dom elements using java selenium</description>
@@ -156,7 +156,7 @@
 		          <serverId>ossrh</serverId>
 		          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
 		          <!-- Set this to true and the release will automatically proceed and sync to Central Repository will follow  -->
-		          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+		          <autoReleaseAfterClose>false</autoReleaseAfterClose>
 	        </configuration>
       </plugin>
 	  <plugin>
