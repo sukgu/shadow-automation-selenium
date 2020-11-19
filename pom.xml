@@ -4,7 +4,7 @@
 
   <groupId>io.github.sukgu</groupId>
   <artifactId>automation</artifactId>
-  <version>0.0.14</version>
+  <version>0.0.14-SNAPSHOT</version>
 
   <name>automation</name>
   <description>This project automates shadow-dom elements using java selenium</description>
