@@ -34,33 +34,84 @@
    
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <hamcrest-all.version>1.3</hamcrest-all.version>
+    <java.version>1.8</java.version>
+    <junit-jupiter.version>5.4.0</junit-jupiter.version>
+    <junit-jupiter-engine-version>5.4.0</junit-jupiter-engine-version>
+    <junit-vintage-engine-version>5.4.0</junit-vintage-engine-version>
+    <junit-platform-launcher.version>1.4.0</junit-platform-launcher.version>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven-surefire-plugin.version>2.20</maven-surefire-plugin.version>
+    <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <selenium.version>3.14.0</selenium.version>
+    <webdrivermanager.version>3.8.1</webdrivermanager.version>
+    <selenium-chrome-driver.version>${selenium.version}</selenium-chrome-driver.version>
+    <selenium-firefox-driver.version>${selenium.version}</selenium-firefox-driver.version>
   </properties>
 
   <dependencies>
+  
+  	<!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest-all -->
+	<dependency>
+	    <groupId>org.hamcrest</groupId>
+	    <artifactId>hamcrest-all</artifactId>
+	    <version>${hamcrest-all.version}</version>
+	    <scope>test</scope>
+	</dependency>
+	  	
+  	<dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-firefox-driver</artifactId>
+      <version>${selenium-firefox-driver.version}</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-chrome-driver</artifactId>
+      <version>${selenium-chrome-driver.version}</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>io.github.bonigarcia</groupId>
+      <artifactId>webdrivermanager</artifactId>
+      <version>${webdrivermanager.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    
     <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
 	<dependency>
         <groupId>org.junit.jupiter</groupId>
         <artifactId>junit-jupiter-api</artifactId>
-        <version>5.4.0</version>
+        <version>${junit-jupiter.version}</version>
         <scope>test</scope>
     </dependency>
     
     <dependency>
 	    <groupId>org.junit.platform</groupId>
 	    <artifactId>junit-platform-launcher</artifactId>
-	    <version>1.4.0</version>
+	    <version>${junit-platform-launcher.version}</version>
 	    <scope>test</scope>
 	</dependency>
 	<dependency>
 	    <groupId>org.junit.jupiter</groupId>
 	    <artifactId>junit-jupiter-engine</artifactId>
-	    <version>5.4.0</version>
+	    <version>${junit-jupiter-engine-version}</version>
 	    <scope>test</scope>
 	</dependency>
 	<dependency>
 	    <groupId>org.junit.vintage</groupId>
 	    <artifactId>junit-vintage-engine</artifactId>
-	    <version>5.4.0</version>
+	    <version>${junit-vintage-engine-version}</version>
 	    <scope>test</scope>
 	</dependency>
 
@@ -69,7 +120,7 @@
 	<dependency>
 	    <groupId>org.seleniumhq.selenium</groupId>
 	    <artifactId>selenium-api</artifactId>
-	    <version>3.14.0</version>
+	    <version>${selenium.version}</version>
 	    <scope>compile</scope>
 	    <optional>true</optional>
 	</dependency>
@@ -78,7 +129,7 @@
 	<dependency>
 	    <groupId>org.seleniumhq.selenium</groupId>
 	    <artifactId>selenium-server</artifactId>
-	    <version>3.14.0</version>
+	    <version>${selenium.version}</version>
 	    <scope>compile</scope>
 	    <optional>true</optional>
 	</dependency>
@@ -87,7 +138,7 @@
 	<dependency>
 	    <groupId>org.seleniumhq.selenium</groupId>
 	    <artifactId>selenium-java</artifactId>
-	    <version>3.14.0</version>
+	    <version>${selenium.version}</version>
 	    <scope>compile</scope>
 	    <optional>true</optional>
 	</dependency>
@@ -107,6 +158,40 @@
   
   <build>
 	  <plugins>
+	  
+	  	<plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-surefire-plugin</artifactId>
+	        <version>${maven-surefire-plugin.version}</version>
+	        <executions>
+	          <execution>
+	            <configuration>
+	              <systemPropertyVariables>
+	                <webdriver.driver>${browser.name}</webdriver.driver>
+	              </systemPropertyVariables>
+	            </configuration>
+	          </execution>
+	        </executions>
+	    </plugin>
+	    
+	    <plugin>
+		    <groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-compiler-plugin</artifactId>
+		    <version>${maven-compiler-plugin.version}</version>
+		    <goals>
+		      <goal>compile</goal>
+		    </goals>
+		    <configuration>
+		      <source>${java.version}</source>
+		      <target>${java.version}</target>
+		      <encoding>${project.build.sourceEncoding}</encoding>
+		      <compilerArgument>-Xlint:all</compilerArgument>
+		      <compilerArgument>-Xlint:-processing</compilerArgument>
+		      <showWarnings>true</showWarnings>
+		      <showDeprecation>true</showDeprecation>
+		    </configuration>
+		</plugin>
+	    
 	   	<plugin>
 		    <groupId>org.apache.maven.plugins</groupId>
 		    <artifactId>maven-source-plugin</artifactId>
@@ -120,7 +205,7 @@
 			     </execution>
 		    </executions>
 	   </plugin>
-	   <plugin>
+	   <!-- <plugin>
 		    <groupId>org.apache.maven.plugins</groupId>
 		    <artifactId>maven-javadoc-plugin</artifactId>
 		    <version>2.9.1</version>
@@ -132,7 +217,7 @@
 				      </goals>
 			     </execution>
 		    </executions>
-	   </plugin>
+	   </plugin> -->
 	   <plugin>
 		    <groupId>org.apache.maven.plugins</groupId>
 		    <artifactId>maven-gpg-plugin</artifactId>
@@ -194,9 +279,30 @@
         </resource>
       </resources>
 	  
-	  
-	  
   </build>
   
+  <profiles>
+    <profile>
+      <id>chrome</id>
+      <properties>
+        <browser.name>chrome</browser.name>
+      </properties>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+    </profile>
+    <profile>
+      <id>edge</id>
+      <properties>
+        <browser.name>edge</browser.name>
+      </properties>
+    </profile>
+    <profile>
+      <id>firefox</id>
+      <properties>
+        <browser.name>firefox</browser.name>
+      </properties>
+    </profile>
+  </profiles>
   
 </project>

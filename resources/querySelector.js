@@ -42,10 +42,10 @@ var getChildElements = function getChildElements(object) {
 };
 
 var getSiblingElements = function getSiblingElements(object) {
-	if(object.nodeName=="#document-fragment") {
+	if(object.nodeName == "#document-fragment") {
 		return object.host.children;
 	} else {
-		return object.siblings();
+	    return object.parentNode.children;
 	}
 };
 
