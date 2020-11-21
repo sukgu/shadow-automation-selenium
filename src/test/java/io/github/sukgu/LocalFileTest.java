@@ -25,7 +25,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class LocalFileTest {
 
-	private static boolean isCIBuild = true; //checkEnvironment();
+	private static boolean isCIBuild = checkEnvironment();
 
 	private static final boolean debug = Boolean
 			.parseBoolean(getPropertyEnv("DEBUG", "false"));
