@@ -64,8 +64,9 @@ public class ShadowTest {
 	}
 
 	@Test
-	public void testApp() {
-
+	public void testHighlight() {
+		WebElement element = shadow.findElement(urlLocator);
+		shadow.highlight(element, "red", 3000);
 	}
 
 	@Test
