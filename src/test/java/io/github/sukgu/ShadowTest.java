@@ -64,9 +64,15 @@ public class ShadowTest {
 	}
 
 	@Test
-	public void testHighlight() {
+	public void testHighlightWithGrennColor() {
 		WebElement element = shadow.findElement(urlLocator);
-		shadow.highlight(element, "red", 3000);
+		shadow.highlight(element, "green", 3000);
+	}
+	
+	@Test
+	public void testHighlightWithDefaultColor() {
+		WebElement element = shadow.findElement(urlLocator);
+		shadow.highlight(element);
 	}
 
 	@Test

@@ -1,6 +1,5 @@
 package io.github.sukgu;
 
-import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -474,6 +473,20 @@ public class Shadow {
 	
 	public void highlight(WebElement element, String color, Integer timeInMiliSeconds) {
 		long time = timeInMiliSeconds == null ? 4000 : timeInMiliSeconds;
+		String border = "3";
+	    String originalStyle = element.getAttribute("style");
+	    applyStyle(element, String.format("border: %spx solid %s;", border, color));
+	    try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	    applyStyle(element, originalStyle);
+	}
+	
+	public void highlight(WebElement element) {
+		String color = "red";
+		long time = 3000;
 		String border = "3";
 	    String originalStyle = element.getAttribute("style");
 	    applyStyle(element, String.format("border: %spx solid %s;", border, color));
