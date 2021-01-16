@@ -134,6 +134,59 @@ var selectDropdown = function selectDropdown(label, root=document) {
 	}
 };
 
+var evaluateAllDeep = function evaluateAllDeep(selector, root) {
+	if(root==undefined) {
+		return collectAllElementsEvaluateDeep(selector, document);
+	} else {
+		return collectAllElementsEvaluateDeep(selector, root);
+	}
+};
+
+var evaluateDeep = function evaluateDeep(selector, root) {
+	if(root==undefined) {
+		return collectElementEvaluateDeep(selector, document);
+	} else {
+		return collectElementEvaluateDeep(selector, root);
+	}
+};
+
+var getXPathObject = function getXPathObject(selector, root = document) {
+	while (selector.indexOf('/')==0 && selector.search('/') != -1) {
+    	selector = selector.replace('/','');
+    }
+	splitedSelectors = selector.split('//');
+	if (splitedSelectors.length == 1) {
+		return evaluateDeep(selector, root);
+	}
+	if (splitedSelectors.length == 2) {
+		parent = evaluateDeep(splitedSelectors[0], root);
+	    return evaluateDeep(splitedSelectors[1], parent);
+	}
+	if (splitedSelectors.length == 3) {
+		parent = evaluateDeep(splitedSelectors[0], root);
+		parent_1 = evaluateDeep(splitedSelectors[1], parent);
+	    return evaluateDeep(splitedSelectors[2], parent_1);
+	}
+	if (splitedSelectors.length == 4) {
+		parent = evaluateDeep(splitedSelectors[0], root);
+	    return evaluateDeep(splitedSelectors[1], parent);
+	}
+	if (splitedSelectors.length == 5) {
+		parent = evaluateDeep(splitedSelectors[0], root);
+	    return evaluateDeep(splitedSelectors[1], parent);
+	}
+	if (splitedSelectors.length == 6) {
+		parent = evaluateDeep(splitedSelectors[0], root);
+	    return evaluateDeep(splitedSelectors[1], parent);
+	}
+	
+	
+}
+
+var getXPathAllObject = function getXPathAllObject(selector, root = document) {
+	
+}
+
 var querySelectorAllDeep = function querySelectorAllDeep(selector, root) {
 	if(root==undefined) {
 		return _querySelectorDeep(selector, true, document);
@@ -280,7 +333,7 @@ function _querySelectorDeep(selector, findMany, root) {
                     .replace(/\s*([>+~]+)\s*/g, '$1'), ' ')
                 .filter((entry) => !!entry);
             const possibleElementsIndex = splitSelector.length - 1;
-            const possibleElements = collectAllElementsDeep(splitSelector[possibleElementsIndex], root);
+            const possibleElements = collectAllElementsQuerySelectorDeep(splitSelector[possibleElementsIndex], root);
             const findElements = findMatchingElement(splitSelector, possibleElementsIndex, root);
             if (findMany) {
                 acc = acc.concat(possibleElements.filter(findElements));
@@ -348,7 +401,7 @@ function findParentOrHost(element, root) {
 }
 
 
-function collectAllElementsDeep(selector = null, root) {
+function collectAllElementsQuerySelectorDeep(selector = null, root) {
     const allElements = [];
 
     const findAllElements = function(nodes) {
@@ -367,4 +420,78 @@ function collectAllElementsDeep(selector = null, root) {
     findAllElements(root.querySelectorAll('*'));
 
     return selector ? allElements.filter(el => el.matches(selector)) : allElements;
+}
+
+
+function collectAllElementsEvaluateDeep(selector, root) {
+    var allElements = [];
+    while (selector.indexOf('/')==0 && selector.search('/') != -1) {
+    	selector = selector.replace('/','');
+    }
+    
+    allElementsInDocument = collectAllElementsQuerySelectorDeep('*', root);
+
+    const findAllElements = function(nodes) {
+    	var item;
+    	
+        for (i=0; i<nodes.length; i++) {
+        	test_node = document.createElement('test-node');
+        	parent_node = nodes[i].parentNode;
+        	if (parent_node.nodeName != 'HTML' && parent_node.nodeName != '#document') {
+            	test_node.appendChild(nodes[i].cloneNode());
+            	elements = document.evaluate(".//"+selector, test_node, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE);
+            	while ((element=elements.iterateNext()) != null) {
+                	allElements.push(nodes[i]);
+                }
+        	}
+        	
+        	elements = document.evaluate(".//"+selector, nodes[i], null, XPathResult.ORDERED_NODE_ITERATOR_TYPE);
+            while ((element=elements.iterateNext()) != null) {
+            	allElements.push(element);
+            }
+        }
+    };
+
+    findAllElements(allElementsInDocument);
+
+    return allElements;
+}
+
+
+function collectElementEvaluateDeep(selector, root) {
+    var element = null;
+    while (selector.indexOf('/')==0 && selector.search('/') != -1) {
+    	selector = selector.replace('/','');
+    }
+    
+    allElementsInDocument = collectAllElementsQuerySelectorDeep('*', root);
+
+    const findAllElements = function(nodes) {
+    	var item;
+        for (i=0; i<nodes.length; i++) {
+        	test_node = document.createElement('test-node');
+        	parent_node = nodes[i].parentNode;
+        	if (parent_node != null && parent_node.nodeName != 'HTML' && parent_node.nodeName != '#document') {
+            	debugger;
+            	console.log(i)
+        		test_node.append(nodes[i].cloneNode());
+            	elements = document.evaluate(".//"+selector, test_node, null, XPathResult.FIRST_ORDERED_NODE_TYPE);
+            	value = elements.singleNodeValue;
+            	if (value!=null) {
+            		element = nodes[i];
+            		break;
+            	}
+        	}
+        	elements = document.evaluate(".//"+selector, nodes[i], null, XPathResult.FIRST_ORDERED_NODE_TYPE);
+        	value = elements.singleNodeValue;
+        	if (value!=null) {
+        		element = elements.singleNodeValue;
+        		break;
+        	}
+        }
+    };
+
+    findAllElements(allElementsInDocument);
+
+    return element;
 }
