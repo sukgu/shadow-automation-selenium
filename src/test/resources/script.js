@@ -15,6 +15,12 @@
     var e = document.createElement("h2");
     e.textContent = "Inside Shadow DOM";
     e.id = "inside";
+    e.className = "inside";
+    root.appendChild(e);
+    var e = document.createElement("h2");
+    e.textContent = "Inside Shadow DOM";
+    e.id = "inside";
+    e.className = "inside1";
     root.appendChild(e);
     
     var root2 = data.attachShadow({mode: "open"});
