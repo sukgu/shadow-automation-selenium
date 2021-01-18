@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<!-- origin: https://www.html5rocks.com/en/tutorials/webcomponents/shadowdom/ -->
+  <head>
+    <link rel="stylesheet" href="style.css">
+    
+  </head>
+  <body>
+  <div id="parent">
+  	<input type="range">
+    <button class="test">Hello Dom!</button>
+    <div id="divid">Hello DIV</div>
+    <script>
+      var button = document.querySelector("button.test");
+      var body = document.querySelector("body");
+      var div_parent = body.attachShadow({mode: "open"});
+      div_parent.append(document.querySelector("div#parent"));
+      button.onclick = function(){
+    	  var root = div_parent.querySelector("#divid").attachShadow({mode: "open"});
+    	  var divs = document.createElement("div");
+    	  divs.textContent = "node";
+    	  divs.id = "node";
+          divs.innerHTML = "<p>hello from shadow Root</p>";
+          root.appendChild(divs);
+      };
+     </script>
+   </div>
+  </body>
+</html>

@@ -1,10 +1,25 @@
 language: java
-jdk: oraclejdk8
+jdk: openjdk8
 sudo: false
 dist: trusty
+services:
+  - xvfb
 
 install: true
+addons:
+  chrome: stable
+  apt:
+    packages:
+      - xvfb
+before_script:
+  - "export DISPLAY=:99.0"
+  - "export TRAVIS=true"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3
+
 script: "mvn clean validate compile test cobertura:cobertura"
+after_script:
+  - "sh -e /etc/init.d/xvfb stop"
 
 cache:
   directories:
