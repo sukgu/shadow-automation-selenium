@@ -135,6 +135,13 @@ You can use this plugin by adding jar file or by including maven dependency in y
     String text = element.getText();
   ```
   
+  ## Note:
+
+* 🟩 The findElementByXPath or findElementsByXPath takes XPath only with double slash for intermediate selections
+* 🟩 It means it only uses the relative search.
+* 🟩 //div[@id='container']//h2[text()='Inside Shadow DOM'] is **correct**
+* 🟥 //div[@id='container']/h2[text()='Inside Shadow DOM'] is **incorrect**
+  
   ## Wait: Implicit and Explicit
 If you want to use wait to synchronize your scripts then you should use the implicit or explicit wait feature.
 
