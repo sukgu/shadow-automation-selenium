@@ -198,7 +198,7 @@ var getXPathObject = function getXPathObject(selector, root = document) {
 	    return evaluateDeep(splitedSelectors[6], parent_5);
 	}
 	
-}
+};
 
 var getXPathAllObject = function getXPathAllObject(selector, root = document) {
 	while (selector.indexOf('/')==0 && selector.search('/') != -1) {
@@ -247,7 +247,7 @@ var getXPathAllObject = function getXPathAllObject(selector, root = document) {
 	    parent_5 = evaluateDeep(splitedSelectors[5], parent_4);
 	    return evaluateAllDeep(splitedSelectors[6], parent_5);
 	}
-}
+};
 
 var querySelectorAllDeep = function querySelectorAllDeep(selector, root) {
 	if(root==undefined) {
