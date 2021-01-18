@@ -169,22 +169,84 @@ var getXPathObject = function getXPathObject(selector, root = document) {
 	}
 	if (splitedSelectors.length == 4) {
 		parent = evaluateDeep(splitedSelectors[0], root);
-	    return evaluateDeep(splitedSelectors[1], parent);
+		parent_1 = evaluateDeep(splitedSelectors[1], parent);
+	    parent_2 = evaluateDeep(splitedSelectors[2], parent_1);
+	    return evaluateDeep(splitedSelectors[3], parent_2);
 	}
 	if (splitedSelectors.length == 5) {
 		parent = evaluateDeep(splitedSelectors[0], root);
-	    return evaluateDeep(splitedSelectors[1], parent);
+		parent_1 = evaluateDeep(splitedSelectors[1], parent);
+	    parent_2 = evaluateDeep(splitedSelectors[2], parent_1);
+	    parent_3 = evaluateDeep(splitedSelectors[3], parent_2);
+	    return evaluateDeep(splitedSelectors[4], parent_3);
 	}
 	if (splitedSelectors.length == 6) {
 		parent = evaluateDeep(splitedSelectors[0], root);
-	    return evaluateDeep(splitedSelectors[1], parent);
+		parent_1 = evaluateDeep(splitedSelectors[1], parent);
+	    parent_2 = evaluateDeep(splitedSelectors[2], parent_1);
+	    parent_3 = evaluateDeep(splitedSelectors[3], parent_2);
+	    parent_4 = evaluateDeep(splitedSelectors[4], parent_3);
+	    return evaluateDeep(splitedSelectors[5], parent_4);
 	}
-	
+	if (splitedSelectors.length == 7) {
+		parent = evaluateDeep(splitedSelectors[0], root);
+		parent_1 = evaluateDeep(splitedSelectors[1], parent);
+	    parent_2 = evaluateDeep(splitedSelectors[2], parent_1);
+	    parent_3 = evaluateDeep(splitedSelectors[3], parent_2);
+	    parent_4 = evaluateDeep(splitedSelectors[4], parent_3);
+	    parent_5 = evaluateDeep(splitedSelectors[5], parent_4);
+	    return evaluateDeep(splitedSelectors[6], parent_5);
+	}
 	
 }
 
 var getXPathAllObject = function getXPathAllObject(selector, root = document) {
-	
+	while (selector.indexOf('/')==0 && selector.search('/') != -1) {
+    	selector = selector.replace('/','');
+    }
+	splitedSelectors = selector.split('//');
+	if (splitedSelectors.length == 1) {
+		return evaluateAllDeep(selector, root);
+	}
+	if (splitedSelectors.length == 2) {
+		parent = evaluateDeep(splitedSelectors[0], root);
+	    return evaluateAllDeep(splitedSelectors[1], parent);
+	}
+	if (splitedSelectors.length == 3) {
+		parent = evaluateDeep(splitedSelectors[0], root);
+		parent_1 = evaluateDeep(splitedSelectors[1], parent);
+	    return evaluateAllDeep(splitedSelectors[2], parent_1);
+	}
+	if (splitedSelectors.length == 4) {
+		parent = evaluateDeep(splitedSelectors[0], root);
+		parent_1 = evaluateDeep(splitedSelectors[1], parent);
+	    parent_2 = evaluateDeep(splitedSelectors[2], parent_1);
+	    return evaluateAllDeep(splitedSelectors[3], parent_2);
+	}
+	if (splitedSelectors.length == 5) {
+		parent = evaluateDeep(splitedSelectors[0], root);
+		parent_1 = evaluateDeep(splitedSelectors[1], parent);
+	    parent_2 = evaluateDeep(splitedSelectors[2], parent_1);
+	    parent_3 = evaluateDeep(splitedSelectors[3], parent_2);
+	    return evaluateAllDeep(splitedSelectors[4], parent_3);
+	}
+	if (splitedSelectors.length == 6) {
+		parent = evaluateDeep(splitedSelectors[0], root);
+		parent_1 = evaluateDeep(splitedSelectors[1], parent);
+	    parent_2 = evaluateDeep(splitedSelectors[2], parent_1);
+	    parent_3 = evaluateDeep(splitedSelectors[3], parent_2);
+	    parent_4 = evaluateDeep(splitedSelectors[4], parent_3);
+	    return evaluateAllDeep(splitedSelectors[5], parent_4);
+	}
+	if (splitedSelectors.length == 7) {
+		parent = evaluateDeep(splitedSelectors[0], root);
+		parent_1 = evaluateDeep(splitedSelectors[1], parent);
+	    parent_2 = evaluateDeep(splitedSelectors[2], parent_1);
+	    parent_3 = evaluateDeep(splitedSelectors[3], parent_2);
+	    parent_4 = evaluateDeep(splitedSelectors[4], parent_3);
+	    parent_5 = evaluateDeep(splitedSelectors[5], parent_4);
+	    return evaluateAllDeep(splitedSelectors[6], parent_5);
+	}
 }
 
 var querySelectorAllDeep = function querySelectorAllDeep(selector, root) {
