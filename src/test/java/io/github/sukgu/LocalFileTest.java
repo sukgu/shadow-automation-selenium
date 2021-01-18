@@ -13,7 +13,6 @@ import java.util.Map;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import org.openqa.selenium.WebDriver;
@@ -25,8 +24,8 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class LocalFileTest {
 
-	private static boolean isCIBuild = checkEnvironment();
-
+	//private static boolean isCIBuild = checkEnvironment();
+	private static boolean isCIBuild = true;
 	private static final boolean debug = Boolean
 			.parseBoolean(getPropertyEnv("DEBUG", "false"));
 
@@ -63,8 +62,8 @@ public class LocalFileTest {
 
 	@Test
 	public void test1() {
-		System.out.println(getPageContent("index.html"));
-		driver.navigate().to(getPageContent("index.html"));
+		String url = getPageContent("index.html");
+		driver.get(url);
 		WebElement element = shadow.findElement("#container");
 		List<WebElement> elements = shadow.getAllShadowElement(element, "#inside");
 		assertThat(elements, notNullValue());
@@ -90,7 +89,6 @@ public class LocalFileTest {
 		err.println(elements);
 	}
 
-	@Disabled("Disabled until com.google.common.collect.Maps$TransformedEntriesMap cannot be cast to org.openqa.selenium.WebElement is addressed")
 	@Test
 	public void test3() {
 		driver.navigate().to(getPageContent("button.html"));
@@ -98,11 +96,10 @@ public class LocalFileTest {
 		shadow.scrollTo(element);
 		assertThat(element, notNullValue());
 		element.click();
-		WebElement p_element = shadow.findElement("div#divid>div#node>p");
+		WebElement p_element = shadow.findElement("body>div#divid>div#node>p");
 		WebElement body = shadow.findElement("body");
 		err.println("outerHTML: " + shadow.getAttribute(p_element, "outerHTML"));
 		List<WebElement> elements = shadow.getChildElements(body);
-		System.out.println(elements);
 		assertThat(elements, notNullValue());
 		err.println(elements);
 
@@ -110,16 +107,62 @@ public class LocalFileTest {
 		err.println(element);
 	}
 
-	@Disabled("Disabled until getShadowElement javascript error: Cannot read property 'querySelector' of null is addressed")
 	@Test
 	public void test4() {
-
 		driver.navigate().to(getPageContent("button.html"));
 		WebElement parent = shadow.findElement("body");
 		assertThat(parent, notNullValue());
-		// Cannot read property 'querySelector' of null
 		WebElement element = shadow.getShadowElement(parent, "button");
 		assertThat(element, notNullValue());
+	}
+	
+	@Test
+	public void testXPath() {
+		driver.navigate().to(getPageContent("index.html"));
+		WebElement element = shadow.findElementByXPath("//body");
+		assertThat(element, notNullValue());
+	}
+	
+	@Test
+	public void testXPathWithIndex() {
+		driver.navigate().to(getPageContent("index.html"));
+		WebElement element = shadow.findElementByXPath("//body//div[1]");
+		assertThat(element, notNullValue());
+	}
+	
+	@Test
+	public void testXPathWithText() {
+		driver.navigate().to(getPageContent("index.html"));
+		WebElement element = shadow.findElementByXPath("//h3[text()='some DOM element']");
+		assertThat(element, notNullValue());
+	}
+	
+	@Test
+	public void testXPathWithTextInsideShadow() {
+		driver.navigate().to(getPageContent("index.html"));
+		WebElement element = shadow.findElementByXPath("//div[@id='container']//h2[text()='Inside Shadow DOM']");
+		assertThat(element, notNullValue());
+	}
+	
+	@Test
+	public void testAllElementsXPath() {
+		driver.navigate().to(getPageContent("index.html"));
+		WebElement element = shadow.findElementByXPath("//div[@id='container']//h2[text()='Inside Shadow DOM']");
+		assertThat(element, notNullValue());
+	}
+	
+	@Test
+	public void testAllElementsXPathWithText() {
+		driver.navigate().to(getPageContent("index.html"));
+		List<WebElement> element = shadow.findElementsByXPath("//div[@id='container']//h2[text()='Inside Shadow DOM']");
+		assert element.size()==2;
+	}
+	
+	@Test
+	public void testAllElementsXPathWithId() {
+		driver.navigate().to(getPageContent("index.html"));
+		List<WebElement> element = shadow.findElementsByXPath("//div[@id='container']//h2[@id='inside']");
+		assert element.size()==2;
 	}
 
 	@AfterAll
@@ -171,8 +214,8 @@ public class LocalFileTest {
 		try {
 			URI uri = LocalFileTest.class.getClassLoader().getResource(pagename)
 					.toURI();
-			err.println("Testing local file: " + uri.toString());
-			return uri.toString();
+			err.println("Testing local file: " + uri.getPath().toString());
+			return "file://"+uri.getPath().toString();
 		} catch (URISyntaxException e) { // NOTE: multi-catch statement is not
 			// supported in -source 1.6
 			throw new RuntimeException(e);

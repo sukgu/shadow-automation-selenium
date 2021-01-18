@@ -7,15 +7,12 @@ import static org.hamcrest.Matchers.greaterThan;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-
 // https://www.baeldung.com/junit-before-beforeclass-beforeeach-beforeall
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -32,17 +29,10 @@ public class ShadowTest {
 	private static final String urlLocator = "vt-ui-shell vt-ui-button[data-route='url']";
 	private static final boolean debug = Boolean
 			.parseBoolean(getPropertyEnv("DEBUG", "false"));;
-	private static boolean isCIBuild = checkEnvironment();
-
 	private static WebDriver driver = null;
 	private static Shadow shadow = null;
 	private static String browser = getPropertyEnv("BROWSER",
 			getPropertyEnv("webdriver.driver", "chrome"));
-	// export BROWSER=firefox or
-	// use -Pfirefox to override
-	private static final boolean headless = Boolean
-			.parseBoolean(getPropertyEnv("HEADLESS", "false"));
-
 	@BeforeAll
 	public static void injectShadowJS() {
 		err.println("Launching " + browser);
