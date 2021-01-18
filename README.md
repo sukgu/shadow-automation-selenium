@@ -87,17 +87,17 @@ You can use this plugin by adding jar file or by including maven dependency in y
   <dependency>
 	<groupId>io.github.sukgu</groupId>
 	<artifactId>automation</artifactId>
-	<version>0.0.12</version>
+	<version>0.1.0</version>
   </dependency>
   ```
   
   **Gradle**
   ```
-  implementation 'io.github.sukgu:automation:0.0.12'
+  implementation 'io.github.sukgu:automation:0.1.0'
   ```
   
   
- You can download the jar file from repository http://central.maven.org/maven2/io/github/sukgu/automation/0.0.12/automation-0.0.12.jar
+ You can download the jar file from repository http://central.maven.org/maven2/io/github/sukgu/automation/0.1.0/automation-0.1.0.jar
   
 ## Selector:
   ###### Examples: 
