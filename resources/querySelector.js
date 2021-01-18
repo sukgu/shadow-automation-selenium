@@ -1,5 +1,9 @@
 var getShadowElement = function getShadowElement(object,selector) {
-	return object.shadowRoot.querySelector(selector);
+	if (object.shadowRoot !=null) {
+		return object.shadowRoot.querySelector(selector);
+	} else {
+		return null;
+	}
 };
 
 var getAllShadowElement = function getAllShadowElement(object,selector) {
@@ -34,11 +38,16 @@ var getParentElement = function getParentElement(object) {
 };
 
 var getChildElements = function getChildElements(object) {
+	elements = null;
 	if(object.nodeName=="#document-fragment") {
-		return object.children;
+		elements = object.children;
 	} else {
-		return object.childNodes;
+		elements = object.children;
 	}
+	if (object.shadowRoot!=null && elements.length==0){
+		elements = object.shadowRoot.children;
+	}
+	return elements;
 };
 
 var getSiblingElements = function getSiblingElements(object) {
@@ -499,9 +508,13 @@ function collectAllElementsEvaluateDeep(selector, root) {
         for (i=0; i<nodes.length; i++) {
         	test_node = document.createElement('test-node');
         	parent_node = nodes[i].parentNode;
-        	if (parent_node.nodeName != 'HTML' && parent_node.nodeName != '#document') {
-            	test_node.appendChild(nodes[i].cloneNode());
-            	elements = document.evaluate(".//"+selector, test_node, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE);
+        	if (parent_node != null && parent_node.nodeName != 'HTML' && parent_node.nodeName != '#document') {
+        		cloned_node = nodes[i].cloneNode();
+        		if (nodes[i].textContent != "") {
+        			cloned_node.textContent = nodes[i].textContent; 
+        		}
+        		test_node.append(cloned_node);
+            	elements = document.evaluate('.//'+selector, test_node, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE);
             	while ((element=elements.iterateNext()) != null) {
                 	allElements.push(nodes[i]);
                 }
@@ -534,17 +547,19 @@ function collectElementEvaluateDeep(selector, root) {
         	test_node = document.createElement('test-node');
         	parent_node = nodes[i].parentNode;
         	if (parent_node != null && parent_node.nodeName != 'HTML' && parent_node.nodeName != '#document') {
-            	debugger;
-            	console.log(i)
-        		test_node.append(nodes[i].cloneNode());
-            	elements = document.evaluate(".//"+selector, test_node, null, XPathResult.FIRST_ORDERED_NODE_TYPE);
+        		cloned_node = nodes[i].cloneNode();
+        		if (nodes[i].textContent != "") {
+        			cloned_node.textContent = nodes[i].textContent; 
+        		}
+        		test_node.append(cloned_node);
+            	elements = document.evaluate('.//'+selector, test_node, null, XPathResult.FIRST_ORDERED_NODE_TYPE);
             	value = elements.singleNodeValue;
             	if (value!=null) {
             		element = nodes[i];
             		break;
             	}
         	}
-        	elements = document.evaluate(".//"+selector, nodes[i], null, XPathResult.FIRST_ORDERED_NODE_TYPE);
+        	elements = document.evaluate('.//'+selector, nodes[i], null, XPathResult.FIRST_ORDERED_NODE_TYPE);
         	value = elements.singleNodeValue;
         	if (value!=null) {
         		element = elements.singleNodeValue;
