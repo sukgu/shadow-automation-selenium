@@ -1,7 +1,7 @@
 # Shadow root DOM automation using selenium
 
-[![Build Status](https://travis-ci.org/sukgu/shadow-automation-selenium.svg?branch=dev)](https://travis-ci.org/sukgu/shadow-automation-selenium "Travis CI")
-[![codecov](https://codecov.io/gh/sukgu/shadow-automation-selenium/branch/dev/graph/badge.svg)](https://codecov.io/gh/sukgu/shadow-automation-selenium)
+[![Build Status](https://travis-ci.org/sukgu/shadow-automation-selenium.svg?branch=master)](https://travis-ci.org/sukgu/shadow-automation-selenium "Travis CI")
+[![codecov](https://codecov.io/gh/sukgu/shadow-automation-selenium/branch/master/graph/badge.svg)](https://codecov.io/gh/sukgu/shadow-automation-selenium)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.sukgu/automation.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.sukgu%22%20AND%20a:%22automation%22)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
@@ -28,6 +28,14 @@ You can use this plugin by adding jar file or by including maven dependency in y
   `WebElement findElement(WebElement parent, String cssSelector)` : use this if you want to find a single elements from parent object DOM
   
   `List<WebElement> findElements(WebElement parent, String cssSelector)` : use this if you want to find all elements from parent object DOM
+  
+  `WebElement findElementByXPath(String XPath)` : use this method if want single element from DOM
+
+  `List<WebElement> findElementsByXPath(String XPath)` : use this if you want to find all elements from DOM
+  
+  `WebElement findElementByXPath(WebElement parent, String XPath)` : use this if you want to find a single elements from parent object DOM
+  
+  `List<WebElement> findElementsByXPath(WebElement parent, String XPath)` : use this if you want to find all elements from parent object DOM
   
    `void setImplicitWait(int seconds)` : use this method for implicit wait
     
