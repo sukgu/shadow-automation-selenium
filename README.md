@@ -79,6 +79,10 @@ You can use this plugin by adding jar file or by including maven dependency in y
   
   `void scrollTo(WebElement element)` : use this to scroll to web element.
   
+  `public void highlight(WebElement element, String color, Integer timeInMiliSeconds)` : highlight method.
+  
+  `public void highlight(WebElement element)` : highlight method highlight in red color.
+  
 ###### How to use this plugin:
   You will have to dependency in your project.
   
@@ -135,12 +139,13 @@ You can use this plugin by adding jar file or by including maven dependency in y
     String text = element.getText();
   ```
   
-  ## Note:
+  ## Note for XPath:
 
 * 🟩 The findElementByXPath or findElementsByXPath takes XPath only with double slash for intermediate selections
 * 🟩 It means it only uses the relative search.
 * 🟩 //div[@id='container']//h2[text()='Inside Shadow DOM'] is **correct**
 * 🟥 //div[@id='container']/h2[text()='Inside Shadow DOM'] is **incorrect**
+* 🟩 For examples on XPath follow the [link](https://github.com/sukgu/shadow-automation-selenium/wiki/Examples-for-XPath-selector)
   
   ## Wait: Implicit and Explicit
 If you want to use wait to synchronize your scripts then you should use the implicit or explicit wait feature.
