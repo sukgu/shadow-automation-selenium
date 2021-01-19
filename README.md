@@ -1,7 +1,7 @@
 # Shadow root DOM automation using selenium
 
-[![Build Status](https://travis-ci.org/sukgu/shadow-automation-selenium.svg?branch=dev)](https://travis-ci.org/sukgu/shadow-automation-selenium "Travis CI")
-[![codecov](https://codecov.io/gh/sukgu/shadow-automation-selenium/branch/dev/graph/badge.svg)](https://codecov.io/gh/sukgu/shadow-automation-selenium)
+[![Build Status](https://travis-ci.org/sukgu/shadow-automation-selenium.svg?branch=master)](https://travis-ci.org/sukgu/shadow-automation-selenium "Travis CI")
+[![codecov](https://codecov.io/gh/sukgu/shadow-automation-selenium/branch/master/graph/badge.svg)](https://codecov.io/gh/sukgu/shadow-automation-selenium)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.sukgu/automation.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.sukgu%22%20AND%20a:%22automation%22)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
@@ -28,6 +28,14 @@ You can use this plugin by adding jar file or by including maven dependency in y
   `WebElement findElement(WebElement parent, String cssSelector)` : use this if you want to find a single elements from parent object DOM
   
   `List<WebElement> findElements(WebElement parent, String cssSelector)` : use this if you want to find all elements from parent object DOM
+  
+  `WebElement findElementByXPath(String XPath)` : use this method if want single element from DOM
+
+  `List<WebElement> findElementsByXPath(String XPath)` : use this if you want to find all elements from DOM
+  
+  `WebElement findElementByXPath(WebElement parent, String XPath)` : use this if you want to find a single elements from parent object DOM
+  
+  `List<WebElement> findElementsByXPath(WebElement parent, String XPath)` : use this if you want to find all elements from parent object DOM
   
    `void setImplicitWait(int seconds)` : use this method for implicit wait
     
@@ -71,6 +79,10 @@ You can use this plugin by adding jar file or by including maven dependency in y
   
   `void scrollTo(WebElement element)` : use this to scroll to web element.
   
+  `public void highlight(WebElement element, String color, Integer timeInMiliSeconds)` : highlight method.
+  
+  `public void highlight(WebElement element)` : highlight method highlight in red color.
+  
 ###### How to use this plugin:
   You will have to dependency in your project.
   
@@ -79,17 +91,17 @@ You can use this plugin by adding jar file or by including maven dependency in y
   <dependency>
 	<groupId>io.github.sukgu</groupId>
 	<artifactId>automation</artifactId>
-	<version>0.0.12</version>
+	<version>0.1.0</version>
   </dependency>
   ```
   
   **Gradle**
   ```
-  implementation 'io.github.sukgu:automation:0.0.12'
+  implementation 'io.github.sukgu:automation:0.1.0'
   ```
   
   
- You can download the jar file from repository http://central.maven.org/maven2/io/github/sukgu/automation/0.0.12/automation-0.0.12.jar
+ You can download the jar file from repository http://central.maven.org/maven2/io/github/sukgu/automation/0.1.0/automation-0.1.0.jar
   
 ## Selector:
   ###### Examples: 
@@ -126,6 +138,14 @@ You can use this plugin by adding jar file or by including maven dependency in y
 	WebElement element = shadow.findElement("properties-page#settingsPage>textarea#textarea");
     String text = element.getText();
   ```
+  
+  ## Note for XPath:
+
+* 🟩 The findElementByXPath or findElementsByXPath takes XPath only with double slash for intermediate selections
+* 🟩 It means it only uses the relative search.
+* 🟩 //div[@id='container']//h2[text()='Inside Shadow DOM'] is **correct**
+* 🟥 //div[@id='container']/h2[text()='Inside Shadow DOM'] is **incorrect**
+* 🟩 For examples on XPath follow the [link](https://github.com/sukgu/shadow-automation-selenium/wiki/Examples-for-XPath-selector)
   
   ## Wait: Implicit and Explicit
 If you want to use wait to synchronize your scripts then you should use the implicit or explicit wait feature.
