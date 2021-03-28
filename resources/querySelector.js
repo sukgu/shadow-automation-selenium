@@ -503,8 +503,6 @@ function collectAllElementsEvaluateDeep(selector, root) {
     allElementsInDocument = collectAllElementsQuerySelectorDeep('*', root);
 
     const findAllElements = function(nodes) {
-    	var item;
-    	
         for (i=0; i<nodes.length; i++) {
         	test_node = document.createElement('test-node');
         	parent_node = nodes[i].parentNode;
@@ -514,15 +512,18 @@ function collectAllElementsEvaluateDeep(selector, root) {
         			cloned_node.textContent = nodes[i].textContent; 
         		}
         		test_node.append(cloned_node);
-            	elements = document.evaluate('.//'+selector, test_node, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE);
+            	elements = document.evaluate(".//"+selector, test_node, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE);
             	while ((element=elements.iterateNext()) != null) {
-                	allElements.push(nodes[i]);
+					if (!allElements.filter((value) => value == nodes[i]).length > 0) {
+						allElements.push(nodes[i]);
+					}
                 }
         	}
-        	
         	elements = document.evaluate(".//"+selector, nodes[i], null, XPathResult.ORDERED_NODE_ITERATOR_TYPE);
             while ((element=elements.iterateNext()) != null) {
-            	allElements.push(element);
+            	if (!allElements.filter((value) => value == element).length > 0) {
+					allElements.push(element);
+				}
             }
         }
     };
@@ -542,7 +543,6 @@ function collectElementEvaluateDeep(selector, root) {
     allElementsInDocument = collectAllElementsQuerySelectorDeep('*', root);
 
     const findAllElements = function(nodes) {
-    	var item;
         for (i=0; i<nodes.length; i++) {
         	test_node = document.createElement('test-node');
         	parent_node = nodes[i].parentNode;
