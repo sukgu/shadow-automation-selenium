@@ -7,7 +7,6 @@ import static org.hamcrest.Matchers.greaterThan;
 
 import java.util.List;
 import java.util.Map;
-// https://www.baeldung.com/junit-before-beforeclass-beforeeach-beforeall
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -19,7 +18,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import io.github.sukgu.Shadow;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class ShadowTest {
