@@ -4,6 +4,8 @@ import static java.lang.System.err;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -14,7 +16,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -74,6 +76,23 @@ public class LocalFileTest {
 				.map(o -> String.format("outerHTML: %s", o.getAttribute("outerHTML")))
 				.forEach(err::println);
 	}
+	
+	@Test
+	public void testFindElementsWithIncorrectSelector() {
+		String url = getPageContent("index.html");
+		driver.get(url);
+		WebElement element = shadow.findElement("#container");
+		List<WebElement> elements = shadow.findElements(element, "#inside1111111");
+		assertTrue(elements.size() == 0);
+	}
+	
+	@Test
+	public void testFindElementsWithIncorrectSelector2Levels() {
+		String url = getPageContent("index.html");
+		driver.get(url);
+		List<WebElement> elements = shadow.findElements("#container>#inside1111111");
+		assertTrue(elements.size() == 0);
+	}
 
 	@Test
 	public void test2() {
@@ -105,6 +124,18 @@ public class LocalFileTest {
 
 		element = (WebElement)elements.get(0);
 		err.println(element);
+	}
+	
+	@Test
+	public void testNoSuchElementException() {
+		driver.navigate().to(getPageContent("button.html"));
+		WebElement element = shadow.findElement("button");
+		shadow.scrollTo(element);
+		assertThat(element, notNullValue());
+		element.click();
+		assertThrows(NoSuchElementException.class, () -> {
+			shadow.findElement("body>div#divid>div#node>p11");
+		});
 	}
 
 	@Test
@@ -148,6 +179,13 @@ public class LocalFileTest {
 	public void testAllElementsXPath() {
 		driver.navigate().to(getPageContent("index.html"));
 		WebElement element = shadow.findElementByXPath("//div[@id='container']//h2[text()='Inside Shadow DOM']");
+		assertThat(element, notNullValue());
+	}
+	
+	@Test
+	public void testXPathWithPipe() {
+		driver.navigate().to(getPageContent("index.html"));
+		WebElement element = shadow.findElementByXPath("//div[@id='container']//h2[text()='Inside Shadow DOM1'] | //div[@id='container']//h2[text()='Inside Shadow DOM']");
 		assertThat(element, notNullValue());
 	}
 	

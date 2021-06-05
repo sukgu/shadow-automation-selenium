@@ -5,11 +5,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Pattern;
 
-import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.JavascriptException;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -248,8 +252,8 @@ public class Shadow {
 			fixLocator(driver, cssSelector, element);
 		}
 		
-		if(!isPresent(element)) {
-			throw new ElementNotVisibleException("Element with CSS "+cssSelector+" is not present on screen");
+		if (element == null) {
+			throw new NoSuchElementException(cssSelector);
 		}
 		
 		return element;
@@ -295,8 +299,8 @@ public class Shadow {
 			fixLocator(driver, cssSelector, element);
 		}
 		
-		if(!isPresent(element)) {
-			throw new ElementNotVisibleException("Element with CSS "+cssSelector+" is not present on screen");
+		if (element == null) {
+			throw new NoSuchElementException(cssSelector);
 		}
 		
 		return element;
@@ -311,7 +315,7 @@ public class Shadow {
 				
 			}
 		}
-		List<WebElement> element = null;
+		List<WebElement> element = new LinkedList<>();
 		Object object = executerGetObject("return getAllObject(\""+cssSelector+"\");");
 		if(object != null && object instanceof List<?>) {
 			element = (List<WebElement>) object;
@@ -331,7 +335,7 @@ public class Shadow {
 				
 			}
 		}
-		List<WebElement> element = null;
+		List<WebElement> element = new LinkedList<>();
 		Object object = executerGetObject("return getAllObject(\""+cssSelector+"\", arguments[0]);", parent);
 		if(object != null && object instanceof List<?>) {
 			element = (List<WebElement>) object;
@@ -342,7 +346,7 @@ public class Shadow {
 		return element;
 	}
 	
-	public WebElement findElementByXPath(String XPath) {
+	private WebElement elementByXPath(String XPath) {
 		WebElement element = null;
 		boolean visible = false;
 		
@@ -380,15 +384,10 @@ public class Shadow {
 			fixLocatorXPath(driver, XPath, element);
 		}
 		
-		if(!isPresent(element)) {
-			throw new ElementNotVisibleException("Element with XPath "+XPath+" is not present on screen");
-		}
-		
 		return element;
-
 	}
 	
-	public WebElement findElementByXPath(WebElement parent, String XPath) {
+	private WebElement elementByXPath(WebElement parent, String XPath) {
 		WebElement element = null;
 		boolean visible = false;
 		
@@ -427,15 +426,39 @@ public class Shadow {
 			fixLocatorXPath(driver, XPath, element);
 		}
 		
-		if(!isPresent(element)) {
-			throw new ElementNotVisibleException("Element with XPath "+XPath+" is not present on screen");
-		}
-		
 		return element;
 	}
 	
+	public WebElement findElementByXPath(String XPath) {
+		List<WebElement> elements = new LinkedList<>();
+		Arrays.asList(XPath.split(Pattern.quote("|"))).forEach(x_path -> {
+			WebElement element = elementByXPath(x_path.trim());
+			if(element != null) {
+				elements.add(element);
+			}
+		});
+		if(elements.size() > 0) {
+			return elements.get(0);
+		}
+		throw new NoSuchElementException(XPath);
+	}
+	
+	public WebElement findElementByXPath(WebElement parent, String XPath) {
+		List<WebElement> elements = new LinkedList<>();
+		Arrays.asList(XPath.split(Pattern.quote("|"))).forEach(x_path -> {
+			WebElement element = elementByXPath(parent, x_path.trim());
+			if(element != null) {
+				elements.add(element);
+			}
+		});
+		if(elements.size() > 0) {
+			return elements.get(0);
+		}
+		throw new NoSuchElementException(XPath);
+	}
+	
 	@SuppressWarnings("unchecked")
-	public List<WebElement> findElementsByXPath(String XPath) {
+	private List<WebElement> elementsByXPath(String XPath) {
 		if(implicitWait > 0) {
 			try {
 				Thread.sleep(implicitWait * 1000);
@@ -455,7 +478,7 @@ public class Shadow {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<WebElement> findElementsByXPath(WebElement parent, String XPath) {
+	private List<WebElement> elementsByXPath(WebElement parent, String XPath) {
 		if(implicitWait > 0) {
 			try {
 				Thread.sleep(implicitWait * 1000);
@@ -472,6 +495,34 @@ public class Shadow {
 			fixLocatorXPath(driver, XPath, webElement);
 		}
 		return element;
+	}
+	
+	public List<WebElement> findElementsByXPath(String XPath) {
+		List<List<WebElement>> elements = new LinkedList<>();
+		Arrays.asList(XPath.split(Pattern.quote("|"))).forEach(x_path -> {
+			List<WebElement> elementList = elementsByXPath(x_path.trim());
+			if(elementList.size() > 0) {
+				elements.add(elementList);
+			}
+		});
+		if(elements.size() > 0) {
+			return elements.get(0);
+		}
+		return new ArrayList<>();
+	}
+	
+	public List<WebElement> findElementsByXPath(WebElement parent, String XPath) {
+		List<List<WebElement>> elements = new LinkedList<>();
+		Arrays.asList(XPath.split(Pattern.quote("|"))).forEach(x_path -> {
+			List<WebElement> elementList = elementsByXPath(parent, x_path.trim());
+			if(elementList.size() > 0) {
+				elements.add(elementList);
+			}
+		});
+		if(elements.size() > 0) {
+			return elements.get(0);
+		}
+		return new ArrayList<>();
 	}
 	
 	public WebElement getShadowElement(WebElement parent,String selector) {
@@ -561,11 +612,11 @@ public class Shadow {
 				
 			}
 		}
-		return (WebElement)  executerGetObject("return getSiblingElement(arguments[0],\""+selector+"\");", element);
+		return (WebElement) executerGetObject("return getSiblingElement(arguments[0],\""+selector+"\");", element);
 	}
 	
 	public WebElement getNextSiblingElement(WebElement element) {
-		return (WebElement)  executerGetObject("return getNextSiblingElement(arguments[0]);", element);
+		return (WebElement) executerGetObject("return getNextSiblingElement(arguments[0]);", element);
 	}
 	
 	public WebElement getPreviousSiblingElement(WebElement element) {
