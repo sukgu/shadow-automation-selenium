@@ -91,17 +91,17 @@ You can use this plugin by adding jar file or by including maven dependency in y
   <dependency>
 	<groupId>io.github.sukgu</groupId>
 	<artifactId>automation</artifactId>
-	<version>0.1.2</version>
+	<version>0.1.3</version>
   </dependency>
   ```
   
   **Gradle**
   ```
-  implementation 'io.github.sukgu:automation:0.1.2'
+  implementation 'io.github.sukgu:automation:0.1.3'
   ```
   
   
- You can download the jar file from repository http://central.maven.org/maven2/io/github/sukgu/automation/0.1.2/automation-0.1.2.jar
+ You can download the jar file from repository http://central.maven.org/maven2/io/github/sukgu/automation/0.1.3/automation-0.1.3.jar
   
 ## Selector:
   ###### Examples: 
@@ -139,7 +139,7 @@ You can use this plugin by adding jar file or by including maven dependency in y
     String text = element.getText();
   ```
   
-  ## Note for XPath:
+## Note for XPath:
 
 * 🟩 The findElementByXPath or findElementsByXPath takes XPath only with double slash for intermediate selections
 * 🟩 It means it only uses the relative search.
@@ -147,7 +147,7 @@ You can use this plugin by adding jar file or by including maven dependency in y
 * 🟥 //div[@id='container']/h2[text()='Inside Shadow DOM'] is **incorrect**
 * 🟩 For examples on XPath follow the [link](https://github.com/sukgu/shadow-automation-selenium/wiki/Examples-for-XPath-selector)
   
-  ## Wait: Implicit and Explicit
+## Wait: Implicit and Explicit
 If you want to use wait to synchronize your scripts then you should use the implicit or explicit wait feature.
 
 * For Implicit wait, you can use **shadow.setImplicitWait(int seconds)** method.
@@ -155,6 +155,52 @@ If you want to use wait to synchronize your scripts then you should use the impl
 
 * In Implicit wait, the driver will wait for at least n seconds as set in **shadow.setImplicitWait(n)**.
 * In Explicit wait, the driver will wait for at max n seconds as set in **shadow.setImplicitWait(n,m)**. In between driver will check for presence of WebElement every m seconds.
+
+## PageFactory:
+* @FindElementBy annotation can be used with PageFactory model to find elements based on css_selector or xpath.
+* To achieve this you will need to modify page initialization method as `PageFactory.initElements(new ElementFieldDecorator(new DefaultElementLocatorFactory(driver), this)`.
+* For more example on PageFactory see this [page](https://github.com/sukgu/shadow-automation-selenium/wiki/PageFactory-Annotations).
+#### PageFactory Example:
+``` java
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
+import io.github.sukgu.support.ElementFieldDecorator;
+import io.github.sukgu.support.FindElementBy;
+
+public class LocalTestPage {
+	
+	WebDriver driver;
+	
+	@FindElementBy(css = "#container")
+	WebElement container;
+	
+	@FindBy(css = "#h3")
+	WebElement h3;
+	
+	@FindBy(css = "#h3")
+	List<WebElement> allH3;
+	
+	@FindElementBy(css = "#inside")
+	List<WebElement> insides;
+	
+	@FindElementBy(xpath = "//body")
+	WebElement bodyByXPath;
+	
+	@FindElementBy(xpath = "//body//div[1]")
+	WebElement divByIndex;
+	
+    public LocalTestPage(WebDriver driver) {
+    	this.driver = driver;
+    	ElementFieldDecorator decorator = new ElementFieldDecorator(new DefaultElementLocatorFactory(driver));
+    	// need to use decorator if you want to use @FindElementBy in your PageFactory model.
+    	PageFactory.initElements(decorator, this);
+    }
+    //... 
+}
+```
   
   ###### Note: > is used to combine multi level dom structure. So you can combine 5 levels of dom. If you want some more level modify the script and ready to rock.
   
