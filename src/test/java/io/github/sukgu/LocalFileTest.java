@@ -148,10 +148,132 @@ public class LocalFileTest {
 	}
 	
 	@Test
+	public void testImpicitWaitCSS() {
+		driver.navigate().to(getPageContent("button.html"));
+		WebElement element = shadow.findElement("button");
+		shadow.scrollTo(element);
+		assertThat(element, notNullValue());
+		element.click();
+		shadow.setImplicitWait(2);
+		WebElement p_element = shadow.findElement("div#divid>div#node>p");
+		err.println("outerHTML: " + shadow.getAttribute(p_element, "outerHTML"));
+		List<WebElement> elements = shadow.getChildElements(element);
+		assertThat(elements, notNullValue());
+		err.println(elements);
+		shadow.setImplicitWait(0);
+	}
+	
+	@Test
+	public void testExplicitWaitCSS() throws Exception {
+		driver.navigate().to(getPageContent("button.html"));
+		WebElement element = shadow.findElement("button");
+		shadow.scrollTo(element);
+		assertThat(element, notNullValue());
+		element.click();
+		shadow.setExplicitWait(5, 1);
+		WebElement p_element = shadow.findElement("div#divid>div#node>p");
+		err.println("outerHTML: " + shadow.getAttribute(p_element, "outerHTML"));
+		List<WebElement> elements = shadow.getChildElements(element);
+		assertThat(elements, notNullValue());
+		err.println(elements);
+		shadow.setExplicitWait(0, 0);
+	}
+	
+	@Test
+	public void testImplicitAndExplicitWaitCSS() throws Exception {
+		driver.navigate().to(getPageContent("button.html"));
+		shadow.setImplicitWait(2);
+		WebElement element = shadow.findElement("button");
+		shadow.scrollTo(element);
+		assertThat(element, notNullValue());
+		element.click();
+		shadow.setExplicitWait(5, 1);
+		WebElement p_element = shadow.findElement("div#divid>div#node>p");
+		err.println("outerHTML: " + shadow.getAttribute(p_element, "outerHTML"));
+		List<WebElement> elements = shadow.getChildElements(element);
+		assertThat(elements, notNullValue());
+		err.println(elements);
+		shadow.setImplicitWait(0);
+		shadow.setExplicitWait(0, 0);
+	}
+	
+	@Test
+	public void testImpicitWaitXPath() {
+		driver.navigate().to(getPageContent("button.html"));
+		WebElement element = shadow.findElementByXPath("//button");
+		shadow.scrollTo(element);
+		assertThat(element, notNullValue());
+		element.click();
+		shadow.setImplicitWait(2);
+		WebElement p_element = shadow.findElementByXPath("//div[@id='divid']//div[@id='node']//p");
+		err.println("outerHTML: " + shadow.getAttribute(p_element, "outerHTML"));
+		List<WebElement> elements = shadow.getChildElements(element);
+		assertThat(elements, notNullValue());
+		err.println(elements);
+		shadow.setImplicitWait(0);
+	}
+	
+	@Test
+	public void testExplicitWaitXPath() throws Exception {
+		driver.navigate().to(getPageContent("button.html"));
+		WebElement element = shadow.findElementByXPath("//button");
+		shadow.scrollTo(element);
+		assertThat(element, notNullValue());
+		element.click();
+		shadow.setExplicitWait(5, 1);
+		WebElement p_element = shadow.findElementByXPath("//div[@id='divid']//div[@id='node']//p");
+		err.println("outerHTML: " + shadow.getAttribute(p_element, "outerHTML"));
+		List<WebElement> elements = shadow.getChildElements(element);
+		assertThat(elements, notNullValue());
+		err.println(elements);
+		shadow.setExplicitWait(0, 0);
+	}
+	
+	@Test
+	public void testImplicitAndExplicitWaitXPath() throws Exception {
+		driver.navigate().to(getPageContent("button.html"));
+		shadow.setImplicitWait(2);
+		WebElement element = shadow.findElementByXPath("//button");
+		shadow.scrollTo(element);
+		assertThat(element, notNullValue());
+		element.click();
+		shadow.setExplicitWait(5, 1);
+		WebElement p_element = shadow.findElementByXPath("//div[@id='divid']//div[@id='node']//p");
+		err.println("outerHTML: " + shadow.getAttribute(p_element, "outerHTML"));
+		List<WebElement> elements = shadow.getChildElements(element);
+		assertThat(elements, notNullValue());
+		err.println(elements);
+		shadow.setImplicitWait(0);
+		shadow.setExplicitWait(0, 0);
+	}
+	
+	@Test
 	public void testXPath() {
 		driver.navigate().to(getPageContent("index.html"));
 		WebElement element = shadow.findElementByXPath("//body");
 		assertThat(element, notNullValue());
+	}
+	
+	@Test
+	public void testXPathElementWithParent() {
+		driver.navigate().to(getPageContent("button.html"));
+		WebElement element = shadow.findElementByXPath("//button");
+		shadow.scrollTo(element);
+		element.click();
+		WebElement element1 = shadow.findElementByXPath("//div[@id='divid']");
+		WebElement p_element = shadow.findElementByXPath(element1, "//div[@id='node']//p");
+		assertThat(p_element, notNullValue());
+	}
+	
+	@Test
+	public void testXPathElementsWithParent() {
+		driver.navigate().to(getPageContent("button.html"));
+		WebElement element = shadow.findElementByXPath("//button");
+		shadow.scrollTo(element);
+		element.click();
+		WebElement element1 = shadow.findElementByXPath("//div[@id='divid']");
+		List<WebElement> p_element = shadow.findElementsByXPath(element1, "//div[@id='node']//p");
+		assertThat(p_element.get(0), notNullValue());
 	}
 	
 	@Test
