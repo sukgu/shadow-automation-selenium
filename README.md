@@ -91,17 +91,17 @@ You can use this plugin by adding jar file or by including maven dependency in y
   <dependency>
 	<groupId>io.github.sukgu</groupId>
 	<artifactId>automation</artifactId>
-	<version>0.1.3</version>
+	<version>0.1.4</version>
   </dependency>
   ```
   
   **Gradle**
   ```
-  implementation 'io.github.sukgu:automation:0.1.3'
+  implementation 'io.github.sukgu:automation:0.1.4'
   ```
   
   
- You can download the jar file from repository http://central.maven.org/maven2/io/github/sukgu/automation/0.1.3/automation-0.1.3.jar
+ You can download the jar file from repository http://central.maven.org/maven2/io/github/sukgu/automation/0.1.4/automation-0.1.4.jar
   
 ## Selector:
   ###### Examples: 
@@ -141,10 +141,9 @@ You can use this plugin by adding jar file or by including maven dependency in y
   
 ## Note for XPath:
 
-* 🟩 The findElementByXPath or findElementsByXPath takes XPath only with double slash for intermediate selections
-* 🟩 It means it only uses the relative search.
+* 🟩 The findElementByXPath or findElementsByXPath takes XPath only with double slash internally for intermediate selections
 * 🟩 //div[@id='container']//h2[text()='Inside Shadow DOM'] is **correct**
-* 🟥 //div[@id='container']/h2[text()='Inside Shadow DOM'] is **incorrect**
+* 🟩 //div[@id='container']/h2[text()='Inside Shadow DOM'] is **correct**
 * 🟩 For examples on XPath follow the [link](https://github.com/sukgu/shadow-automation-selenium/wiki/Examples-for-XPath-selector)
   
 ## Wait: Implicit and Explicit
@@ -201,8 +200,6 @@ public class LocalTestPage {
     //... 
 }
 ```
-  
-  ###### Note: > is used to combine multi level dom structure. So you can combine 5 levels of dom. If you want some more level modify the script and ready to rock.
   
   **Documentation** [Link](https://github.com/sukgu/shadow-automation-selenium/wiki)
   
