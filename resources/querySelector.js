@@ -168,102 +168,43 @@ var evaluateDeep = function evaluateDeep(selector, root) {
 };
 
 var getXPathObject = function getXPathObject(selector, root = document) {
-	while (selector.indexOf('/')==0 && selector.search('/') != -1) {
-    	selector = selector.replace('/','');
+	while (selector.search(/\//)!= 0 && selector.search(/\//)!= -1) {
+    	selector = selector.replace(/\//,'//');
+    }
+    while (selector.search(/\/\//)==0 && selector.search(/\/\//) != -1) {
+    	selector = selector.replace(/\/\//,'');
     }
 	splitedSelectors = selector.split('//');
-	if (splitedSelectors.length == 1) {
-		return evaluateDeep(selector, root);
-	}
-	if (splitedSelectors.length == 2) {
-		parent = evaluateDeep(splitedSelectors[0], root);
-	    return evaluateDeep(splitedSelectors[1], parent);
-	}
-	if (splitedSelectors.length == 3) {
-		parent = evaluateDeep(splitedSelectors[0], root);
-		parent_1 = evaluateDeep(splitedSelectors[1], parent);
-	    return evaluateDeep(splitedSelectors[2], parent_1);
-	}
-	if (splitedSelectors.length == 4) {
-		parent = evaluateDeep(splitedSelectors[0], root);
-		parent_1 = evaluateDeep(splitedSelectors[1], parent);
-	    parent_2 = evaluateDeep(splitedSelectors[2], parent_1);
-	    return evaluateDeep(splitedSelectors[3], parent_2);
-	}
-	if (splitedSelectors.length == 5) {
-		parent = evaluateDeep(splitedSelectors[0], root);
-		parent_1 = evaluateDeep(splitedSelectors[1], parent);
-	    parent_2 = evaluateDeep(splitedSelectors[2], parent_1);
-	    parent_3 = evaluateDeep(splitedSelectors[3], parent_2);
-	    return evaluateDeep(splitedSelectors[4], parent_3);
-	}
-	if (splitedSelectors.length == 6) {
-		parent = evaluateDeep(splitedSelectors[0], root);
-		parent_1 = evaluateDeep(splitedSelectors[1], parent);
-	    parent_2 = evaluateDeep(splitedSelectors[2], parent_1);
-	    parent_3 = evaluateDeep(splitedSelectors[3], parent_2);
-	    parent_4 = evaluateDeep(splitedSelectors[4], parent_3);
-	    return evaluateDeep(splitedSelectors[5], parent_4);
-	}
-	if (splitedSelectors.length == 7) {
-		parent = evaluateDeep(splitedSelectors[0], root);
-		parent_1 = evaluateDeep(splitedSelectors[1], parent);
-	    parent_2 = evaluateDeep(splitedSelectors[2], parent_1);
-	    parent_3 = evaluateDeep(splitedSelectors[3], parent_2);
-	    parent_4 = evaluateDeep(splitedSelectors[4], parent_3);
-	    parent_5 = evaluateDeep(splitedSelectors[5], parent_4);
-	    return evaluateDeep(splitedSelectors[6], parent_5);
-	}
 	
+	webElement = root;
+    for (let index = 0; index < splitedSelectors.length-1; index++) {
+        webElement = evaluateDeep(splitedSelectors[index], webElement);
+        if (webElement === undefined) {
+            throw new ElementNotFoundException("Element with XPath "+splitedSelectors[index]+" couldn't be found.");
+        }
+    }
+    webElement = evaluateDeep(splitedSelectors[splitedSelectors.length-1], webElement);
+    return webElement;
 };
 
 var getXPathAllObject = function getXPathAllObject(selector, root = document) {
-	while (selector.indexOf('/')==0 && selector.search('/') != -1) {
-    	selector = selector.replace('/','');
+	while (selector.search(/\//)!= 0 && selector.search(/\//)!= -1) {
+    	selector = selector.replace(/\//,'//');
+    }
+    while (selector.search(/\/\//)==0 && selector.search(/\/\//) != -1) {
+    	selector = selector.replace(/\/\//,'');
     }
 	splitedSelectors = selector.split('//');
-	if (splitedSelectors.length == 1) {
-		return evaluateAllDeep(selector, root);
-	}
-	if (splitedSelectors.length == 2) {
-		parent = evaluateDeep(splitedSelectors[0], root);
-	    return evaluateAllDeep(splitedSelectors[1], parent);
-	}
-	if (splitedSelectors.length == 3) {
-		parent = evaluateDeep(splitedSelectors[0], root);
-		parent_1 = evaluateDeep(splitedSelectors[1], parent);
-	    return evaluateAllDeep(splitedSelectors[2], parent_1);
-	}
-	if (splitedSelectors.length == 4) {
-		parent = evaluateDeep(splitedSelectors[0], root);
-		parent_1 = evaluateDeep(splitedSelectors[1], parent);
-	    parent_2 = evaluateDeep(splitedSelectors[2], parent_1);
-	    return evaluateAllDeep(splitedSelectors[3], parent_2);
-	}
-	if (splitedSelectors.length == 5) {
-		parent = evaluateDeep(splitedSelectors[0], root);
-		parent_1 = evaluateDeep(splitedSelectors[1], parent);
-	    parent_2 = evaluateDeep(splitedSelectors[2], parent_1);
-	    parent_3 = evaluateDeep(splitedSelectors[3], parent_2);
-	    return evaluateAllDeep(splitedSelectors[4], parent_3);
-	}
-	if (splitedSelectors.length == 6) {
-		parent = evaluateDeep(splitedSelectors[0], root);
-		parent_1 = evaluateDeep(splitedSelectors[1], parent);
-	    parent_2 = evaluateDeep(splitedSelectors[2], parent_1);
-	    parent_3 = evaluateDeep(splitedSelectors[3], parent_2);
-	    parent_4 = evaluateDeep(splitedSelectors[4], parent_3);
-	    return evaluateAllDeep(splitedSelectors[5], parent_4);
-	}
-	if (splitedSelectors.length == 7) {
-		parent = evaluateDeep(splitedSelectors[0], root);
-		parent_1 = evaluateDeep(splitedSelectors[1], parent);
-	    parent_2 = evaluateDeep(splitedSelectors[2], parent_1);
-	    parent_3 = evaluateDeep(splitedSelectors[3], parent_2);
-	    parent_4 = evaluateDeep(splitedSelectors[4], parent_3);
-	    parent_5 = evaluateDeep(splitedSelectors[5], parent_4);
-	    return evaluateAllDeep(splitedSelectors[6], parent_5);
-	}
+
+    webElement = root;
+    for (let index = 0; index < splitedSelectors.length-1; index++) {
+        webElement = evaluateDeep(splitedSelectors[index], webElement);
+        if (webElement === undefined) {
+            return null;
+        }
+    }
+    webElement = evaluateAllDeep(splitedSelectors[splitedSelectors.length-1], webElement);
+    return webElement;
 };
 
 var querySelectorAllDeep = function querySelectorAllDeep(selector, root) {
@@ -289,113 +230,28 @@ var ElementNotFoundException = function ElementNotFoundException(message = "Not 
 
 var getObject = function getObject(selector, root = document) {
     const multiLevelSelectors = splitByCharacterUnlessQuoted(selector, '>');
-	if (multiLevelSelectors.length == 1) {
-		return querySelectorDeep(multiLevelSelectors[0], root);
-	} else if (multiLevelSelectors.length == 2) {
-	    parent = querySelectorDeep(multiLevelSelectors[0]);
-        if (parent === undefined) {
-            throw new ElementNotFoundException("Element with CSS "+multiLevelSelectors[0]+" couldn't be found.");
+    webElement = root;
+    for (let index = 0; index < multiLevelSelectors.length-1; index++) {
+        webElement = querySelectorDeep(multiLevelSelectors[index], webElement);
+        if (webElement === undefined) {
+            throw new ElementNotFoundException("Element with CSS "+multiLevelSelectors[index]+" couldn't be found.");
         }
-		return querySelectorDeep(multiLevelSelectors[1], parent);
-	} else if (multiLevelSelectors.length == 3) {
-	    parent_1 = querySelectorDeep(multiLevelSelectors[0]);
-        if (parent_1 === undefined) {
-            throw new ElementNotFoundException("Element with CSS "+multiLevelSelectors[0]+" couldn't be found.");
-        }
-        parent_2 = querySelectorDeep(multiLevelSelectors[1], parent_1);
-        if (parent_2 === undefined) {
-            throw new ElementNotFoundException("Element with CSS "+multiLevelSelectors[1]+" couldn't be found.");
-        }
-		return querySelectorDeep(multiLevelSelectors[2], parent_2);
-	} else if (multiLevelSelectors.length == 4) {
-	    parent_1 = querySelectorDeep(multiLevelSelectors[0]);
-        if (parent_1 === undefined) {
-            throw new ElementNotFoundException("Element with CSS "+multiLevelSelectors[0]+" couldn't be found.");
-        }
-        parent_2 = querySelectorDeep(multiLevelSelectors[1], parent_1);
-        if (parent_2 === undefined) {
-            throw new ElementNotFoundException("Element with CSS "+multiLevelSelectors[1]+" couldn't be found.");
-        }
-        parent_3 = querySelectorDeep(multiLevelSelectors[2], parent_2);
-        if (parent_3 === undefined) {
-            throw new ElementNotFoundException("Element with CSS "+multiLevelSelectors[2]+" couldn't be found.");
-        }
-		return querySelectorDeep(multiLevelSelectors[3], parent_3);
-	} else if (multiLevelSelectors.length == 5) {
-	    parent_1 = querySelectorDeep(multiLevelSelectors[0]);
-        if (parent_1 === undefined) {
-            throw new ElementNotFoundException("Element with CSS "+multiLevelSelectors[0]+" couldn't be found.");
-        }
-        parent_2 = querySelectorDeep(multiLevelSelectors[1], parent_1);
-        if (parent_2 === undefined) {
-            throw new ElementNotFoundException("Element with CSS "+multiLevelSelectors[1]+" couldn't be found.");
-        }
-        parent_3 = querySelectorDeep(multiLevelSelectors[2], parent_2);
-        if (parent_3 === undefined) {
-            throw new ElementNotFoundException("Element with CSS "+multiLevelSelectors[2]+" couldn't be found.");
-        }
-        parent_4 = querySelectorDeep(multiLevelSelectors[3], parent_3);
-        if (parent_4 === undefined) {
-            throw new ElementNotFoundException("Element with CSS "+multiLevelSelectors[3]+" couldn't be found.");
-        }
-		return querySelectorDeep(multiLevelSelectors[4], parent_4);
-	}
+    }
+    webElement = querySelectorDeep(multiLevelSelectors[multiLevelSelectors.length-1], webElement);
+    return webElement;
 };
 
 var getAllObject = function getAllObject(selector, root = document) {
     const multiLevelSelectors = splitByCharacterUnlessQuoted(selector, '>');
-    if (multiLevelSelectors.length == 1) {
-        return querySelectorAllDeep(multiLevelSelectors[0], root);
-    } else if (multiLevelSelectors.length == 2) {
-        parent = querySelectorDeep(multiLevelSelectors[0]);
-        if (parent === undefined) {
-            return [];
+    webElement = root;
+    for (let index = 0; index < multiLevelSelectors.length-1; index++) {
+        webElement = querySelectorDeep(multiLevelSelectors[index], webElement);
+        if (webElement === undefined) {
+            return null;
         }
-        return querySelectorAllDeep(multiLevelSelectors[1], parent);
-    } else if (multiLevelSelectors.length == 3) {
-        parent_1 = querySelectorDeep(multiLevelSelectors[0]);
-        if (parent_1 === undefined) {
-            return [];
-        }
-        parent_2 = querySelectorDeep(multiLevelSelectors[1], parent_1);
-        if (parent_2 === undefined) {
-            return [];
-        }
-        return querySelectorAllDeep(multiLevelSelectors[2], parent_2);
-    } else if (multiLevelSelectors.length == 4) {
-        parent_1 = querySelectorDeep(multiLevelSelectors[0]);
-        if (parent_1 === undefined) {
-            return [];
-        }
-        parent_2 = querySelectorDeep(multiLevelSelectors[1], parent_1);
-        if (parent_2 === undefined) {
-            return [];
-        }
-        parent_3 = querySelectorDeep(multiLevelSelectors[2], parent_2);
-        if (parent_3 === undefined) {
-            return [];
-        }
-		return querySelectorAllDeep(multiLevelSelectors[3], parent_3);
-	} else if (multiLevelSelectors.length == 5) {
-	    parent_1 = querySelectorDeep(multiLevelSelectors[0]);
-        if (parent_1 === undefined) {
-            return [];
-        }
-        parent_2 = querySelectorDeep(multiLevelSelectors[1], parent_1);
-        if (parent_2 === undefined) {
-            return [];
-        }
-        parent_3 = querySelectorDeep(multiLevelSelectors[2], parent_2);
-        if (parent_3 === undefined) {
-            return [];
-        }
-        parent_4 = querySelectorDeep(multiLevelSelectors[3], parent_3);
-        if (parent_4 === undefined) {
-            return [];
-        }
-		return querySelectorAllDeep(multiLevelSelectors[4], parent_4);
-	}
-
+    }
+    webElement = querySelectorAllDeep(multiLevelSelectors[multiLevelSelectors.length-1], webElement);
+    return webElement;
 };
 
 function _querySelectorDeep(selector, findMany, root) {
