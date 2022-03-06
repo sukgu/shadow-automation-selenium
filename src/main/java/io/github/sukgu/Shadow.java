@@ -183,7 +183,6 @@ public class Shadow {
                     }
                 };
         try {
-            Thread.sleep(1000);
             WebDriverWait wait = new WebDriverWait(driver, 30);
             wait.until(expectation);
         } catch (Throwable error) {
