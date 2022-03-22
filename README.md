@@ -1,6 +1,6 @@
 # Shadow root DOM automation using selenium
 
-[![Build Status](https://travis-ci.com/sukgu/shadow-automation-selenium.svg?branch=master)](https://travis-ci.com/sukgu/shadow-automation-selenium "Travis CI")
+[![Build Status](https://travis-ci.org/sukgu/shadow-automation-selenium.svg?branch=master)](https://travis-ci.org/sukgu/shadow-automation-selenium "Travis CI")
 [![codecov](https://codecov.io/gh/sukgu/shadow-automation-selenium/branch/master/graph/badge.svg)](https://codecov.io/gh/sukgu/shadow-automation-selenium)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.sukgu/automation.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.sukgu%22%20AND%20a:%22automation%22)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
@@ -91,17 +91,17 @@ You can use this plugin by adding jar file or by including maven dependency in y
   <dependency>
 	<groupId>io.github.sukgu</groupId>
 	<artifactId>automation</artifactId>
-	<version>0.1.4</version>
+	<version>0.1.4.1</version>
   </dependency>
   ```
   
   **Gradle**
   ```
-  implementation 'io.github.sukgu:automation:0.1.4'
+  implementation 'io.github.sukgu:automation:0.1.4.1'
   ```
   
   
- You can download the jar file from repository http://central.maven.org/maven2/io/github/sukgu/automation/0.1.4/automation-0.1.4.jar
+ You can download the jar file from repository http://central.maven.org/maven2/io/github/sukgu/automation/0.1.4.1/automation-0.1.4.1.jar
   
 ## Selector:
   ###### Examples: 
