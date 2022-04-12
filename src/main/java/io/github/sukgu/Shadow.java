@@ -94,14 +94,14 @@ public class Shadow {
         return text;
     }
 
-    private void fixLocator(SearchContext context, String cssLocator, WebElement element) {
+    private void fixLocator(SearchContext context, String selector, WebElement element, String target) {
         if (element instanceof RemoteWebElement) {
             try {
                 @SuppressWarnings("rawtypes")
                 Class[] parameterTypes = new Class[]{SearchContext.class, String.class, String.class};
                 Method m = element.getClass().getDeclaredMethod("setFoundBy", parameterTypes);
                 m.setAccessible(true);
-                Object[] parameters = new Object[]{context, "cssSelector", cssLocator};
+                Object[] parameters = new Object[]{context, target, selector};
                 m.invoke(element, parameters);
             } catch (Exception fail) {
                 //fail("Something bad happened when fixing locator");
@@ -109,20 +109,12 @@ public class Shadow {
         }
     }
 
+    private void fixLocatorCss(SearchContext context, String XPath, WebElement element) {
+        fixLocator(context, XPath, element, "cssSelector");
+    }
 
     private void fixLocatorXPath(SearchContext context, String XPath, WebElement element) {
-        if (element instanceof RemoteWebElement) {
-            try {
-                @SuppressWarnings("rawtypes")
-                Class[] parameterTypes = new Class[]{SearchContext.class, String.class, String.class};
-                Method m = element.getClass().getDeclaredMethod("setFoundBy", parameterTypes);
-                m.setAccessible(true);
-                Object[] parameters = new Object[]{context, "xpath", XPath};
-                m.invoke(element, parameters);
-            } catch (Exception fail) {
-                //fail("Something bad happened when fixing locator");
-            }
-        }
+        fixLocator(context, XPath, element, "xpath");
     }
 
     private void waitForPageLoaded() {
@@ -152,12 +144,11 @@ public class Shadow {
     }
 
     private boolean isPresent(WebElement element) {
-        boolean present = false;
         try {
-            present = (Boolean) executorGetObject("return isVisible(arguments[0]);", element);
+            return (Boolean) executorGetObject("return isVisible(arguments[0]);", element);
         } catch (JavascriptException ignored) {
         }
-        return present;
+        return false;
     }
 
     public WebElement findElement(String cssSelector) {
@@ -168,19 +159,19 @@ public class Shadow {
             } catch (InterruptedException ignored) {
             }
             element = (WebElement) executorGetObject(String.format("return getObject(\"%s\");", cssSelector));
-            fixLocator(driver, cssSelector, element);
+            this.fixLocatorCss(driver, cssSelector, element);
         }
 
         if (explicitWait > 0) {
             element = (WebElement) executorGetObject(String.format("return getObject(\"%s\");", cssSelector));
-            fixLocator(driver, cssSelector, element);
+            this.fixLocatorCss(driver, cssSelector, element);
             boolean visible = isPresent(element);
 
             for (int i = 0; i < explicitWait && !visible; ) {
                 try {
                     Thread.sleep(pollingTime * 1000L);
                     element = (WebElement) executorGetObject(String.format("return getObject(\"%s\");", cssSelector));
-                    fixLocator(driver, cssSelector, element);
+                    this.fixLocatorCss(driver, cssSelector, element);
                     visible = isPresent(element);
                     i += pollingTime;
                 } catch (InterruptedException ignored) {
@@ -190,7 +181,7 @@ public class Shadow {
 
         if (explicitWait == 0 && implicitWait == 0) {
             element = (WebElement) executorGetObject(String.format("return getObject(\"%s\");", cssSelector));
-            fixLocator(driver, cssSelector, element);
+            this.fixLocatorCss(driver, cssSelector, element);
         }
 
         if (element == null) {
@@ -209,19 +200,19 @@ public class Shadow {
             } catch (InterruptedException ignored) {
             }
             element = (WebElement) executorGetObject("return getObject(\"" + cssSelector + "\", arguments[0]);", parent);
-            fixLocator(driver, cssSelector, element);
+            this.fixLocatorCss(driver, cssSelector, element);
         }
 
         if (explicitWait > 0) {
             element = (WebElement) executorGetObject("return getObject(\"" + cssSelector + "\", arguments[0]);", parent);
-            fixLocator(driver, cssSelector, element);
+            this.fixLocatorCss(driver, cssSelector, element);
             boolean visible = isPresent(element);
 
             for (int i = 0; i < explicitWait && !visible; ) {
                 try {
                     Thread.sleep(pollingTime * 1000L);
                     element = (WebElement) executorGetObject("return getObject(\"" + cssSelector + "\", arguments[0]);", parent);
-                    fixLocator(driver, cssSelector, element);
+                    this.fixLocatorCss(driver, cssSelector, element);
                     visible = isPresent(element);
                     i += pollingTime;
                 } catch (InterruptedException ignored) {
@@ -232,7 +223,7 @@ public class Shadow {
 
         if (explicitWait == 0 && implicitWait == 0) {
             element = (WebElement) executorGetObject("return getObject(\"" + cssSelector + "\", arguments[0]);", parent);
-            fixLocator(driver, cssSelector, element);
+            this.fixLocatorCss(driver, cssSelector, element);
         }
 
         if (element == null) {
@@ -256,7 +247,7 @@ public class Shadow {
             element = (List<WebElement>) object;
         }
         for (WebElement webElement : element) {
-            fixLocator(driver, cssSelector, webElement);
+            this.fixLocatorCss(driver, cssSelector, webElement);
         }
         return element;
     }
@@ -275,7 +266,7 @@ public class Shadow {
             element = (List<WebElement>) object;
         }
         for (WebElement webElement : element) {
-            fixLocator(driver, cssSelector, webElement);
+            this.fixLocatorCss(driver, cssSelector, webElement);
         }
         return element;
     }
@@ -456,7 +447,7 @@ public class Shadow {
         }
         WebElement element = null;
         element = (WebElement) executorGetObject("return getShadowElement(arguments[0],\"" + selector + "\");", parent);
-        fixLocator(driver, selector, element);
+        this.fixLocatorCss(driver, selector, element);
         return element;
     }
 
@@ -474,7 +465,7 @@ public class Shadow {
             elements = (List<WebElement>) object;
         }
         for (WebElement element : elements) {
-            fixLocator(driver, selector, element);
+            this.fixLocatorCss(driver, selector, element);
         }
         return elements;
     }
