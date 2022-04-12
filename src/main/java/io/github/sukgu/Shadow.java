@@ -1,13 +1,7 @@
 package io.github.sukgu;
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.remote.CommandExecutor;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.RemoteWebElement;
-import org.openqa.selenium.remote.SessionId;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -26,29 +20,14 @@ public class Shadow {
     private final String javascriptLibrary = convertJStoText().toString();
     protected WebDriver driver;
     protected WebDriverWait wait;
-    protected JavascriptExecutor jse = null;
-    private WebDriverException exception;
-    private CommandExecutor executer;
-    private SessionId sessionId;
+    protected JavascriptExecutor jse;
     private int implicitWait = 0;
     private int explicitWait = 0;
     private int pollingTime = 0;
 
     public Shadow(WebDriver driver) {
-        if (driver instanceof ChromeDriver) {
-            sessionId = ((ChromeDriver) driver).getSessionId();
-            jse = (JavascriptExecutor) driver;
-        } else if (driver instanceof FirefoxDriver) {
-            sessionId = ((FirefoxDriver) driver).getSessionId();
-            jse = ((FirefoxDriver) driver);
-        } else if (driver instanceof InternetExplorerDriver) {
-            sessionId = ((InternetExplorerDriver) driver).getSessionId();
-            jse = ((InternetExplorerDriver) driver);
-        } else if (driver instanceof RemoteWebDriver) {
-            sessionId = ((RemoteWebDriver) driver).getSessionId();
-            jse = (JavascriptExecutor) driver;
-        }
         this.driver = driver;
+        jse = (JavascriptExecutor) driver;
     }
 
     private Object injectShadowExecutor(String javascript) {
@@ -141,6 +120,7 @@ public class Shadow {
         }
         this.explicitWait = seconds;
         this.pollingTime = pollingTime;
+        wait = new WebDriverWait(driver, seconds, pollingTime);
     }
 
     private boolean isPresent(WebElement element) {
