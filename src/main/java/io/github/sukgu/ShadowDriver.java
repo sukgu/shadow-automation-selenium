@@ -1,21 +1,17 @@
 package io.github.sukgu;
 
 import io.github.sukgu.exceptions.UnsupportedSelector;
-import io.github.sukgu.support.BaseBy;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
 import java.util.Set;
 
-public class ShadowDriver extends Shadow implements WebDriver {
+public class ShadowDriver extends Shadow implements WebDriver, JavascriptExecutor {
     public ShadowDriver(WebDriver driver) {
         super(driver);
-    }
-
-    public WebDriver getDriver() {
-        return driver;
     }
 
     @Override
@@ -37,9 +33,7 @@ public class ShadowDriver extends Shadow implements WebDriver {
     public List<WebElement> findElements(By by) {
         String selector = getSelector(by);
 
-        if (by instanceof BaseBy) {
-            return findElements(((BaseBy) by).getSelector());
-        } else if (by instanceof By.ByCssSelector) {
+        if (by instanceof By.ByCssSelector) {
             return findElements(selector);
         } else if (by instanceof By.ByName) {
             return findElements("[name=" + selector + "\"]");
@@ -57,9 +51,7 @@ public class ShadowDriver extends Shadow implements WebDriver {
     public WebElement findElement(By by) {
         String selector = getSelector(by);
 
-        if (by instanceof BaseBy) {
-            return findElement(((BaseBy) by).getSelector());
-        } else if (by instanceof By.ByCssSelector) {
+        if (by instanceof By.ByCssSelector) {
             return findElement(selector);
         } else if (by instanceof By.ByName) {
             return findElement("[name=" + selector + "\"]");
@@ -115,5 +107,15 @@ public class ShadowDriver extends Shadow implements WebDriver {
 
     public String getSelector(By by) {
         return by.toString().replaceAll("By.*: ", "");
+    }
+
+    @Override
+    public Object executeScript(String s, Object... objects) {
+        return jse.executeScript(s, objects);
+    }
+
+    @Override
+    public Object executeAsyncScript(String s, Object... objects) {
+        return jse.executeAsyncScript(s, objects);
     }
 }
