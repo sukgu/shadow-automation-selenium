@@ -1,15 +1,14 @@
 package io.github.sukgu;
 
 import io.github.sukgu.exceptions.UnsupportedSelector;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.*;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-public class ShadowDriver extends Shadow implements WebDriver, JavascriptExecutor {
+public class ShadowDriver extends Shadow implements WebDriver, JavascriptExecutor, HasInputDevices, Interactive, TakesScreenshot {
     public ShadowDriver(WebDriver driver) {
         super(driver);
     }
@@ -36,7 +35,7 @@ public class ShadowDriver extends Shadow implements WebDriver, JavascriptExecuto
         if (by instanceof By.ByCssSelector) {
             return findElements(selector);
         } else if (by instanceof By.ByName) {
-            return findElements("[name=" + selector + "\"]");
+            return findElements("[name=" + selector + "]");
         } else if (by instanceof By.ByXPath) {
             return findElementsByXPath(selector);
         } else if (by instanceof By.ById) {
@@ -54,7 +53,7 @@ public class ShadowDriver extends Shadow implements WebDriver, JavascriptExecuto
         if (by instanceof By.ByCssSelector) {
             return findElement(selector);
         } else if (by instanceof By.ByName) {
-            return findElement("[name=" + selector + "\"]");
+            return findElement("[name=" + selector + "]");
         } else if (by instanceof By.ByXPath) {
             return findElementByXPath(selector);
         } else if (by instanceof By.ById) {
@@ -117,5 +116,30 @@ public class ShadowDriver extends Shadow implements WebDriver, JavascriptExecuto
     @Override
     public Object executeAsyncScript(String s, Object... objects) {
         return jse.executeAsyncScript(s, objects);
+    }
+
+    @Override
+    public Keyboard getKeyboard() {
+        return ((HasInputDevices) driver).getKeyboard();
+    }
+
+    @Override
+    public Mouse getMouse() {
+        return ((HasInputDevices) driver).getMouse();
+    }
+
+    @Override
+    public <X> X getScreenshotAs(OutputType<X> outputType) throws WebDriverException {
+        return ((TakesScreenshot) driver).getScreenshotAs(outputType);
+    }
+
+    @Override
+    public void perform(Collection<Sequence> collection) {
+        ((Interactive) driver).perform(collection);
+    }
+
+    @Override
+    public void resetInputState() {
+        ((Interactive) driver).resetInputState();
     }
 }
