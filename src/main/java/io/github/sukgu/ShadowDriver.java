@@ -42,6 +42,12 @@ public class ShadowDriver extends Shadow implements WebDriver, JavascriptExecuto
             return findElements("#" + selector);
         } else if (by instanceof By.ByClassName) {
             return findElements("[class=" + selector + "]");
+        } else if (by instanceof By.ByTagName) {
+            return findElements("[" + selector + "]");
+        } else if (by instanceof By.ByPartialLinkText) {
+            return findElementsByXPath("//a[.='" + selector + "')]");
+        } else if (by instanceof By.ByLinkText) {
+            return findElementsByXPath("//a[contains(text()," + selector + ")]");
         }
         throw new UnsupportedSelector("Selector: " + selector + " is not supported yet.");
     }
@@ -60,6 +66,12 @@ public class ShadowDriver extends Shadow implements WebDriver, JavascriptExecuto
             return findElement("#" + selector);
         } else if (by instanceof By.ByClassName) {
             return findElement("[class=" + selector + "]");
+        } else if (by instanceof By.ByTagName) {
+            return findElement("[" + selector + "]");
+        } else if (by instanceof By.ByPartialLinkText) {
+            return findElementByXPath("//a[.='" + selector + "')]");
+        } else if (by instanceof By.ByLinkText) {
+            return findElementByXPath("//a[contains(text()," + selector + ")]");
         }
         throw new UnsupportedSelector("Selector: " + selector + " is not supported yet.");
     }
