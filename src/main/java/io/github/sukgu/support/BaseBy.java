@@ -10,7 +10,7 @@ import org.openqa.selenium.remote.RemoteWebElement;
 
 import java.util.List;
 
-public abstract class BaseBy extends By {
+abstract class BaseBy extends By {
 
     protected final String selector;
     protected final String selectorType;
@@ -71,9 +71,5 @@ public abstract class BaseBy extends By {
         }
 
         return null;
-    }
-
-    public String getSelector() {
-        return selector;
     }
 }
