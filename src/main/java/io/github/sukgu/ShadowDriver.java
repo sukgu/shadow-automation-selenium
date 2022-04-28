@@ -117,7 +117,9 @@ public class ShadowDriver extends Shadow implements WebDriver, JavascriptExecuto
     }
 
     public String getSelector(By by) {
-        return by.toString().replaceAll("By.*: ", "").replace("\"", "");
+        return by.toString().replaceAll("By.*: ", "")
+                .replace("\"", "")
+                .replace("\\", "\\\\");
     }
 
     @Override
