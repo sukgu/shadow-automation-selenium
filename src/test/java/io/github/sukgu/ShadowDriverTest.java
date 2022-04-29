@@ -30,13 +30,13 @@ public class ShadowDriverTest {
     public void driver_shouldFindElement_whenProvideBySelector() {
         List<By> selectors = Arrays.asList(
                 By.cssSelector("[data-route=url]"),
-                By.name("bare-account"),
-                By.xpath("//div[@id='view-container']"),
-                By.id("notificationsIcon"),
+                By.name("trigger"),
+                By.xpath("//span[@id='wrapperLink']"),
+                By.id("wrapperLink"),
                 By.className("about"),
                 By.tagName("body"),
-                By.partialLinkText("Vote and Com"),
-                By.linkText("API")
+                By.partialLinkText("Check our"),
+                By.linkText("Check our API")
         );
 
         selectors.forEach(by -> {
@@ -55,7 +55,7 @@ public class ShadowDriverTest {
                 By.className("about"),
                 By.tagName("div"),
                 By.partialLinkText("API"),
-                By.linkText("API")
+                By.linkText("Check our API")
         );
 
         selectors.forEach(by -> {
@@ -75,7 +75,6 @@ public class ShadowDriverTest {
             WebDriverManager.firefoxdriver().setup();
             driver = new FirefoxDriver();
         } // TODO: finish for other browsers
-        driver.manage().window().maximize();
         driver.navigate().to(baseUrl);
         driver = new ShadowDriver(driver);
     }
