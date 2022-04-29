@@ -35,19 +35,19 @@ public class ShadowDriver extends Shadow implements WebDriver, JavascriptExecuto
         if (by instanceof By.ByCssSelector) {
             return findElements(selector);
         } else if (by instanceof By.ByName) {
-            return findElements("[name=" + selector + "]");
+            return findElements("[name='" + selector + "']");
         } else if (by instanceof By.ByXPath) {
             return findElementsByXPath(selector);
         } else if (by instanceof By.ById) {
             return findElements("#" + selector);
         } else if (by instanceof By.ByClassName) {
-            return findElements("[class=" + selector + "]");
+            return findElements("[class='" + selector + "']");
         } else if (by instanceof By.ByTagName) {
-            return findElements("[" + selector + "]");
-        } else if (by instanceof By.ByPartialLinkText) {
-            return findElementsByXPath("//a[.='" + selector + "')]");
+            return findElements(selector);
         } else if (by instanceof By.ByLinkText) {
-            return findElementsByXPath("//a[contains(text()," + selector + ")]");
+            return findElementsByXPath("//a[.='" + selector + "']");
+        } else if (by instanceof By.ByPartialLinkText) {
+            return findElementsByXPath("//a[contains(text(),'" + selector + "')]");
         }
         throw new UnsupportedSelector("Selector: " + selector + " is not supported yet.");
     }
@@ -59,19 +59,19 @@ public class ShadowDriver extends Shadow implements WebDriver, JavascriptExecuto
         if (by instanceof By.ByCssSelector) {
             return findElement(selector);
         } else if (by instanceof By.ByName) {
-            return findElement("[name=" + selector + "]");
+            return findElement("[name='" + selector + "']");
         } else if (by instanceof By.ByXPath) {
             return findElementByXPath(selector);
         } else if (by instanceof By.ById) {
             return findElement("#" + selector);
         } else if (by instanceof By.ByClassName) {
-            return findElement("[class=" + selector + "]");
+            return findElement("[class='" + selector + "']");
         } else if (by instanceof By.ByTagName) {
-            return findElement("[" + selector + "]");
-        } else if (by instanceof By.ByPartialLinkText) {
-            return findElementByXPath("//a[.='" + selector + "')]");
+            return findElement(selector);
         } else if (by instanceof By.ByLinkText) {
-            return findElementByXPath("//a[contains(text()," + selector + ")]");
+            return findElementByXPath("//a[.='" + selector + "']");
+        } else if (by instanceof By.ByPartialLinkText) {
+            return findElementByXPath("//a[contains(text(),'" + selector + "')]");
         }
         throw new UnsupportedSelector("Selector: " + selector + " is not supported yet.");
     }
