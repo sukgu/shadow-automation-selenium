@@ -64,32 +64,6 @@ public class ShadowDriverTest {
         });
     }
 
-//    private static Stream<Arguments> findElementBySelectors() {
-//        return Stream.of(
-//                Arguments.of(By.cssSelector("vt-ui-main-upload-form > infoIcon")),
-//                Arguments.of(By.name("form.suspicious-dns")),
-//                Arguments.of(By.xpath("//*[@id=\"autocompleteDropdown\"]")),
-//                Arguments.of(By.id("searchBarInputDropdown")),
-//                Arguments.of(By.className("blue")),
-//                Arguments.of(By.tagName("footer")),
-//                Arguments.of(By.partialLinkText("Vote and Com")),
-//                Arguments.of(By.linkText("Intelligence"))
-//        );
-//    }
-
-//    private static Stream<Arguments> findElementsBySelectors() {
-//        return Stream.of(
-//                Arguments.of(By.cssSelector()),
-//                Arguments.of(By.name()),
-//                Arguments.of(By.xpath()),
-//                Arguments.of(By.id()),
-//                Arguments.of(By.className()),
-//                Arguments.of(By.tagName()),
-//                Arguments.of(By.partialLinkText()),
-//                Arguments.of(By.linkText())
-//        );
-//    }
-
     @BeforeAll
     public static void injectShadowJS() {
         err.println("Launching " + browser);
