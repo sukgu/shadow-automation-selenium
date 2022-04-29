@@ -61,6 +61,7 @@ public class ShadowDriverTest {
         selectors.forEach(by -> {
             List<WebElement> sut = driver.findElements(by);
             err.println(">>" + by + "<< element count: " + sut.size());
+            assert sut.size() > 1;
         });
     }
 
