@@ -38,6 +38,7 @@
         <hamcrest-all.version>1.3</hamcrest-all.version>
         <java.version>1.8</java.version>
         <junit-jupiter.version>5.4.0</junit-jupiter.version>
+        <junit-params.version>5.4.0</junit-params.version>
         <junit-jupiter-engine-version>5.4.0</junit-jupiter-engine-version>
         <junit-vintage-engine-version>5.4.0</junit-vintage-engine-version>
         <junit-platform-launcher.version>1.4.0</junit-platform-launcher.version>
@@ -112,6 +113,14 @@
             <groupId>org.junit.vintage</groupId>
             <artifactId>junit-vintage-engine</artifactId>
             <version>${junit-vintage-engine-version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-params -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit-params.version}</version>
             <scope>test</scope>
         </dependency>
 

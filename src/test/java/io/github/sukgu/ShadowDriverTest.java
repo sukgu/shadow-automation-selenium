@@ -30,7 +30,7 @@ public class ShadowDriverTest {
     public void driver_shouldFindElement_whenProvideBySelector() {
         List<By> selectors = Arrays.asList(
                 By.cssSelector("[data-route=url]"),
-                By.name("trigger"),
+                By.name("form.suspicious-dns"),
                 By.xpath("//span[@id='wrapperLink']"),
                 By.id("wrapperLink"),
                 By.className("about"),
@@ -41,7 +41,7 @@ public class ShadowDriverTest {
 
         selectors.forEach(by -> {
             WebElement sut = driver.findElement(by);
-            err.println(">>" + by + "<< element size: " + sut.getSize());
+            err.println(">>" + by + "<< element tag: " + sut.getAttribute("tagName"));
         });
     }
 

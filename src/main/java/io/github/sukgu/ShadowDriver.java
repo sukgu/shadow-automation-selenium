@@ -1,6 +1,5 @@
 package io.github.sukgu;
 
-import io.github.sukgu.exceptions.UnsupportedSelector;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.*;
 
@@ -8,11 +7,32 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import static io.github.sukgu.support.SelectorProvider.buildSelector;
+
 public class ShadowDriver extends Shadow implements WebDriver, JavascriptExecutor, HasInputDevices, Interactive, TakesScreenshot {
     public ShadowDriver(WebDriver driver) {
         super(driver);
     }
 
+    @Override
+    public List<WebElement> findElements(By by) {
+        String selector = buildSelector(by);
+        if (by instanceof By.ByXPath || by instanceof By.ByLinkText || by instanceof By.ByPartialLinkText) {
+            return findElementsByXPath(selector);
+        }
+        return findElements(selector);
+    }
+
+    @Override
+    public WebElement findElement(By by) {
+        String selector = buildSelector(by);
+        if (by instanceof By.ByXPath || by instanceof By.ByLinkText || by instanceof By.ByPartialLinkText) {
+            return findElementByXPath(selector);
+        }
+        return findElement(selector);
+    }
+    
+    //region WebDriver delegates
     @Override
     public void get(String url) {
         driver.get(url);
@@ -26,54 +46,6 @@ public class ShadowDriver extends Shadow implements WebDriver, JavascriptExecuto
     @Override
     public String getTitle() {
         return driver.getTitle();
-    }
-
-    @Override
-    public List<WebElement> findElements(By by) {
-        String selector = getSelector(by);
-
-        if (by instanceof By.ByCssSelector) {
-            return findElements(selector);
-        } else if (by instanceof By.ByName) {
-            return findElements("[name='" + selector + "']");
-        } else if (by instanceof By.ByXPath) {
-            return findElementsByXPath(selector);
-        } else if (by instanceof By.ById) {
-            return findElements("#" + selector);
-        } else if (by instanceof By.ByClassName) {
-            return findElements("[class='" + selector + "']");
-        } else if (by instanceof By.ByTagName) {
-            return findElements(selector);
-        } else if (by instanceof By.ByLinkText) {
-            return findElementsByXPath("//a[.='" + selector + "']");
-        } else if (by instanceof By.ByPartialLinkText) {
-            return findElementsByXPath("//a[contains(text(),'" + selector + "')]");
-        }
-        throw new UnsupportedSelector("Selector: " + selector + " is not supported yet.");
-    }
-
-    @Override
-    public WebElement findElement(By by) {
-        String selector = getSelector(by);
-
-        if (by instanceof By.ByCssSelector) {
-            return findElement(selector);
-        } else if (by instanceof By.ByName) {
-            return findElement("[name='" + selector + "']");
-        } else if (by instanceof By.ByXPath) {
-            return findElementByXPath(selector);
-        } else if (by instanceof By.ById) {
-            return findElement("#" + selector);
-        } else if (by instanceof By.ByClassName) {
-            return findElement("[class='" + selector + "']");
-        } else if (by instanceof By.ByTagName) {
-            return findElement(selector);
-        } else if (by instanceof By.ByLinkText) {
-            return findElementByXPath("//a[.='" + selector + "']");
-        } else if (by instanceof By.ByPartialLinkText) {
-            return findElementByXPath("//a[contains(text(),'" + selector + "')]");
-        }
-        throw new UnsupportedSelector("Selector: " + selector + " is not supported yet.");
     }
 
     @Override
@@ -115,13 +87,9 @@ public class ShadowDriver extends Shadow implements WebDriver, JavascriptExecuto
     public Options manage() {
         return driver.manage();
     }
+    //endregion
 
-    public String getSelector(By by) {
-        return by.toString().replaceAll("By.*: ", "")
-                .replace("\"", "")
-                .replace("\\", "\\\\");
-    }
-
+    //region JavascriptExecutor delegates
     @Override
     public Object executeScript(String s, Object... objects) {
         return jse.executeScript(s, objects);
@@ -131,7 +99,9 @@ public class ShadowDriver extends Shadow implements WebDriver, JavascriptExecuto
     public Object executeAsyncScript(String s, Object... objects) {
         return jse.executeAsyncScript(s, objects);
     }
+    //endregion
 
+    //region HasInputDevices delegates
     @Override
     public Keyboard getKeyboard() {
         return ((HasInputDevices) driver).getKeyboard();
@@ -141,12 +111,9 @@ public class ShadowDriver extends Shadow implements WebDriver, JavascriptExecuto
     public Mouse getMouse() {
         return ((HasInputDevices) driver).getMouse();
     }
+    //endregion
 
-    @Override
-    public <X> X getScreenshotAs(OutputType<X> outputType) throws WebDriverException {
-        return ((TakesScreenshot) driver).getScreenshotAs(outputType);
-    }
-
+    //region Interactive delegates
     @Override
     public void perform(Collection<Sequence> collection) {
         ((Interactive) driver).perform(collection);
@@ -156,4 +123,12 @@ public class ShadowDriver extends Shadow implements WebDriver, JavascriptExecuto
     public void resetInputState() {
         ((Interactive) driver).resetInputState();
     }
+    //endregion
+
+    //region TakesScreenshot delegates
+    @Override
+    public <X> X getScreenshotAs(OutputType<X> outputType) throws WebDriverException {
+        return ((TakesScreenshot) driver).getScreenshotAs(outputType);
+    }
+    //endregion
 }
