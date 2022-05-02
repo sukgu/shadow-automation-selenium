@@ -1,34 +1,13 @@
-package io.github.sukgu;
+package io.github.sukgu.data;
 
-import io.github.sukgu.support.SelectorProvider;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.By;
 
 import java.util.stream.Stream;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-
-
-public class SelectorProviderTest extends SelectorProvider {
-
-    @ParameterizedTest
-    @MethodSource("selectorsToExtractSet")
-    public void correctSelector_shouldBeExtracted_whenProvideByClass(By by, String expectedSelector) {
-        String sut = extractSelector(by);
-        assertThat(sut, equalTo(expectedSelector));
-    }
-
-    @ParameterizedTest
-    @MethodSource("selectorsToBuildSet")
-    public void correctSelector_shouldBeBuilt_whenProvideByClass(By by, String expectedSelector) {
-        String sut = buildSelector(by);
-        assertThat(sut, equalTo(expectedSelector));
-    }
-
-    private static Stream<Arguments> selectorsToExtractSet() {
+public class DataProvider {
+    //region SelectorProviderTest data
+    public static Stream<Arguments> selectorsToExtract() {
         return Stream.of(
                 Arguments.of(By.cssSelector("div > span.test"), "div > span.test"),
                 Arguments.of(By.name("someName"), "someName"),
@@ -41,7 +20,7 @@ public class SelectorProviderTest extends SelectorProvider {
         );
     }
 
-    private static Stream<Arguments> selectorsToBuildSet() {
+    public static Stream<Arguments> selectorsToBuild() {
         return Stream.of(
                 Arguments.of(By.cssSelector("div > span.test"), "div > span.test"),
                 Arguments.of(By.name("someName"), "[name='someName']"),
@@ -53,4 +32,33 @@ public class SelectorProviderTest extends SelectorProvider {
                 Arguments.of(By.partialLinkText("Part of some text"), "//a[contains(text(),'Part of some text')]")
         );
     }
+    //endregion
+
+    //region ShadowDriverTest data
+    public static Stream<Arguments> findElementSelectors() {
+        return Stream.of(
+                Arguments.of(By.cssSelector("[data-route=url]")),
+                Arguments.of(By.name("form.suspicious-dns")),
+                Arguments.of(By.xpath("//span[@id='wrapperLink']")),
+                Arguments.of(By.id("wrapperLink")),
+                Arguments.of(By.className("about")),
+                Arguments.of(By.tagName("body")),
+                Arguments.of(By.partialLinkText("Check our")),
+                Arguments.of(By.linkText("Check our API"))
+        );
+    }
+
+    public static Stream<Arguments> findElementsSelectors() {
+        return Stream.of(
+                Arguments.of(By.cssSelector("[data-route=url]")),
+                Arguments.of(By.name("trigger")),
+                Arguments.of(By.xpath("//*[contains(@id,'-feature')]")),
+                Arguments.of(By.id("wrapperLink")),
+                Arguments.of(By.className("about")),
+                Arguments.of(By.tagName("div")),
+                Arguments.of(By.partialLinkText("API")),
+                Arguments.of(By.linkText("Check our API"))
+        );
+    }
+    //endregion
 }
