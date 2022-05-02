@@ -31,7 +31,7 @@ public class ShadowDriver extends Shadow implements WebDriver, JavascriptExecuto
         }
         return findElement(selector);
     }
-    
+
     //region WebDriver delegates
     @Override
     public void get(String url) {
@@ -92,12 +92,12 @@ public class ShadowDriver extends Shadow implements WebDriver, JavascriptExecuto
     //region JavascriptExecutor delegates
     @Override
     public Object executeScript(String s, Object... objects) {
-        return jse.executeScript(s, objects);
+        return ((JavascriptExecutor) driver).executeScript(s, objects);
     }
 
     @Override
     public Object executeAsyncScript(String s, Object... objects) {
-        return jse.executeAsyncScript(s, objects);
+        return ((JavascriptExecutor) driver).executeAsyncScript(s, objects);
     }
     //endregion
 
