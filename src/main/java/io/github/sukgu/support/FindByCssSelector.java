@@ -1,8 +1,8 @@
 package io.github.sukgu.support;
 
-class FindByCssSelector extends BaseBy {
+public class FindByCssSelector extends BaseBy {
 
-	protected FindByCssSelector(String selector, String selectorType) {
+	public FindByCssSelector(String selector, String selectorType) {
 		super(selector, selectorType);
 	}
 
