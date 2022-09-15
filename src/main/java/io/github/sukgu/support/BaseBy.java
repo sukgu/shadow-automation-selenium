@@ -11,10 +11,10 @@ import org.openqa.selenium.remote.RemoteWebElement;
 import io.github.sukgu.Shadow;
 import io.github.sukgu.support.FindElementBy.FindByBuilder.SelectorType;
 
-abstract class BaseBy extends By {
+public abstract class BaseBy extends By {
 
-    protected final String selector;
-    protected final String selectorType;
+    public final String selector;
+    public final String selectorType;
 
     protected BaseBy(String selector, String selectorType) {
         this.selector = selector;
