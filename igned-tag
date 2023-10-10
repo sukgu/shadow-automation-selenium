@@ -1,0 +1,226 @@
+[33mcommit 5007cff9dc10d9f3285cdc54c9b6552d7c9d0a61[m[33m ([m[1;36mHEAD -> [m[1;32mAnsuman0-ansuman07_Fixess_for_Does-this-library-supports-selenium-4.6.0-[m[33m)[m
+Author: ansum <ansuman07@hotmail.com>
+Date:   Tue Oct 10 22:47:05 2023 +0530
+
+    Fixess_for_Does-this-library-supports-selenium-4.6.0 ?
+
+[33mcommit 4b0a063e7f4d3b1e3d10c50636708b79687d7d7b[m
+Author: Ansuman Parida <ansuman07@hotmail.com>
+Date:   Tue Oct 10 22:45:17 2023 +0530
+
+    Unsigned commit
+
+[33mcommit 21d04cbaef822410aca4904e05198ea75af11a3b[m[33m ([m[1;31morigin/Ansuman0-ansuman07_Fixess_for_Does-this-library-supports-selenium-4.6.0-[m[33m, [m[1;31mgithub-desktop-Ansuman0/ansuman07_Fixess_for_Does-this-library-supports-selenium-4.6.0-[m[33m, [m[1;32mpr/65[m[33m)[m
+Author: Ansuman07 <ansuman07@hotmail.com>
+Date:   Fri Sep 15 00:12:04 2023 +0530
+
+    FixesFor_Does this library supports selenium 4.6.0?
+    
+    i have changes in pom .xml file ,main method file- Shadow  and  changed in Codecov.yml files  .now these  changes are working fine with selenium latest version .i.e. selenium 4.0 above.
+
+[33mcommit 815889fcea23164075ace94e820f4dba85fd70b6[m
+Author: Ansuman07 <ansuman07@hotmail.com>
+Date:   Fri Sep 15 00:00:07 2023 +0530
+
+    Issue_resolved
+
+[33mcommit aa2052bbe46559ed776e0018aee6b345c5cbcd45[m[33m ([m[1;31mupstream/master[m[33m, [m[1;31mupstream/HEAD[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31mgithub-desktop-Ansuman0/master[m[33m, [m[1;31mgithub-desktop-Ansuman0/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+[41mgpg: directory '/c/Users/ansum/.gnupg' created[m
+[41mgpg: keybox '/c/Users/ansum/.gnupg/pubring.kbx' created[m
+[41mgpg: Signature made Tue Mar 22 14:03:53 2022 IST[m
+[41mgpg:                using RSA key 4AEE18F83AFDEB23[m
+[41mgpg: Can't check signature: No public key[m
+Merge: 5f56b33 b810f13
+Author: Sushil Kumar Gupta <sushil106768@gmail.com>
+Date:   Tue Mar 22 14:03:53 2022 +0530
+
+    Merge pull request #47 from sukgu/dev
+    
+    release 0.1.4.1 patch
+
+[33mcommit b810f13069a2225d23a6223b449281779642b7cd[m[33m ([m[1;31mupstream/dev[m[33m, [m[1;31morigin/dev[m[33m, [m[1;31mgithub-desktop-Ansuman0/dev[m[33m)[m
+Author: Sushil Gupta <sushil106768@gmail.com>
+Date:   Tue Mar 22 10:54:48 2022 +0530
+
+    release 0.1.4.1 patch
+
+[33mcommit 5f56b33e4f84e7eeff4da05b36aa1d4dab0677bc[m
+[41mgpg: Signature made Sun Mar  6 20:17:53 2022 IST[m
+[41mgpg:                using RSA key 4AEE18F83AFDEB23[m
+[41mgpg: Can't check signature: No public key[m
+Merge: 9df8f47 2641454
+Author: Sushil Kumar Gupta <sushil106768@gmail.com>
+Date:   Sun Mar 6 20:17:53 2022 +0530
+
+    Merge pull request #46 from kelunik/patch-1
+    
+    Remove Thread.sleep(1000)
+
+[33mcommit 2641454e5e1dad82201eb7bf1331a295fac208c7[m
+[41mgpg: Signature made Fri Mar  4 21:35:40 2022 IST[m
+[41mgpg:                using RSA key 4AEE18F83AFDEB23[m
+[41mgpg: Can't check signature: No public key[m
+Author: Niklas Keller <me@kelunik.com>
+Date:   Fri Mar 4 17:05:40 2022 +0100
+
+    Remove Thread.sleep(1000)
+    
+    This makes everything quite slow.
+
+[33mcommit 9df8f47ceead697ea84c46cf39b97392984a6759[m[33m ([m[1;33mtag: v0.1.4[m[33m)[m
+[41mgpg: Signature made Sun Feb  6 18:01:52 2022 IST[m
+[41mgpg:                using RSA key 4AEE18F83AFDEB23[m
+[41mgpg: Can't check signature: No public key[m
+Merge: 488a03e 5e3a57f
+Author: Sushil Kumar Gupta <sushil106768@gmail.com>
+Date:   Sun Feb 6 18:01:52 2022 +0530
+
+    Merge pull request #42 from sukgu/dev
+    
+    Flexibility to use any depth levels of css and xpath
+
+[33mcommit 5e3a57fead1fe7fe679ff15be6af6a4c580a158d[m
+Author: Sushil Gupta <sushil106768@gmail.com>
+Date:   Sun Feb 6 17:38:25 2022 +0530
+
+    #41 remove unwanted files and added test
+
+[33mcommit 40109e9fcc0a34529e47eb75ab841585c7645f93[m
+Author: Sushil Gupta <sushil106768@gmail.com>
+Date:   Sun Feb 6 17:03:37 2022 +0530
+
+    #41 added feature
+
+[33mcommit 488a03e2cb8e21535cd3500e07b4b24021f866e7[m
+Author: Sushil Gupta <sushil106768@gmail.com>
+Date:   Mon Jul 5 13:16:00 2021 +0530
+
+    updateded readme
+
+[33mcommit 460949d194fd06f744e06b1d888bdb686c412db4[m[33m ([m[1;33mtag: v0.1.3[m[33m)[m
+[41mgpg: Signature made Mon Jul  5 11:57:52 2021 IST[m
+[41mgpg:                using RSA key 4AEE18F83AFDEB23[m
+[41mgpg: Can't check signature: No public key[m
+Merge: c705d43 bb020ce
+Author: Sushil Kumar Gupta <sushil106768@gmail.com>
+Date:   Mon Jul 5 11:57:52 2021 +0530
+
+    Merge pull request #35 from sukgu/dev
+    
+    #24 implemented pageFactory feature
+
+[33mcommit bb020ce0c0b2855f4ea287ea6b23ef96ba91f2da[m
+Author: Sushil Gupta <sushil106768@gmail.com>
+Date:   Mon Jul 5 11:55:01 2021 +0530
+
+    #24 implemented pageFactory feature
+
+[33mcommit c705d43bfcc520b255b80850d58c93204e5e7f1e[m[33m ([m[1;33mtag: v0.1.2[m[33m)[m
+[41mgpg: Signature made Sat Jun  5 23:30:32 2021 IST[m
+[41mgpg:                using RSA key 4AEE18F83AFDEB23[m
+[41mgpg: Can't check signature: No public key[m
+Merge: 1471fdf 3a97a21
+Author: Sushil Kumar Gupta <sushil106768@gmail.com>
+Date:   Sat Jun 5 23:30:32 2021 +0530
+
+    Merge pull request #34 from sukgu/dev
+    
+    #28 added enhancement and #33 #25 fixed issues
+
+[33mcommit 3a97a2148fb613867dab4b72dd2278dedc9f3c73[m
+Author: Sushil Gupta <sushil106768@gmail.com>
+Date:   Sat Jun 5 23:25:05 2021 +0530
+
+    #28 added enhancement and #33 #25 fixed issues
+
+[33mcommit 1471fdf3b22726fbd7fbcfc4ab659741426c6f1b[m[33m ([m[1;33mtag: v0.1.1[m[33m)[m
+Author: Sushil Gupta <sushil106768@gmail.com>
+Date:   Mon Mar 29 01:41:10 2021 +0530
+
+    adding v0.1.1
+
+[33mcommit 8da9cd771c93b2264b6b1a1768ade83a5fbd2d16[m
+[41mgpg: Signature made Sun Mar 28 23:25:49 2021 IST[m
+[41mgpg:                using RSA key 4AEE18F83AFDEB23[m
+[41mgpg: Can't check signature: No public key[m
+Merge: 3fc07b0 3e6e905
+Author: Sushil Kumar Gupta <sushil106768@gmail.com>
+Date:   Sun Mar 28 23:25:49 2021 +0530
+
+    Merge pull request #27 from sukgu/dev
+    
+    merge dev to master
+
+[33mcommit 3e6e905c92166a8aa6a42a408e29557730a84386[m
+Author: Sushil Gupta <sushil106768@gmail.com>
+Date:   Sun Mar 28 23:19:03 2021 +0530
+
+    removed unused imports
+
+[33mcommit 1b86f424d80551a94ed0e128f5d7107bd5cefb60[m
+Author: Sushil Gupta <sushil106768@gmail.com>
+Date:   Sun Mar 28 23:18:26 2021 +0530
+
+    #26 fixed issue
+
+[33mcommit 27e5c8a77eb0250dd751e071601c73f151d40060[m
+Merge: b50d687 3fc07b0
+Author: Sushil Gupta <sushil106768@gmail.com>
+Date:   Tue Jan 19 10:57:54 2021 +0530
+
+    Forwarding dev to match master
+
+[33mcommit 3fc07b0d2782021bf95d752306d832e78f92a986[m[33m ([m[1;33mtag: v0.1.0[m[33m)[m
+Author: Sushil Gupta <sushil106768@gmail.com>
+Date:   Tue Jan 19 10:37:11 2021 +0530
+
+    Updated README
+
+[33mcommit 293003fd479b32a34b39e4cf7d9c85c920d29704[m
+Author: Sushil Gupta <sushil106768@gmail.com>
+Date:   Mon Jan 18 19:27:27 2021 +0530
+
+    updated README
+
+[33mcommit 8c7cf816ab11f9f3781e25cc8c8bf7e41569b974[m
+Author: Sushil Gupta <sushil106768@gmail.com>
+Date:   Mon Jan 18 18:58:27 2021 +0530
+
+    adding updated README
+
+[33mcommit 11bfc54e76f79e10482407172193ef1be08954e1[m
+Author: Sushil Gupta <sushil106768@gmail.com>
+Date:   Mon Jan 18 18:56:32 2021 +0530
+
+    added missing jar doc plugin
+
+[33mcommit bc2ee1c29dedddbf1154d4ab2ba57ef586f7dc97[m
+Author: Sushil Gupta <sushil106768@gmail.com>
+Date:   Mon Jan 18 18:24:07 2021 +0530
+
+    added README for v0.1.0
+
+[33mcommit d9d5dad52ff61a6c2a07a0ccc19c18abc296f6f9[m
+Merge: ae744ac b50d687
+Author: Sushil Gupta <sushil106768@gmail.com>
+Date:   Mon Jan 18 18:12:19 2021 +0530
+
+    merge dev branch to master
+
+[33mcommit b50d687ccd0422abe44d0013400a57ad3ed4e558[m
+Author: Sushil Gupta <sushil106768@gmail.com>
+Date:   Mon Jan 18 17:23:43 2021 +0530
+
+    adding tests for larger coverage
+
+[33mcommit d7df5831c30d9078e4eb0a9bf2e6b926b60301b0[m
+Author: Sushil Gupta <sushil106768@gmail.com>
+Date:   Mon Jan 18 17:22:44 2021 +0530
+
+    adding addiotinal html files for test
+
+[33mcommit 04144422129cb940c198d0b59de83d5768c3276b[m
+Author: Sushil Gupta <sushil106768@gmail.com>
+Date:   Mon Jan 18 17:21:37 2021 +0530
+
+    close #22 
