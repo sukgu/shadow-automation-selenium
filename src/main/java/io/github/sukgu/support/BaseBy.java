@@ -21,18 +21,19 @@ abstract class BaseBy extends By {
         this.selectorType = selectorType;
     }
 
-    private final WebDriver getWebDriver(SearchContext context) {
+    @Override
+    public WebDriver getWebDriver(SearchContext context) {
         WebDriver webDriver;
         
         if (context instanceof RemoteWebElement) {
-        	webDriver = ((RemoteWebElement) context).getWrappedDriver();
+            webDriver = ((RemoteWebElement) context).getWrappedDriver();
         } else {
-        	webDriver = (WebDriver) context;
+            webDriver = (WebDriver) context;
         }
         
         return webDriver;
     }
-
+    
 	@Override
     public WebElement findElement(SearchContext context) {
     	WebDriver webDriver = getWebDriver(context);

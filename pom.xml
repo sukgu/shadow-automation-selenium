@@ -51,8 +51,9 @@
 		<maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
-		<selenium.version>4.0.0-alpha-2</selenium.version>
-		<selenium-java>4.12.1</selenium-java>
+		<selenium-api.version>4.13.0</selenium-api.version>
+		<selenium-server.version>4.0.0-alpha-2</selenium-server.version>
+		<selenium-java>4.13.0</selenium-java>
 		<webdrivermanager.version>5.5.3</webdrivermanager.version>
 		<selenium-chrome-driver.version>${selenium-java}</selenium-chrome-driver.version>
 		<selenium-firefox-driver.version>${selenium-java}</selenium-firefox-driver.version>
@@ -126,7 +127,7 @@
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-api</artifactId>
-			<version>${selenium.version}</version>
+			<version>${selenium-api.version}</version>
 			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
@@ -146,7 +147,7 @@
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-server</artifactId>
-			<version>${selenium.version}</version>
+			<version>${selenium-server.version}</version>
 			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
@@ -156,7 +157,7 @@
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
-			<version>${selenium.version}</version>
+			<version>${selenium-api.version}</version>
 			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
