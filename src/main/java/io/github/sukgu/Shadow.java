@@ -288,7 +288,7 @@ public class Shadow {
 					visible = isPresent(element);
 					i = i + pollingTime;
 				} catch (InterruptedException e) {
-					e.getStackTrace();
+					e.getStackTrace().toString();
 				}
 			}
 		}
