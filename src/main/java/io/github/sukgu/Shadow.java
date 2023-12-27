@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Method;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -183,7 +184,7 @@ public class Shadow {
                     }
                 };
         try {
-            WebDriverWait wait = new WebDriverWait(driver, 30);
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
             wait.until(expectation);
         } catch (Throwable error) {
             //Assertions.fail("Timeout waiting for Page Load Request to complete.");

@@ -82,7 +82,11 @@ You can use this plugin by adding jar file or by including maven dependency in y
   `public void highlight(WebElement element, String color, Integer timeInMiliSeconds)` : highlight method.
   
   `public void highlight(WebElement element)` : highlight method highlight in red color.
-  
+
+### What's New 
+##### We support now Selenium version 4 with release of Shadow version 0.1.5
+##### Java 11 and Selenium 4.16.1 to be used with Shadow 0.1.5
+
 ###### How to use this plugin:
   You will have to dependency in your project.
   
@@ -91,17 +95,17 @@ You can use this plugin by adding jar file or by including maven dependency in y
   <dependency>
 	<groupId>io.github.sukgu</groupId>
 	<artifactId>automation</artifactId>
-	<version>0.1.4.1</version>
+	<version>0.1.5</version>
   </dependency>
   ```
   
   **Gradle**
   ```
-  implementation 'io.github.sukgu:automation:0.1.4.1'
+  implementation 'io.github.sukgu:automation:0.1.5'
   ```
   
   
- You can download the jar file from repository http://central.maven.org/maven2/io/github/sukgu/automation/0.1.4.1/automation-0.1.4.1.jar
+ You can download the jar file from repository http://central.maven.org/maven2/io/github/sukgu/automation/0.1.5/automation-0.1.5.jar
   
 ## Selector:
   ###### Examples: 
