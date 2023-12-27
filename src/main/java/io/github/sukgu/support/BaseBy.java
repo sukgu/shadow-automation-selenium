@@ -21,7 +21,7 @@ abstract class BaseBy extends By {
         this.selectorType = selectorType;
     }
 
-    private final WebDriver getWebDriver(SearchContext context) {
+    protected final WebDriver getWebDriver(SearchContext context) {
         WebDriver webDriver;
         
         if (context instanceof RemoteWebElement) {

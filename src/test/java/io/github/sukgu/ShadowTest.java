@@ -24,7 +24,8 @@ public class ShadowTest {
 
 	private final static String baseUrl = "https://www.virustotal.com";
 	// private static final String urlLocator = "a[data-route='url']";
-	private static final String urlLocator = "vt-ui-shell vt-ui-button[data-route='url']";
+	private static final String urlLocator = "home-view a[data-route='url']";
+	private static final String pageHeading = "home-view div.container";
 	private static final boolean debug = Boolean
 			.parseBoolean(getPropertyEnv("DEBUG", "false"));;
 	private static WebDriver driver = null;
@@ -91,15 +92,16 @@ public class ShadowTest {
 	public void testAPICalls1() {
 		WebElement element = shadow.findElements(urlLocator).get(0);
 
-		WebElement element1 = shadow.getNextSiblingElement(element);
-		assertThat(element1, notNullValue());
+		WebElement element1 = shadow.getParentElement(element);
+		WebElement element2 = shadow.getNextSiblingElement(element1);
+		assertThat(element2, notNullValue());
 		// TODO: compare siblings
 	}
 
 	@Test
 	public void testAPICalls2() {
-		WebElement element = shadow.findElements(urlLocator).get(0);
-		List<WebElement> elements = shadow.findElements(element, "div");
+		WebElement element = shadow.findElements(pageHeading).get(0);
+		List<WebElement> elements = shadow.findElements(element, "p");
 		assertThat(elements, notNullValue());
 		assertThat(elements.size(), greaterThan(0));
 	}
@@ -114,7 +116,7 @@ public class ShadowTest {
 
 	@Test
 	public void testAPICalls4() {
-		WebElement element = shadow.findElement(urlLocator);
+		WebElement element = shadow.findElement(pageHeading);
 		List<WebElement> elements = shadow.getChildElements(element);
 		assertThat(elements, notNullValue());
 		assertThat(elements.size(), greaterThan(0));
@@ -123,7 +125,7 @@ public class ShadowTest {
 	@Test
 	public void testAPICalls5() {
 		List<WebElement> elements = shadow
-				.findElements(shadow.findElement(urlLocator), "#wrapperLink");
+				.findElements(shadow.findElement(pageHeading), ".omnibar");
 		assertThat(elements, notNullValue());
 		assertThat(elements.size(), greaterThan(0));
 		err.println(String.format("Found %d elements: ", elements.size()));
@@ -138,7 +140,7 @@ public class ShadowTest {
 
 	@AfterAll
 	public static void tearDownAll() {
-		driver.close();
+		driver.quit();
 	}
 
 	public static String getPropertyEnv(String name, String defaultValue) {

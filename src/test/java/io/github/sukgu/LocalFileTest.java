@@ -327,7 +327,7 @@ public class LocalFileTest {
 
 	@AfterAll
 	public static void tearDownAll() {
-		driver.close();
+		driver.quit();
 	}
 
 	// Utilities

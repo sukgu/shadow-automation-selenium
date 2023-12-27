@@ -173,7 +173,7 @@ public class AnnotationTest {
 
 	@AfterAll
 	public static void tearDownAll() {
-		driver.close();
+		driver.quit();
 	}
 
 
