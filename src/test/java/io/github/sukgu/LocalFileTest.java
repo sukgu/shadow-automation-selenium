@@ -325,6 +325,18 @@ public class LocalFileTest {
 		assert element.size()==2;
 	}
 
+    @Test
+    public void shadowNestedTest1() {
+        driver.navigate().to(getPageContent("nested.html"));
+        WebElement element = shadow.findElement("div[id='host1'] > div[id='middle1'] > div[id='inner1'] > input[id='input1']");
+        WebElement button = shadow.findElement("div[id='host1'] > div[id='middle1'] > div[id='inner1'] > button[id='button1']");
+        shadow.scrollTo(element);
+        assertThat(element, notNullValue());
+        element.click();
+        element.sendKeys("ilk test html");
+        System.out.println(shadow.getAttribute(button,"id"));
+    }
+
 	@AfterAll
 	public static void tearDownAll() {
 		driver.quit();
