@@ -55,7 +55,7 @@
     <maven.javadoc.plugin.version>3.6.3</maven.javadoc.plugin.version>
     <maven.source.plugin.version>3.3.0</maven.source.plugin.version>
     <selenium.version>4.16.1</selenium.version>
-    <webdrivermanager.version>5.6.2</webdrivermanager.version>
+    <webdrivermanager.version>6.2.0</webdrivermanager.version>
     <selenium-chrome-driver.version>${selenium.version}</selenium-chrome-driver.version>
     <selenium-firefox-driver.version>${selenium.version}</selenium-firefox-driver.version>
   </properties>
