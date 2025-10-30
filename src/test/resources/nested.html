@@ -23,7 +23,7 @@
     function createFourLayerShadowTextbox(hostId, labelText,middleHostId,innerHostId,inputId,labelId,buttonId) {
       const host = document.getElementById(hostId);
 
-      // 1️⃣ OUTER SHADOW
+      // OUTER SHADOW
       const outerShadow = host.attachShadow({ mode: 'open' });
 
       const middleHost = document.createElement('div');
@@ -31,23 +31,21 @@
       middleHost.setAttribute("id", middleHostId);
 
 
-      // 2️⃣ MIDDLE SHADOW
+      // MIDDLE SHADOW
       const middleShadow = middleHost.attachShadow({ mode: 'open' });
 
       const innerHost = document.createElement('div');
       innerHost.className = 'inner-host';
       innerHost.setAttribute("id", innerHostId);
 
-      // 3️⃣ INNER SHADOW (input + label + button container)
+      // INNER SHADOW (input + label + button container)
       const innerShadow = innerHost.attachShadow({ mode: 'open' });
 
       const wrapper = document.createElement('div');
 
-      // Input öncesi span
       const inputBefore = document.createElement('span');
       inputBefore.textContent = "🧱 Input begins here ";
 
-      // Input
       const input = document.createElement('input');
       input.type = 'text';
       input.placeholder = 'Type something...';
@@ -65,31 +63,31 @@
         label.textContent = input.value;
       });
 
-      // 4️⃣ BUTTON HOST (button için shadow açacağız)
+      // BUTTON HOST 
       const buttonHost = document.createElement('div');
       buttonHost.className = "button-host";
 
-      // Button için shadow root
+      // shadow root for button
       const buttonShadow = buttonHost.attachShadow({ mode: 'open' });
 
       const button = document.createElement('button');
       button.textContent = "Show Alert";
       button.setAttribute("id",buttonId)
 
-      // 🔔 Button: input değerini göster
+      // Button: shows input value
       button.addEventListener('click', () => {
         alert(`Input value: ${input.value}`);
       });
 
       buttonShadow.appendChild(button);
 
-      // Yapıyı birleştir
+      // Build
       wrapper.appendChild(inputBefore);
       wrapper.appendChild(input);
       wrapper.appendChild(document.createElement('br'));
       wrapper.appendChild(label);
       wrapper.appendChild(document.createElement('br'));
-      wrapper.appendChild(buttonHost); // button (4. shadow) burada
+      wrapper.appendChild(buttonHost); 
 
       innerShadow.appendChild(wrapper);
       middleShadow.appendChild(innerHost);
@@ -97,7 +95,7 @@
     }
 
 
-    // Üç farklı host için uygula
+    
     createFourLayerShadowTextbox("host1", "Label 1","middle1","inner1","input1","label1","button1");
     createFourLayerShadowTextbox("host2", "Label 2","middle2","inner2","input2","label2","button2");
     createFourLayerShadowTextbox("host3", "Label 3","middle3","inner3","input3","label3","button3");
