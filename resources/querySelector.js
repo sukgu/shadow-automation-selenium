@@ -14,13 +14,19 @@ var getAttribute = function getAttribute(object,attribute) {
 	return object.getAttribute(attribute);
 };
 
-var isVisible = function isVisible(object) {
-	var visible = object.offsetWidth;
-	if(visible>0) {
-		return true;
-	} else {
-		return false;
-	}
+var isVisible = function(element) {
+  if (!element) return false;
+
+  const style = window.getComputedStyle(element);
+  if (style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0') {
+    return false;
+  }
+
+  if (element.offsetWidth <= 0 || element.offsetHeight <= 0) {
+    return false;
+  }
+
+  return true;
 };
 
 var scrollTo = function scrollTo(object) {
