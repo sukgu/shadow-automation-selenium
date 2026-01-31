@@ -54,7 +54,7 @@
     <maven.gpg.plugin.version>1.5</maven.gpg.plugin.version>
     <maven.javadoc.plugin.version>3.6.3</maven.javadoc.plugin.version>
     <maven.source.plugin.version>3.3.0</maven.source.plugin.version>
-    <selenium.version>4.16.1</selenium.version>
+    <selenium.version>4.40.0</selenium.version>
     <webdrivermanager.version>6.2.0</webdrivermanager.version>
     <selenium-chrome-driver.version>${selenium.version}</selenium-chrome-driver.version>
     <selenium-firefox-driver.version>${selenium.version}</selenium-firefox-driver.version>
