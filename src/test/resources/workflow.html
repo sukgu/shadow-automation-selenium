@@ -1,0 +1,125 @@
+<html><head>
+<style>
+  .form-container { padding: 20px; border: 1px solid #ccc; }
+  .hidden { display: none; }
+  .success { color: green; }
+  .error { color: red; }
+</style></head><body>
+<div id='app-container'></div>
+<script>
+// Create complex shadow DOM application
+const appContainer = document.getElementById('app-container');
+const appShadow = appContainer.attachShadow({mode: 'open'});
+
+appShadow.innerHTML = `
+  <style>
+    .app-style { font-family: Arial, sans-serif; }
+    .form-section { margin: 10px 0; }
+    .btn-primary { background: blue; color: white; padding: 5px 10px; }
+    .btn-secondary { background: gray; color: white; padding: 5px 10px; }
+    .validation-error { color: red; font-size: 12px; }
+  </style>
+  <div class='app-style'>
+    <h1 id='app-title'>Shadow DOM Application</h1>
+    <div class='form-section'>
+      <label for='user-name'>Username:</label>
+      <input type='text' id='user-name' required>
+      <div id='name-error' class='validation-error hidden'>Username is required</div>
+    </div>
+    <div class='form-section'>
+      <label for='user-email'>Email:</label>
+      <input type='email' id='user-email' required>
+      <div id='email-error' class='validation-error hidden'>Valid email is required</div>
+    </div>
+    <div class='form-section'>
+      <label>Preferences:</label>
+      <label><input type='checkbox' id='pref-newsletter'> Newsletter</label>
+      <label><input type='checkbox' id='pref-updates'> Updates</label>
+    </div>
+    <div class='form-section'>
+      <label>Account Type:</label>
+      <label><input type='radio' name='account' value='basic' id='acc-basic'> Basic</label>
+      <label><input type='radio' name='account' value='premium' id='acc-premium'> Premium</label>
+    </div>
+    <div class='form-section'>
+      <label for='user-country'>Country:</label>
+      <select id='user-country'>
+        <option value=''>Select Country</option>
+        <option value='US'>United States</option>
+        <option value='UK'>United Kingdom</option>
+        <option value='CA'>Canada</option>
+      </select>
+    </div>
+    <div class='form-section'>
+      <button id='validate-btn' class='btn-secondary'>Validate</button>
+      <button id='submit-btn' class='btn-primary' disabled>Submit</button>
+      <button id='reset-btn' class='btn-secondary'>Reset</button>
+    </div>
+    <div id='result-section' class='hidden'>
+      <h3 id='result-title'>Form Result</h3>
+      <div id='result-content'></div>
+    </div>
+  </div>
+`;
+
+// Add form functionality
+const validateBtn = appShadow.getElementById('validate-btn');
+const submitBtn = appShadow.getElementById('submit-btn');
+const resetBtn = appShadow.getElementById('reset-btn');
+
+validateBtn.addEventListener('click', function() {
+  const userName = appShadow.getElementById('user-name').value;
+  const userEmail = appShadow.getElementById('user-email').value;
+  const nameError = appShadow.getElementById('name-error');
+  const emailError = appShadow.getElementById('email-error');
+  
+  let valid = true;
+  
+  if (!userName) {
+    nameError.classList.remove('hidden');
+    valid = false;
+  } else {
+    nameError.classList.add('hidden');
+  }
+  
+  if (!userEmail || !userEmail.includes('@')) {
+    emailError.classList.remove('hidden');
+    valid = false;
+  } else {
+    emailError.classList.add('hidden');
+  }
+  
+  submitBtn.disabled = !valid;
+});
+
+submitBtn.addEventListener('click', function() {
+  const resultSection = appShadow.getElementById('result-section');
+  const resultContent = appShadow.getElementById('result-content');
+  
+  const formData = {
+    name: appShadow.getElementById('user-name').value,
+    email: appShadow.getElementById('user-email').value,
+    newsletter: appShadow.getElementById('pref-newsletter').checked,
+    updates: appShadow.getElementById('pref-updates').checked,
+    account: appShadow.querySelector('input[name="account"]:checked')?.value || 'none',
+    country: appShadow.getElementById('user-country').value
+  };
+  
+  resultContent.innerHTML = JSON.stringify(formData, null, 2);
+  resultSection.classList.remove('hidden');
+});
+
+resetBtn.addEventListener('click', function() {
+  appShadow.getElementById('user-name').value = '';
+  appShadow.getElementById('user-email').value = '';
+  appShadow.getElementById('pref-newsletter').checked = false;
+  appShadow.getElementById('pref-updates').checked = false;
+  appShadow.querySelectorAll('input[name="account"]').forEach(r => r.checked = false);
+  appShadow.getElementById('user-country').value = '';
+  appShadow.getElementById('result-section').classList.add('hidden');
+  appShadow.getElementById('name-error').classList.add('hidden');
+  appShadow.getElementById('email-error').classList.add('hidden');
+  submitBtn.disabled = true;
+});
+</script>
+</body></html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Complex Selector Test Page</title>
+    <style>
+        .container {
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+        .section {
+            margin: 10px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+        }
+        .section[data-type='content'] {
+            background-color: #e7f3ff;
+        }
+        .section[data-type='sidebar'] {
+            background-color: #f0f0f0;
+        }
+        .description {
+            margin: 5px 0;
+            font-weight: normal;
+        }
+        .highlight {
+            background-color: yellow;
+            padding: 2px 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <div class='section' data-type='content'>
+            <p class='description'>Description 1</p>
+            <span class='highlight'>Highlight 1</span>
+        </div>
+        <div class='section' data-type='sidebar'>
+            <p class='description'>Description 2</p>
+            <span class='highlight'>Highlight 2</span>
+        </div>
+        <div class='additional-section'>
+            <div class='nested-container'>
+                <p class='description'>Nested Description</p>
+                <span class='highlight'>Nested Highlight</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Additional elements for more complex selector testing -->
+    <div class='outer-container'>
+        <div class='section' data-type='footer'>
+            <p class='description'>Footer Description</p>
+            <span class='highlight'>Footer Highlight</span>
+        </div>
+    </div>
+    
+    <table class='data-table'>
+        <tr>
+            <td class='cell' data-type='header'>Header Cell</td>
+            <td class='cell' data-type='content'>Content Cell</td>
+        </tr>
+    </table>
+</body>
+</html>

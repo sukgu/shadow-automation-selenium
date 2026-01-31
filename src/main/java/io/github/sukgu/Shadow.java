@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import org.openqa.selenium.InvalidElementStateException;
 import org.openqa.selenium.JavascriptException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
@@ -431,12 +432,16 @@ public class Shadow {
 	
 	public WebElement findElementByXPath(String XPath) {
 		List<WebElement> elements = new LinkedList<>();
-		Arrays.asList(XPath.split(Pattern.quote("|"))).forEach(x_path -> {
-			WebElement element = elementByXPath(x_path.trim());
-			if(element != null) {
-				elements.add(element);
-			}
-		});
+		try {
+			Arrays.asList(XPath.split(Pattern.quote("|"))).forEach(x_path -> {
+				WebElement element = elementByXPath(x_path.trim());
+				if(element != null) {
+					elements.add(element);
+				}
+			});
+		} catch (InvalidElementStateException e) {
+			throw new JavascriptException("Invalid element state while finding element by xpath: " + XPath);
+		}
 		if(elements.size() > 0) {
 			return elements.get(0);
 		}
@@ -553,6 +558,9 @@ public class Shadow {
 		if(object!=null && object instanceof List<?>) {
 			elements = (List<WebElement>) object;
 		}
+		if(elements == null) {
+			elements = new ArrayList<>();
+		}
 		for (WebElement element : elements) {
 			fixLocator(driver, selector, element);
 		}
@@ -601,6 +609,8 @@ public class Shadow {
 		if(object != null && object instanceof List<?>) {
 			elements = (List<WebElement>) object;
 		}
+		if(elements != null && elements.contains(element))
+			elements.remove(element);
 		return elements;
 	}
 	
