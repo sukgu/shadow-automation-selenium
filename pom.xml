@@ -42,7 +42,7 @@
     <junit-vintage-engine-version>5.4.0</junit-vintage-engine-version>
     <junit-platform-launcher.version>1.4.0</junit-platform-launcher.version>
     <maven.compiler.target>11</maven.compiler.target>
-    <maven-surefire-plugin.version>3.2.3</maven-surefire-plugin.version>
+    <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
     <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
     <maven.compiler.source>11</maven.compiler.source>
     <maven-surefire-plugin.version>3.2.3</maven-surefire-plugin.version>
@@ -52,9 +52,9 @@
     <cobertura.maven.plugin.version>2.7</cobertura.maven.plugin.version>
     <nexus.staging.maven.plugin.version>1.6.7</nexus.staging.maven.plugin.version>
     <maven.gpg.plugin.version>1.5</maven.gpg.plugin.version>
-    <maven.javadoc.plugin.version>3.6.3</maven.javadoc.plugin.version>
+    <maven.javadoc.plugin.version>3.12.0</maven.javadoc.plugin.version>
     <maven.source.plugin.version>3.3.0</maven.source.plugin.version>
-    <selenium.version>4.16.1</selenium.version>
+    <selenium.version>4.40.0</selenium.version>
     <webdrivermanager.version>6.2.0</webdrivermanager.version>
     <selenium-chrome-driver.version>${selenium.version}</selenium-chrome-driver.version>
     <selenium-firefox-driver.version>${selenium.version}</selenium-firefox-driver.version>
