@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>4-Layer Shadow DOM with Button</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          padding: 20px;
+        }
+        .host {
+          margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="host" id="host1"></div>
+<div class="host" id="host2"></div>
+<div class="host" id="host3"></div>
+
+<script>
+    function createFourLayerShadowTextbox(hostId, labelText,middleHostId,innerHostId,inputId,labelId,buttonId) {
+      const host = document.getElementById(hostId);
+
+      // OUTER SHADOW
+      const outerShadow = host.attachShadow({ mode: 'open' });
+
+      const middleHost = document.createElement('div');
+      middleHost.className = 'middle-host';
+      middleHost.setAttribute("id", middleHostId);
+
+
+      // MIDDLE SHADOW
+      const middleShadow = middleHost.attachShadow({ mode: 'open' });
+
+      const innerHost = document.createElement('div');
+      innerHost.className = 'inner-host';
+      innerHost.setAttribute("id", innerHostId);
+
+      // INNER SHADOW (input + label + button container)
+      const innerShadow = innerHost.attachShadow({ mode: 'open' });
+
+      const wrapper = document.createElement('div');
+
+      const inputBefore = document.createElement('span');
+      inputBefore.textContent = "🧱 Input begins here ";
+
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.placeholder = 'Type something...';
+      input.setAttribute("maxlength", "30");
+      input.setAttribute("id", inputId);
+
+
+      // Label
+      const label = document.createElement('label');
+      label.textContent = labelText;
+      label.setAttribute("id",labelId)
+
+      // Live update
+      input.addEventListener('input', () => {
+        label.textContent = input.value;
+      });
+
+      // BUTTON HOST 
+      const buttonHost = document.createElement('div');
+      buttonHost.className = "button-host";
+
+      // shadow root for button
+      const buttonShadow = buttonHost.attachShadow({ mode: 'open' });
+
+      const button = document.createElement('button');
+      button.textContent = "Show Alert";
+      button.setAttribute("id",buttonId)
+
+      // Button: shows input value
+      button.addEventListener('click', () => {
+        alert(`Input value: ${input.value}`);
+      });
+
+      buttonShadow.appendChild(button);
+
+      // Build
+      wrapper.appendChild(inputBefore);
+      wrapper.appendChild(input);
+      wrapper.appendChild(document.createElement('br'));
+      wrapper.appendChild(label);
+      wrapper.appendChild(document.createElement('br'));
+      wrapper.appendChild(buttonHost); 
+
+      innerShadow.appendChild(wrapper);
+      middleShadow.appendChild(innerHost);
+      outerShadow.appendChild(middleHost);
+    }
+
+
+    
+    createFourLayerShadowTextbox("host1", "Label 1","middle1","inner1","input1","label1","button1");
+    createFourLayerShadowTextbox("host2", "Label 2","middle2","inner2","input2","label2","button2");
+    createFourLayerShadowTextbox("host3", "Label 3","middle3","inner3","input3","label3","button3");
+
+</script>
+</body>
+</html>
