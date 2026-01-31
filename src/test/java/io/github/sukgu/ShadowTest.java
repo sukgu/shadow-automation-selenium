@@ -1,12 +1,13 @@
 package io.github.sukgu;
 
 import static java.lang.System.err;
+import java.net.URI;
+import java.util.List;
+import java.util.Map;
+
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
-
-import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -22,8 +23,6 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class ShadowTest {
 
-	private final static String baseUrl = "https://www.virustotal.com";
-	// private static final String urlLocator = "a[data-route='url']";
 	private static final String urlLocator = "home-view a[data-route='url']";
 	private static final String pageHeading = "home-view div.container";
 	private static final boolean debug = Boolean
@@ -32,6 +31,7 @@ public class ShadowTest {
 	private static Shadow shadow = null;
 	private static String browser = getPropertyEnv("BROWSER",
 			getPropertyEnv("webdriver.driver", "chrome"));
+	
 	@BeforeAll
 	public static void injectShadowJS() {
 		err.println("Launching " + browser);
@@ -43,7 +43,7 @@ public class ShadowTest {
 			WebDriverManager.firefoxdriver().setup();
 			driver = new FirefoxDriver();
 		} // TODO: finish for other browsers
-		driver.navigate().to(baseUrl);
+		driver.navigate().to(getPageContent("shadow_test.html"));
 		shadow = new Shadow(driver);
 	}
 
@@ -170,6 +170,16 @@ public class ShadowTest {
 			result = true;
 		}
 		return result;
+	}
+
+	// Utility method to get local test files
+	private static String getPageContent(String pagename) {
+		try {
+			URI uri = ShadowTest.class.getClassLoader().getResource(pagename).toURI();
+			return "file://" + uri.getPath();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }

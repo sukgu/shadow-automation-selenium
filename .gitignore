@@ -33,6 +33,13 @@ local.properties
 .settings/
 .loadpath
 
+.idea/
+.vscode/
+bin/
+out/
+.DS_Store
+.vs/
+genai/
 # External tool builders
 .externalToolBuilders/
 

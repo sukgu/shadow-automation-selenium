@@ -7,6 +7,9 @@ var getShadowElement = function getShadowElement(object,selector) {
 };
 
 var getAllShadowElement = function getAllShadowElement(object,selector) {
+	if (object.shadowRoot == null) {
+		return null;
+	}
 	return object.shadowRoot.querySelectorAll(selector);
 };
 
@@ -110,10 +113,20 @@ var findCheckboxWithLabel = function findCheckboxWithLabel(label, root=document)
 			return root;
 		}
 	} else {
-		let all_checkbox = getAllObject("paper-checkbox", root);
+		let all_checkbox = getAllObject("input[type='checkbox']", root);
 		for (let checkbox of all_checkbox) {
-			if(checkbox.childNodes[0].data.trimStart().trimEnd()==label) {
-				return checkbox;
+			if(checkbox.previousElementSibling!=null) {
+				if(checkbox.previousElementSibling.textContent==label) {
+					return checkbox;
+				}
+			} else if(checkbox.nextElementSibling!=null) {
+				if(checkbox.nextElementSibling.textContent==label || checkbox.parentNode.textContent.trimStart().trimEnd()==label) {
+					return checkbox;
+				}
+			} else if(checkbox.parentNode.textContent!='') {
+				if(checkbox.parentNode.textContent.trimStart().trimEnd()==label) {
+					return checkbox;
+				}
 			}
 		}
 	}
@@ -125,10 +138,20 @@ var findRadioWithLabel = function findRadioWithLabel(label, root=document) {
 			return root;
 		}
 	} else {
-		let all_radio = getAllObject("paper-radio-button", root);
+		let all_radio = getAllObject("input[type='radio']", root);
 		for (let radio of all_radio) {
-			if(radio.childNodes[0].data.trimStart().trimEnd()==label) {
-				return radio;
+			if(radio.previousElementSibling!=null) {
+				if(radio.previousElementSibling.textContent==label) {
+					return radio;
+				}
+			} else if(radio.nextElementSibling!=null) {
+				if(radio.nextElementSibling.textContent==label) {
+					return radio;
+				}
+			} else if(radio.parentNode.textContent!='') {
+				if(radio.parentNode.textContent.trimStart().trimEnd()==label) {
+					return radio;
+				}
 			}
 		}
 	}
@@ -137,23 +160,37 @@ var findRadioWithLabel = function findRadioWithLabel(label, root=document) {
 var selectCheckbox = function selectCheckbox(label, root=document) {
 	let checkbox = findCheckboxWithLabel(label, root);
 	if(!checkbox.checked) {
-		checbox.click();
+		checkbox.click();
 	}
 };
 
 var selectRadio = function selectRadio(label, root=document) {
-	let radio = findCheckboxWithLabel(label, root);
+	let radio = findRadioWithLabel(label, root);
 	if(!radio.checked) {
 		radio.click();
 	}
 };
 
 var selectDropdown = function selectDropdown(label, root=document) {
-	if(root.nodeName=="PAPER-LISTBOX") {
-		root.select(label);
+	if(root.nodeName=="SELECT") {
+		let options = root.options;
+		for (let i=0; i<options.length; i++) {
+			if(options[i].text==label) {
+				options[i].selected = true;
+				break;
+			}
+		}
 	} else {
-		let listbox = getAllObject("paper-listbox", root);
-		listbox.select(label);
+		let all_selects = getAllObject("select", root);
+		for (let select of all_selects) {
+			let options = select.options;
+			for (let i=0; i<options.length; i++) {
+				if(options[i].text==label) {
+					options[i].selected = true;
+					break;
+				}
+			}
+		}
 	}
 };
 

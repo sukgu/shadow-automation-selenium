@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shadow DOM Test Page</title>
+    <style>
+        .container {
+            padding: 20px;
+            margin: 20px;
+            border: 1px solid #ccc;
+        }
+        .omnibar {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div id="app-root"></div>
+
+    <script>
+        // Create the main home-view component with shadow DOM
+        const appRoot = document.getElementById('app-root');
+        const homeView = document.createElement('home-view');
+        appRoot.appendChild(homeView);
+
+        // Attach shadow DOM to home-view
+        const homeViewShadow = homeView.attachShadow({mode: 'open'});
+        
+        homeViewShadow.innerHTML = `
+            <style>
+                .container {
+                    padding: 20px;
+                    margin: 20px;
+                    border: 2px solid blue;
+                    background-color: #f9f9f9;
+                }
+                .nav-section {
+                    margin-bottom: 20px;
+                }
+                .omnibar {
+                    width: 100%;
+                    padding: 10px;
+                    margin: 10px 0;
+                    border: 1px solid #ddd;
+                    background-color: white;
+                }
+                a[data-route] {
+                    display: inline-block;
+                    padding: 10px 15px;
+                    margin: 5px;
+                    background-color: #007bff;
+                    color: white;
+                    text-decoration: none;
+                    border-radius: 4px;
+                }
+                a[data-route]:hover {
+                    background-color: #0056b3;
+                }
+                p {
+                    margin: 10px 0;
+                    line-height: 1.6;
+                }
+            </style>
+            <div class="container">
+                <div class="nav-section">
+                    <a data-route="url" href="#url">URL</a>
+                    <a data-route="file" href="#file">FILE</a>
+                    <a data-route="search" href="#search">SEARCH</a>
+                </div>
+                <div class="omnibar">
+                    <input type="text" placeholder="Enter URL to analyze..." style="width: 80%; padding: 8px;">
+                    <button style="padding: 8px 15px;">Analyze</button>
+                </div>
+                <div class="omnibar">
+                    <input type="file" style="width: 80%; padding: 8px;">
+                    <button style="padding: 8px 15px;">Upload</button>
+                </div>
+                <p>Welcome to the Shadow DOM testing environment.</p>
+                <p>This page contains various shadow DOM elements for comprehensive testing.</p>
+                <p>You can interact with the navigation links and form elements above.</p>
+                <div class="additional-content">
+                    <h3>Additional Features</h3>
+                    <p>This section contains additional paragraphs for testing element retrieval.</p>
+                    <p>Multiple paragraphs help test the findElements functionality.</p>
+                </div>
+            </div>
+        `;
+
+        // Create additional nested shadow DOM for more complex testing
+        const nestedContainer = document.createElement('div');
+        nestedContainer.id = 'nested-shadow-host';
+        homeViewShadow.appendChild(nestedContainer);
+
+        const nestedShadow = nestedContainer.attachShadow({mode: 'open'});
+        nestedShadow.innerHTML = `
+            <style>
+                .nested-content {
+                    padding: 15px;
+                    background-color: #e9ecef;
+                    border: 1px solid #6c757d;
+                    margin-top: 20px;
+                }
+            </style>
+            <div class="nested-content">
+                <h4>Nested Shadow DOM Content</h4>
+                <a data-route="nested" href="#nested">Nested Link</a>
+                <p>This is content within a nested shadow DOM.</p>
+            </div>
+        `;
+
+        // Add some dynamic behavior for testing
+        const urlLink = homeViewShadow.querySelector('a[data-route="url"]');
+        if (urlLink) {
+            urlLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                console.log('URL link clicked in shadow DOM');
+            });
+        }
+
+        // Add sibling elements for testing navigation APIs
+        const siblingDiv1 = document.createElement('div');
+        siblingDiv1.className = 'sibling-element';
+        siblingDiv1.textContent = 'Sibling Element 1';
+        
+        const siblingDiv2 = document.createElement('div');
+        siblingDiv2.className = 'sibling-element';
+        siblingDiv2.textContent = 'Sibling Element 2';
+        
+        homeViewShadow.appendChild(siblingDiv1);
+        homeViewShadow.appendChild(siblingDiv2);
+    </script>
+</body>
+</html>
