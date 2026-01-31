@@ -32,8 +32,11 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
+      - name: Install Xvfb
+        run: sudo apt-get install -y xvfb
+
       - name: Run tests with coverage
-        run: mvn clean test jacoco:report
+        run: xvfb-run --auto-servernum mvn clean test jacoco:report
 
       - name: SonarCloud Scan
         env:
