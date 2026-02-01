@@ -254,7 +254,7 @@ jobs:
           export GPG_TTY=$(tty)
 
       - name: Publish to GitHub Packages
-        run: mvn clean install deploy -DskipTests -DaltDeploymentRepository=github::https://maven.pkg.github.com/${{ github.repository }} -Dgpg.keyname=$GPG_KEY_ID -Dgpg.passphrase="$MAVEN_GPG_PASSPHRASE" -Dgpg.pinentry-mode=loopback -Pskip-central-publishing
+        run: mvn clean install deploy -DskipTests -DaltDeploymentRepository=github::https://maven.pkg.github.com/${{ github.repository }} -Dgpg.keyname=$GPG_KEY_ID -Dgpg.passphrase="$MAVEN_GPG_PASSPHRASE" -Dgpg.pinentry-mode=loopback -Pskip-central-publishing -DskipPublishing=true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}

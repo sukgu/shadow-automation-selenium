@@ -329,13 +329,18 @@
     </profile>
     <profile>
       <id>skip-central-publishing</id>
+      <properties>
+        <skipPublishing>true</skipPublishing>
+      </properties>
       <build>
         <plugins>
           <plugin>
             <groupId>org.sonatype.central</groupId>
             <artifactId>central-publishing-maven-plugin</artifactId>
+            <extensions>false</extensions>
             <configuration>
               <skip>true</skip>
+              <skipPublishing>true</skipPublishing>
             </configuration>
           </plugin>
         </plugins>
