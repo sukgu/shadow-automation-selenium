@@ -41,6 +41,16 @@ jobs:
           echo "$GPG_PRIVATE_KEY" | gpg --batch --import
           GPG_KEY_ID=$(gpg --list-secret-keys --keyid-format LONG | grep sec | awk '{print $2}' | cut -d'/' -f2)
           echo "GPG_KEY_ID=$GPG_KEY_ID" >> $GITHUB_ENV
+          
+          # Configure GPG for batch mode
+          mkdir -p ~/.gnupg
+          echo "use-agent" >> ~/.gnupg/gpg.conf
+          echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
+          echo "allow-loopback-pinentry" >> ~/.gnupg/gpg-agent.conf
+          
+          # Test the key with passphrase
+          echo "test" | gpg --batch --yes --passphrase "$GPG_PASSPHRASE" --pinentry-mode loopback --local-user $GPG_KEY_ID --armor --detach-sig
+          
           gpg --list-secret-keys --keyid-format LONG
           export GPG_TTY=$(tty)
 
@@ -68,7 +78,7 @@ jobs:
         run: mvn clean verify
 
       - name: Deploy to Maven Central
-        run: mvn clean deploy -DskipTests -Dgpg.keyname=$GPG_KEY_ID -Dgpg.pinentry-mode=loopback
+        run: mvn clean deploy -DskipTests -Dgpg.keyname=$GPG_KEY_ID -Dgpg.passphrase="$MAVEN_GPG_PASSPHRASE" -Dgpg.pinentry-mode=loopback
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
