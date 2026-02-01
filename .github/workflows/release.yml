@@ -84,7 +84,6 @@ jobs:
           MAVEN_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           GPG_TTY: $(tty)
-          GPG_TTY: $(tty)
 
       - name: Create GitHub Release
         uses: actions/create-release@v1

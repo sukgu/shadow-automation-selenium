@@ -142,11 +142,11 @@
   <distributionManagement>
 	  <snapshotRepository>
 	   <id>ossrh</id>
-	   <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+	   <url>https://central.sonatype.com/repository/maven-snapshots/</url>
 	  </snapshotRepository>
 	  <repository>
 	   <id>ossrh</id>
-	   <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+	   <url>https://central.sonatype.com/repository/maven-releases/</url>
 	  </repository>
   </distributionManagement>
   
@@ -227,6 +227,16 @@
 		    </executions>
 	   </plugin>
 	   <plugin>
+          <groupId>org.sonatype.central</groupId>
+          <artifactId>central-publishing-maven-plugin</artifactId>
+          <version>0.10.0</version>
+          <extensions>true</extensions>
+          <configuration>
+            <publishingServerId>central</publishingServerId>
+			<autoPublish>false</autoPublish>
+          </configuration>
+        </plugin>
+	   <!--<plugin>
 	        <groupId>org.sonatype.plugins</groupId>
 	        <artifactId>nexus-staging-maven-plugin</artifactId>
 	        <version>${nexus.staging.maven.plugin.version}</version>
@@ -234,10 +244,9 @@
 	        <configuration>
 		          <serverId>ossrh</serverId>
 		          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-		          <!-- Set this to true and the release will automatically proceed and sync to Central Repository will follow  -->
 		          <autoReleaseAfterClose>false</autoReleaseAfterClose>
 	        </configuration>
-      </plugin>
+      </plugin>-->
 	  <plugin>
 			<groupId>org.codehaus.mojo</groupId>
 			<artifactId>cobertura-maven-plugin</artifactId>
