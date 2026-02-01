@@ -1,6 +1,6 @@
 # Shadow root DOM automation using selenium
 
-[![Build Status](https://travis-ci.org/sukgu/shadow-automation-selenium.svg?branch=master)](https://travis-ci.org/sukgu/shadow-automation-selenium "Travis CI")
+[![CI/CD Pipeline](https://github.com/sukgu/shadow-automation-selenium/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/sukgu/shadow-automation-selenium/actions/workflows/ci-cd.yml)
 [![codecov](https://codecov.io/gh/sukgu/shadow-automation-selenium/branch/master/graph/badge.svg)](https://codecov.io/gh/sukgu/shadow-automation-selenium)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.sukgu/automation.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.sukgu%22%20AND%20a:%22automation%22)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
