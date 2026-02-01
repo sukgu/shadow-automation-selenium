@@ -39,6 +39,8 @@ jobs:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         run: |
           echo "$GPG_PRIVATE_KEY" | gpg --batch --import
+          GPG_KEY_ID=$(gpg --list-secret-keys --keyid-format LONG | grep sec | awk '{print $2}' | cut -d'/' -f2)
+          echo "GPG_KEY_ID=$GPG_KEY_ID" >> $GITHUB_ENV
           gpg --list-secret-keys --keyid-format LONG
           export GPG_TTY=$(tty)
 
@@ -66,11 +68,13 @@ jobs:
         run: mvn clean verify
 
       - name: Deploy to Maven Central
-        run: mvn clean deploy -DskipTests -Dgpg.passphrase="$MAVEN_GPG_PASSPHRASE" -Dgpg.pinentry-mode=loopback
+        run: mvn clean deploy -DskipTests -Dgpg.keyname=$GPG_KEY_ID -Dgpg.pinentry-mode=loopback
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          GPG_TTY: $(tty)
+          GPG_TTY: $(tty)
 
       - name: Create GitHub Release
         uses: actions/create-release@v1
