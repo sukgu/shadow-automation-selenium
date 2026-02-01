@@ -327,6 +327,20 @@
         <browser.name>firefox</browser.name>
       </properties>
     </profile>
+    <profile>
+      <id>skip-central-publishing</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.sonatype.central</groupId>
+            <artifactId>central-publishing-maven-plugin</artifactId>
+            <configuration>
+              <skip>true</skip>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
   
 </project>

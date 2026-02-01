@@ -253,11 +253,8 @@ jobs:
           gpg --list-secret-keys --keyid-format LONG
           export GPG_TTY=$(tty)
 
-      - name: Build and package artifacts
-        run: mvn clean package -DskipTests
-
       - name: Publish to GitHub Packages
-        run: mvn org.apache.maven.plugins:maven-deploy-plugin:3.1.1:deploy -DskipTests -DaltDeploymentRepository=github::https://maven.pkg.github.com/${{ github.repository }} -Dgpg.keyname=$GPG_KEY_ID -Dgpg.passphrase="$MAVEN_GPG_PASSPHRASE" -Dgpg.pinentry-mode=loopback
+        run: mvn clean install deploy -DskipTests -DaltDeploymentRepository=github::https://maven.pkg.github.com/${{ github.repository }} -Dgpg.keyname=$GPG_KEY_ID -Dgpg.passphrase="$MAVEN_GPG_PASSPHRASE" -Dgpg.pinentry-mode=loopback -Pskip-central-publishing
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
