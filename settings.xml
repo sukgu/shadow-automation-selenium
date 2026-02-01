@@ -2,8 +2,8 @@
   <servers>
     <server>
       <id>ossrh</id>
-      <username>${env.OSSRH_USER_TOKEN}</username>
-      <password>${env.OSSRH_PWD_TOKEN}</password>
+      <username>${env.MAVEN_USERNAME}</username>
+      <password>${env.MAVEN_PASSWORD}</password>
     </server>
   </servers>
   <profiles>
@@ -12,8 +12,7 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
-        <gpg.keyname>${env.GPG_KEY}</gpg.keyname>
-        <gpg.passphrase>${env.GPG_PWD}</gpg.passphrase>
+        <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
       </properties>
     </profile>
   </profiles>
