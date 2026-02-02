@@ -42,7 +42,7 @@
     <junit-vintage-engine-version>5.14.2</junit-vintage-engine-version>
     <junit-platform-launcher.version>1.14.2</junit-platform-launcher.version>
     <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
-    <maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
+    <maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.release.plugin.version>3.3.1</maven.release.plugin.version>
