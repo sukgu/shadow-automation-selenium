@@ -61,13 +61,28 @@ jobs:
 
       - name: Update version
         run: |
-          mvn versions:set -DnewVersion='${{ inputs.version }}'
+          echo "Current version in pom.xml:"
+          grep -A1 "<artifactId>automation</artifactId>" pom.xml | grep "<version>"
+          
+          echo "Updating version to ${{ inputs.version }}"
+          mvn versions:set -DnewVersion='${{ inputs.version }}' -DgenerateBackupPoms=false
           mvn versions:commit
+          
+          echo "Updated version in pom.xml:"
+          grep -A1 "<artifactId>automation</artifactId>" pom.xml | grep "<version>"
 
       - name: Commit version change
         run: |
-          git add pom.xml
-          git commit -m "Release version ${{ inputs.version }}"
+          if git diff --quiet pom.xml; then
+            echo "No changes in pom.xml - version might already be ${{ inputs.version }}"
+            echo "Current version in pom.xml:"
+            grep -A1 "<artifactId>automation</artifactId>" pom.xml | grep "<version>" || echo "Could not find version"
+          else
+            echo "Committing version change"
+            git add pom.xml
+            git commit -m "Release version ${{ inputs.version }}"
+            echo "Version committed successfully"
+          fi
 
       - name: Create and push tag
         run: |
@@ -119,8 +134,11 @@ jobs:
 
       - name: Commit next development version
         run: |
-          git add pom.xml
-          git commit -m "Prepare next development version ${NEXT_VERSION}-SNAPSHOT"
-          git push origin
-        env:
-          NEXT_VERSION: $(echo "${{ inputs.version }}" | awk -F. '{$NF = $NF + 1; OFS = "."} 1')
+          NEXT_VERSION=$(echo "${{ inputs.version }}" | awk -F. '{$NF = $NF + 1; OFS = "."} 1')
+          if git diff --quiet pom.xml; then
+            echo "No changes in pom.xml for next development version"
+          else
+            git add pom.xml
+            git commit -m "Prepare next development version ${NEXT_VERSION}-SNAPSHOT"
+            git push origin
+          fi
