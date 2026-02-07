@@ -74,8 +74,22 @@ jobs:
           git tag -a "v${{ inputs.version }}" -m "Release version ${{ inputs.version }}"
           git push origin "v${{ inputs.version }}"
 
+      - name: Setup Chrome
+        if: matrix.browser == 'chrome'
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Setup Firefox
+        if: matrix.browser == 'firefox'
+        uses: browser-actions/setup-firefox@v1
+
+      - name: Install Xvfb
+        run: sudo apt-get install -y xvfb
+
+      - name: Run tests with chrome
+        run: xvfb-run --auto-servernum mvn clean test -Pchrome
+      
       - name: Build and test
-        run: mvn clean verify
+        run: xvfb-run --auto-servernum mvn clean verify
 
       - name: Deploy to Maven Central
         run: mvn clean deploy -DskipTests -Dgpg.keyname=$GPG_KEY_ID -Dgpg.passphrase="$MAVEN_GPG_PASSPHRASE" -Dgpg.pinentry-mode=loopback
