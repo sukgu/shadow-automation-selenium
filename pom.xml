@@ -139,17 +139,6 @@
     
   </dependencies>
   
-  <distributionManagement>
-	  <snapshotRepository>
-	   <id>ossrh</id>
-	   <url>https://central.sonatype.com/repository/maven-snapshots/</url>
-	  </snapshotRepository>
-	  <repository>
-	   <id>ossrh</id>
-	   <url>https://central.sonatype.com/repository/maven-releases/</url>
-	  </repository>
-  </distributionManagement>
-  
   <build>
 	  <plugins>
 	  
@@ -233,6 +222,7 @@
           <extensions>true</extensions>
           <configuration>
             <publishingServerId>central</publishingServerId>
+			<tokenAuth>true</tokenAuth>
 			<autoPublish>false</autoPublish>
           </configuration>
         </plugin>
