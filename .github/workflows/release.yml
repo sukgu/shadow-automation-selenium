@@ -87,8 +87,10 @@ jobs:
           fi
 
       - name: Create and push tag
+        env:
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         run: |
-          git tag -a "v${{ inputs.version }}" -m "Release version ${{ inputs.version }}"
+          git tag -s "v${{ inputs.version }}" -m "Release version ${{ inputs.version }}"
           git push origin "v${{ inputs.version }}"
 
       - name: Setup Chrome
