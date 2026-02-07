@@ -29,7 +29,7 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           cache: maven
-          server-id: ossrh
+          server-id: central
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
 
@@ -99,9 +99,6 @@ jobs:
 
       - name: Install Xvfb
         run: sudo apt-get install -y xvfb
-
-      - name: Run tests with chrome
-        run: xvfb-run --auto-servernum mvn clean test -Pchrome
       
       - name: Build and test
         run: xvfb-run --auto-servernum mvn clean verify
@@ -109,8 +106,8 @@ jobs:
       - name: Deploy to Maven Central
         run: mvn clean deploy -DskipTests
         env:
-          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          MAVEN_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+          MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
 
       - name: Create GitHub Release
