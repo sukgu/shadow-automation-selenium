@@ -33,7 +33,7 @@ jobs:
 
       - name: Setup Chrome
         if: matrix.browser == 'chrome'
-        uses: browser-actions/setup-chrome@v1
+        uses: browser-actions/setup-chrome@v2
 
       - name: Setup Firefox
         if: matrix.browser == 'firefox'
@@ -49,7 +49,7 @@ jobs:
 
       - name: Upload test reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: test-reports-java${{ matrix.java-version }}-${{ matrix.browser }}
           path: |
@@ -85,7 +85,7 @@ jobs:
         run: mvn source:jar
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: build-artifacts
           path: target/*.jar
