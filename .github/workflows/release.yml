@@ -107,12 +107,11 @@ jobs:
         run: xvfb-run --auto-servernum mvn clean verify
 
       - name: Deploy to Maven Central
-        run: mvn clean deploy -DskipTests -Dgpg.keyname=$GPG_KEY_ID -Dgpg.passphrase="$MAVEN_GPG_PASSPHRASE" -Dgpg.pinentry-mode=loopback
+        run: mvn clean deploy -DskipTests
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-          GPG_TTY: $(tty)
 
       - name: Create GitHub Release
         uses: actions/create-release@v1
