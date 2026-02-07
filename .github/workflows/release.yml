@@ -58,6 +58,8 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+          git config --local user.signingkey $GPG_KEY_ID
+          git config --local commit.gpgsign true
 
       - name: Update version
         run: |
@@ -124,17 +126,19 @@ jobs:
       - name: Prepare next development version
         run: |
           # Extract major.minor and increment patch for next development version
-          NEXT_VERSION=$(echo "${{ inputs.version }}" | awk -F. '{$NF = $NF + 1; OFS = "."} 1')
+          NEXT_VERSION=$(echo "${{ inputs.version }}" | awk -F. '{$NF = $NF + 1; print $1"."$2"."$3}')
           mvn versions:set -DnewVersion="${NEXT_VERSION}-SNAPSHOT"
           mvn versions:commit
 
       - name: Commit next development version
+        env:
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         run: |
-          NEXT_VERSION=$(echo "${{ inputs.version }}" | awk -F. '{$NF = $NF + 1; OFS = "."} 1')
+          NEXT_VERSION=$(echo "${{ inputs.version }}" | awk -F. '{$NF = $NF + 1; print $1"."$2"."$3}')
           if git diff --quiet pom.xml; then
             echo "No changes in pom.xml for next development version"
           else
             git add pom.xml
-            git commit -m "Prepare next development version ${NEXT_VERSION}-SNAPSHOT"
+            git commit -S -m "Prepare next development version ${NEXT_VERSION}-SNAPSHOT"
             git push origin
           fi
