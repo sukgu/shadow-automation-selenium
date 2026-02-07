@@ -105,11 +105,17 @@ jobs:
       - name: Build and test
         run: xvfb-run --auto-servernum mvn clean verify
 
-      - name: Deploy to Maven Central
+      - name: Publish to Maven Central
         run: mvn clean deploy -DskipTests
         env:
           MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+
+      - name: Publish to GitHub Packages
+        run: mvn deploy -DskipTests -DaltDeploymentRepository=github::https://maven.pkg.github.com/${{ github.repository }} -Pskip-central-publishing -DskipPublishing=true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
 
       - name: Create GitHub Release
